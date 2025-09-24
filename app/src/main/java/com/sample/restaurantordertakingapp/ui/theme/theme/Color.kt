@@ -1,4 +1,4 @@
-package com.sample.restaurantordertakingapp.ui.theme
+package com.sample.restaurantordertakingapp.ui.theme.theme
 
 import androidx.compose.ui.graphics.Color
 
