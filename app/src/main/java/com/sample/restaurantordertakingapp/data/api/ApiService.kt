@@ -11,6 +11,10 @@ import retrofit2.http.POST
 
 interface ApiService {
 
+
+
+    @GET("menu.json")
+    suspend fun getMenuResponse(): MenuResponse
     @GET("menu")
     fun getMenu(): Flow<Resource<MenuResponse>>
 

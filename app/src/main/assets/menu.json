@@ -1,0 +1,39 @@
+{
+  "menu": {
+    "categories": [
+      {
+        "id": "c1",
+        "name": "Starters",
+        "items": [
+          {
+            "id": "i101",
+            "name": "Spring Rolls",
+            "description": "Crispy vegetable spring rolls",
+            "price": 120,
+            "imageUrl": "https://example.com/spring_rolls.jpg"
+          },
+          {
+            "id": "i102",
+            "name": "Chicken Wings",
+            "description": "Spicy chicken wings",
+            "price": 200,
+            "imageUrl": "https://example.com/chicken_wings.jpg"
+          }
+        ]
+      },
+      {
+        "id": "c2",
+        "name": "Main Course",
+        "items": [
+          {
+            "id": "i201",
+            "name": "Butter Chicken",
+            "description": "Creamy tomato butter chicken",
+            "price": 350,
+            "imageUrl": "https://example.com/butter_chicken.jpg"
+          }
+        ]
+      }
+    ]
+  }
+}

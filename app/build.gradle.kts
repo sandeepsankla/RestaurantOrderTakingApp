@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.hilt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.kapt)
+    //alias { libs.plugins.android.ksp }
     // kotlin("kapt") version libs.versions.kotlin.get()
 }
 
@@ -17,7 +19,7 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -39,8 +41,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
@@ -58,7 +60,7 @@ android {
         }
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 
 }
@@ -77,10 +79,17 @@ dependencies {
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.retrofit2)
     implementation(libs.androidx.gson.converter)
-    implementation(libs.androidx.hilt.compiler)
+    kapt(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.nav)
     implementation(libs.androidx.dagger.hilt)
     implementation(libs.androidx.coroutine.core)
     implementation(libs.androidx.coroutine.android)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.multidex)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.urlconnection)
+
 
 
     testImplementation(libs.junit)

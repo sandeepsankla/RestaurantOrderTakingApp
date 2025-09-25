@@ -10,8 +10,12 @@ activityCompose = "1.11.0"
 composeBom = "2025.09.00"
 composeNav = "2.9.4"
 retrofitVersion = "3.0.0"
-hiltVersion = "2.56.2"
+hiltVersion = "2.51.1"
+hiltNavVersion = "1.2.0"
 coroutineVersion = "1.10.2"
+material3 = "1.3.2"
+interceptorVersion = "4.2.0"
+multidexVersion = "2.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -28,13 +32,19 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-multidex = { group = "androidx.multidex", name = "multidex" , version.ref = "multidexVersion" }
 androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose",version.ref = "composeNav" }
 androidx-retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit",version.ref = "retrofitVersion" }
 androidx-gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson",version.ref = "retrofitVersion" }
 androidx-dagger-hilt = { group = "com.google.dagger", name = "hilt-android",version.ref = "hiltVersion" }
+androidx-hilt-nav = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavVersion" }
 androidx-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler",version.ref = "hiltVersion" }
 androidx-coroutine-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core",version.ref = "coroutineVersion" }
 androidx-coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android",version.ref = "coroutineVersion" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "interceptorVersion" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "interceptorVersion" }
+okhttp-urlconnection = { group = "com.squareup.okhttp3", name = "okhttp-urlconnection", version.ref = "interceptorVersion" }
 
 
 
@@ -42,6 +52,8 @@ androidx-coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.2.0" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.1.0" }
+kotlin-kapt = { id = "kotlin-kapt" }
+
 
 

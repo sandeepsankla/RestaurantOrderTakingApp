@@ -2,6 +2,10 @@ package com.sample.restaurantordertakingapp.data.model
 
 
 data class MenuResponse(
+    val menu: Menu
+)
+
+data class Menu(
     val categories: List<Category>
 )
 
