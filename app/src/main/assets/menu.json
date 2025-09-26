@@ -8,16 +8,30 @@
           {
             "id": "i101",
             "name": "Spring Rolls",
-            "description": "Crispy vegetable spring rolls",
+            "description": "https://www.freepik.com/free-photo/chicken-skewers-with-slices-sweet-peppers-dill_7537147.htm#fromView=keyword&page=1&position=5&uuid=422e9260-ec5e-47cb-abb2-a7c2d22fcaf1&query=Food",
             "price": 120,
-            "imageUrl": "https://example.com/spring_rolls.jpg"
+            "imageUrl": "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg"
           },
           {
             "id": "i102",
             "name": "Chicken Wings",
             "description": "Spicy chicken wings",
             "price": 200,
-            "imageUrl": "https://example.com/chicken_wings.jpg"
+            "imageUrl": "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg"
+          },
+          {
+            "id": "i103",
+            "name": "kathi Rolls",
+            "description": "Crispy vegetable spring rolls served with sweet chili sauce",
+            "price": 120,
+            "imageUrl": "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg"
+          },
+          {
+            "id": "i104",
+            "name": "Chicken Roll",
+            "description": "Spicy chicken wings",
+            "price": 200,
+            "imageUrl": "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg"
           }
         ]
       },
@@ -28,9 +42,36 @@
           {
             "id": "i201",
             "name": "Butter Chicken",
-            "description": "Creamy tomato butter chicken",
+            "description": "Creamy tomato butter chicken with biryani rice",
             "price": 350,
-            "imageUrl": "https://example.com/butter_chicken.jpg"
+            "imageUrl": "https://example.com/images/butter_chicken.jpg"
+          },
+          {
+            "id": "i202",
+            "name": "Paneer Tikka Masala",
+            "description": "Grilled paneer cooked in rich spiced gravy",
+            "price": 320,
+            "imageUrl": "https://example.com/images/paneer_tikka.jpg"
+          }
+        ]
+      },
+      {
+        "id": "c3",
+        "name": "Desserts",
+        "items": [
+          {
+            "id": "i301",
+            "name": "Gulab Jamun",
+            "description": "Soft gulab jamuns in sugar syrup",
+            "price": 90,
+            "imageUrl": "https://example.com/images/gulab_jamun.jpg"
+          },
+          {
+            "id": "i302",
+            "name": "Ice Cream Sundae",
+            "description": "Vanilla ice cream with chocolate sauce and nuts",
+            "price": 150,
+            "imageUrl": "https://example.com/images/ice_cream_sundae.jpg"
           }
         ]
       }

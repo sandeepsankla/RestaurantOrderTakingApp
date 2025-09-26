@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                    //Greeting("sandeep", modifier = Modifier.padding(it))
                   //  MenuTabScreen(modifier = Modifier.padding(it))
-                    MenuScreen()
+                    MenuScreen(context = this.baseContext)
                 }
             }
         }
@@ -105,19 +105,21 @@ fun MenuTabScreen(modifier: Modifier) {
 }
 
 @Composable
-fun MenuItemCardSkeleton(menuItems: List<MenuItem>) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .padding(4.dp),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
-    ) {
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.Gray.copy(alpha = 0.2f))
-        )
-    }
+fun MenuItemCardSkeleton(menuItems: MenuItem) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .padding(4.dp),
+            shape = RoundedCornerShape(8.dp),
+            elevation = CardDefaults.cardElevation(4.dp)
+        ) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Gray.copy(alpha = 0.2f))
+            )
+            Text(menuItems.name)
+        }
+
 }
 

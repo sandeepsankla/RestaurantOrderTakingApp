@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Solid color for the shape's fill -->
+    <solid android:color="#FF4CAF50" /> <!-- Example: Green color -->
+
+    <!-- Stroke (border) for the shape -->
+    <stroke
+        android:width="2dp"
+        android:color="#FF388E3C" /> <!-- Example: Darker green border -->
+
+    <!-- Corners for rounding the rectangle -->
+    <corners android:radius="8dp" /> <!-- Example: 8dp radius for all corners -->
+
+    <!-- Optional: Padding for the content inside the shape -->
+    <padding
+        android:left="10dp"
+        android:top="10dp"
+        android:right="10dp"
+        android:bottom="10dp" />
+
+    <!-- Optional: Size of the shape (can also be defined in the layout) -->
+    <size
+        android:width="100dp"
+        android:height="50dp" />
+
+</shape>

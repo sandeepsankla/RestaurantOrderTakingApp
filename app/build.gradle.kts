@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.androidx.multidex)
     implementation(libs.okhttp)
     implementation(libs.okhttp.urlconnection)
+    implementation(libs.coil)
 
 
 
