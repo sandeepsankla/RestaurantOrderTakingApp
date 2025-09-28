@@ -6,4 +6,8 @@ data class MenuItem(
     val price: Double,
     val description: String?,
     val imageUrl: String?
-)
+){
+    fun getPrice():String{
+        return "₹$price"
+    }
+}

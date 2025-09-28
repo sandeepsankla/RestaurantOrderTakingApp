@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,11 +23,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -35,6 +39,7 @@ import com.sample.restaurantordertakingapp.data.model.Category
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.network.Resource
 import com.sample.restaurantordertakingapp.utils.NetworkImage
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -53,10 +58,7 @@ fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
         is Resource.Success -> {
             val items = (menuState as Resource.Success).data
             Log.d("sasa","$items")
-            MenuTabScreen(modifier = Modifier.padding(12.dp), categories = items.categories, onMenuItemClick = {
-                Log.d("sasa", "cclicked")
-                Toast.makeText(context, "clicked", Toast.LENGTH_SHORT).show()
-            })
+            MenuTabScreen(modifier = Modifier.padding(12.dp), categories = items.categories)
             // Suppose you also have category list stored or passed
             // For simplicity, group items by category name (if you stored category in MenuItem)
 
@@ -67,9 +69,14 @@ fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuTabScreen(modifier: Modifier, categories : List<Category>, onMenuItemClick : (MenuItem) -> Unit) {
+fun MenuTabScreen(modifier: Modifier, categories : List<Category>) {
     var selectedTab by remember { mutableStateOf(0) }
-
+    var showSheet by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true  // optionally avoid half expanded state
+    )
+    var selectedItem by remember { mutableStateOf<MenuItem?>(null) }
+    val scope = rememberCoroutineScope()
     Column(modifier = modifier.fillMaxSize()) {
         TabRow(selectedTabIndex = selectedTab) {
             categories.forEachIndexed { i, cat ->
@@ -95,9 +102,29 @@ fun MenuTabScreen(modifier: Modifier, categories : List<Category>, onMenuItemCli
             items(menuItems.size) { index ->
                 MenuItemCard(
                     menuItem = menuItems[index],
-                    onClick = { onMenuItemClick(menuItems[index]) }
+                    onClick = {
+                       showSheet = !showSheet
+                        selectedItem = menuItems[index]
+                        scope.launch {
+                            sheetState.show()
+
+                        }
+                    }
+
                 )
             }
+
+
+        }
+        if(showSheet && selectedItem != null){
+            MenuItemDetailScreen1(modifier = Modifier.fillMaxHeight(), menuItem = selectedItem!!, closeSheet = {
+                showSheet = !showSheet
+                scope.launch {
+                    sheetState.hide()
+                }
+            }, addToCart = {
+                // Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+            })
         }
     }
 }

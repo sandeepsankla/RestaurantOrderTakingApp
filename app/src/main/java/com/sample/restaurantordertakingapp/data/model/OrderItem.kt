@@ -1,10 +1,11 @@
 package com.sample.restaurantordertakingapp.data.model
 
 data class OrderItem(
-    val menuItemId: String,
+    val id: String,
     val quantity: Int,
-    val isHalf: Boolean = false,
+    val isFull: Boolean = true,
     val price: Double,
+    val amount: Double,
     val tableId: Int,
     val takeAway : Boolean = false
 )

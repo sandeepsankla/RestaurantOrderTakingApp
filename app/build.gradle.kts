@@ -79,6 +79,7 @@ dependencies {
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.retrofit2)
     implementation(libs.androidx.gson.converter)
+    //implementation(libs.material3)
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.nav)
     implementation(libs.androidx.dagger.hilt)
@@ -90,6 +91,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.okhttp.urlconnection)
     implementation(libs.coil)
+    implementation(libs.androidx.flowLayout)
 
 
 
