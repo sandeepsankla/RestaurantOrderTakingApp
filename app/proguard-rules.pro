@@ -21,3 +21,6 @@
 #-renamesourcefileattribute SourceFile
 -keep class com.sample.restaurantordertakingapp.RestaurantOrderApplication { *; }
 -keep class * extends dagger.hilt.internal.GeneratedComponentManager { *; }
+ -keepclassmembers class com.sample.restaurantordertakingapp.data.model.Menu {
+        <init>();
+    }

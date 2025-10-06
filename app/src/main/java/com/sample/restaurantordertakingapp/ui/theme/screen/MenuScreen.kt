@@ -2,7 +2,6 @@ package com.sample.restaurantordertakingapp.ui.theme.screen
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Card
@@ -25,7 +23,6 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -58,7 +55,7 @@ fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
         is Resource.Success -> {
             val items = (menuState as Resource.Success).data
             Log.d("sasa","$items")
-            MenuTabScreen(modifier = Modifier.padding(12.dp), categories = items.categories)
+            MenuTabScreen(modifier = Modifier.padding(12.dp), categories = items.categories, viewModel)
             // Suppose you also have category list stored or passed
             // For simplicity, group items by category name (if you stored category in MenuItem)
 
@@ -69,7 +66,7 @@ fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuTabScreen(modifier: Modifier, categories : List<Category>) {
+fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: MenuViewModel) {
     var selectedTab by remember { mutableStateOf(0) }
     var showSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(
@@ -122,7 +119,8 @@ fun MenuTabScreen(modifier: Modifier, categories : List<Category>) {
                 scope.launch {
                     sheetState.hide()
                 }
-            }, addToCart = {
+            }, addToCart = {cartItem ->
+                //viewModel.addToCart(cartItem)
                 // Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
             })
         }
@@ -142,7 +140,7 @@ fun MenuItemCard(menuItem: MenuItem, onClick: () -> Unit) {
             Spacer(Modifier.height(8.dp))
             Text(menuItem.name, style = MaterialTheme.typography.headlineSmall)
             Spacer(Modifier.height(4.dp))
-            Text("₹${menuItem.price}", style = MaterialTheme.typography.headlineSmall)
+            Text("₹${menuItem.getFormattedPrice()}", style = MaterialTheme.typography.headlineSmall)
 
         }
     }

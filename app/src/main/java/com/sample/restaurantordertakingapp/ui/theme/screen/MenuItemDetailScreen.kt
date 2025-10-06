@@ -1,26 +1,17 @@
 package com.sample.restaurantordertakingapp.ui.theme.screen
 
-import android.widget.RadioGroup
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
@@ -28,7 +19,6 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -36,27 +26,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.motionEventSpy
-import androidx.compose.ui.layout.ModifierLocalBeyondBoundsLayout
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowRow
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.data.model.OrderItem
 import com.sample.restaurantordertakingapp.utils.NetworkImage
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,7 +71,7 @@ fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : (
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    menuItem.getPrice(),
+                    menuItem.getFormattedPrice(),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -113,7 +99,6 @@ fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : (
                         }) {
                             Text("-", style = MaterialTheme.typography.bodyMedium)
                         }
-                       //Spacer(Modifier.width(16.dp))
                     }
                 }
             }
@@ -122,22 +107,21 @@ fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : (
             RadioButtonGroupWithBorder(onClick = {isFullSelected ->
                 isFull = isFullSelected
             })
-            Spacer(Modifier.height(50.dp))
-            var selected by remember { mutableStateOf<String?>(null) }
-            //var tableList = listOf<String>("Table 1", "Table 2", "Table 3", "Table 4", "Table 5")
+
+            var selectedTable by remember { mutableStateOf<String?>(null) }
             var tableList  = (1..6).map { "Table $it" }
-            TableChipsRow(tableList, selected ,{
-                selected = it
-            } )
+            TableChipsRow(tableList, selectedTable ,{
+                selectedTable = it
+            })
+            Spacer(Modifier.height(16.dp))
             Button(onClick = {
-                var cartItem = OrderItem(menuItem.id, quantity, isFull, menuItem.price, 1.0, 1)
+                val cartItem = OrderItem(id= menuItem.id, quantity =quantity, isFull, price = menuItem.price, selectedTable, takeAway = (selectedTable=="Takeaway") )
                 addToCart(cartItem)
             }, modifier = Modifier.fillMaxWidth()) {
                 Text("Add to Cart", style = MaterialTheme.typography.headlineSmall)
             }
         }
     }
-    // }
 }
 
 
@@ -254,8 +238,7 @@ fun MenuItemDetailScreen(
                     quantity = quantity,
                     isFull = isFull,
                     price = menuItem.price,
-                    amount = menuItem.price * quantity,
-                    tableId = 1
+                    table = "table"
                 )
                 addToCart(item)
             },
@@ -278,14 +261,19 @@ fun TableChipsRow(
     selectedTable: String?,
     onSelect: (String?) -> Unit
 ) {
-    // horizontal scrollable row of chips
+   /* // horizontal scrollable row of chips
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState())
             .padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
+    ) */
+    FlowRow(mainAxisSpacing = 8.dp,
+        crossAxisSpacing = 8.dp,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)) {
         // optional "None / Takeaway" chip
         FilterChip(
             selected = selectedTable == null,

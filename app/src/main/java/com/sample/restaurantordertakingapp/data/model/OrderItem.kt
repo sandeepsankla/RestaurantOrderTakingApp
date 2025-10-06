@@ -5,7 +5,12 @@ data class OrderItem(
     val quantity: Int,
     val isFull: Boolean = true,
     val price: Double,
-    val amount: Double,
-    val tableId: Int,
-    val takeAway : Boolean = false
-)
+    val table: String?,
+    val takeAway: Boolean = false
+){
+   fun getAmount(): Double{
+        return price * quantity
+    }
+}
+
+

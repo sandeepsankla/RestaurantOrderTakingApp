@@ -1,5 +1,6 @@
 package com.sample.restaurantordertakingapp.ui.theme.screen
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.restaurantordertakingapp.data.model.Menu
@@ -20,9 +21,12 @@ class MenuViewModel  @Inject constructor( private val repo: MenuRepository) :Vie
     private val _menuState = MutableStateFlow<Resource<Menu>>(Resource.Loading)
     val menuState: StateFlow<Resource<Menu>> = _menuState
 
+
+
     fun loadMenu() {
         viewModelScope.launch {
-            repo.fetchMenuFromJson().collect { _menuState.value = it }
+           // repo.uploadMenuJson(context)
+            repo.fetchMenusFromFireStore().collect { _menuState.value = it }
         }
     }
 
@@ -32,6 +36,12 @@ class MenuViewModel  @Inject constructor( private val repo: MenuRepository) :Vie
             repo.submitOrder(tableId, items).collect { result ->
                 // react to result: show success or error
             }
+        }
+    }
+
+    suspend fun addToCart(item: OrderItem) {
+        viewModelScope.launch {
+            repo.addToCart(item)
         }
     }
 }

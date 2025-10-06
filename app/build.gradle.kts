@@ -5,9 +5,11 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.gms)
+    alias (libs.plugins.android.room)
+    }
     //alias { libs.plugins.android.ksp }
     // kotlin("kapt") version libs.versions.kotlin.get()
-}
 
 android {
     namespace = "com.sample.restaurantordertakingapp"
@@ -39,6 +41,11 @@ android {
             )
         }
     }
+
+    room {
+        schemaDirectory("$projectDir/schemas")
+    }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -79,7 +86,8 @@ dependencies {
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.retrofit2)
     implementation(libs.androidx.gson.converter)
-    //implementation(libs.material3)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.firestore.ktx)
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.nav)
     implementation(libs.androidx.dagger.hilt)
@@ -92,6 +100,13 @@ dependencies {
     implementation(libs.okhttp.urlconnection)
     implementation(libs.coil)
     implementation(libs.androidx.flowLayout)
+    implementation(platform(libs.firebase.bom))
+    //implementation(libs.firebase.database)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.compiler)
+
+
 
 
 
