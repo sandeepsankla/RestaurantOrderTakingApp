@@ -43,6 +43,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.sample.restaurantordertakingapp.data.model.CartItem
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.data.model.OrderItem
+import com.sample.restaurantordertakingapp.ui.theme.component.common.QuantitySelector
 import com.sample.restaurantordertakingapp.utils.NetworkImage
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -79,29 +80,11 @@ fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : (
             }
             Spacer(Modifier.height(8.dp))
             Text("${menuItem.description}", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(horizontal = 8.dp, 16.dp))
-            Card ( shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp) // This applies 16dp padding on all sides
+            Card ( shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Quantity", style = MaterialTheme.typography.bodyMedium)
-                    Spacer(Modifier.height(8.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically,) {
-                        Button(
-                            shape = RoundedCornerShape(8.dp), onClick = {
-                                quantity += 1
-                            }) {
-                            Text("+", style = MaterialTheme.typography.bodyMedium)
-                        }
-                        Spacer(Modifier.width(16.dp))
-                        Text(" $quantity", style = MaterialTheme.typography.headlineMedium)
-                        Spacer(Modifier.width(18.dp))
-                        Button( shape = RoundedCornerShape(8.dp), onClick = {
-                            quantity -= 1
-                        }) {
-                            Text("-", style = MaterialTheme.typography.bodyMedium)
-                        }
-                    }
-                }
+                    QuantitySelector(quantity= quantity, onQuantityChange = {
+                        quantity = it
+                    }, showLabel = true, modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
             }
             var isFull by remember { mutableStateOf(true) }
             Spacer(Modifier.height(16.dp))

@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.outlined.Remove
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -90,7 +91,7 @@ fun QuantitySelector(
                 enabled = enabled && quantity > minQuantity
             ) {
                 Icon(
-                    imageVector = Icons.Default.ArrowDropDown,
+                    imageVector = Icons.Outlined.Remove,
                     contentDescription = "Decrease quantity",
                     tint = if (enabled && quantity > minQuantity) {
                         MaterialTheme.colorScheme.primary
