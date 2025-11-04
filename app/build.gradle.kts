@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.gms)
     alias (libs.plugins.android.room)
+    alias (libs.plugins.kotlin.ksp)
     }
     //alias { libs.plugins.android.ksp }
     // kotlin("kapt") version libs.versions.kotlin.get()
@@ -101,10 +102,10 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.androidx.flowLayout)
     implementation(platform(libs.firebase.bom))
-    //implementation(libs.firebase.database)
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.compiler)
+    implementation(libs.androidx.compose.material)
+    ksp(libs.androidx.room.compiler)
 
 
 

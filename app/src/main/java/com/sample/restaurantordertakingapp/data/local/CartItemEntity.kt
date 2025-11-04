@@ -2,6 +2,7 @@ package com.sample.restaurantordertakingapp.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.sample.restaurantordertakingapp.data.model.CartItem
 
 
 @Entity(tableName = "cart_items")
@@ -10,9 +11,9 @@ data class CartItemEntity(
     val menuItemId: String,
     val name: String,
     val price: Int,
-    val quantity: Int,
+    val quantity: Int ,
     val isFull: Boolean,
-    val imageUrl: String,
+    val imageUrl: String? = null,
     val table:String? = null,
     val takeAway: Boolean = false,
 )

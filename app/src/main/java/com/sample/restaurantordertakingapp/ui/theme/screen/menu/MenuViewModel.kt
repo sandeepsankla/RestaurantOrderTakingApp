@@ -1,11 +1,11 @@
-package com.sample.restaurantordertakingapp.ui.theme.screen
+package com.sample.restaurantordertakingapp.ui.theme.screen.menu
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sample.restaurantordertakingapp.data.model.CartItem
 import com.sample.restaurantordertakingapp.data.model.Menu
-import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.data.model.OrderItem
+import com.sample.restaurantordertakingapp.data.repository.CartRepository
 import com.sample.restaurantordertakingapp.data.repository.MenuRepository
 import com.sample.restaurantordertakingapp.network.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MenuViewModel  @Inject constructor( private val repo: MenuRepository) :ViewModel() {
+class MenuViewModel  @Inject constructor( private val repo: MenuRepository,  private val cartRepo: CartRepository) :ViewModel() {
 
     private val _menuState = MutableStateFlow<Resource<Menu>>(Resource.Loading)
     val menuState: StateFlow<Resource<Menu>> = _menuState
@@ -39,9 +39,9 @@ class MenuViewModel  @Inject constructor( private val repo: MenuRepository) :Vie
         }
     }
 
-    suspend fun addToCart(item: OrderItem) {
+    suspend fun addToCart(item: CartItem) {
         viewModelScope.launch {
-            repo.addToCart(item)
+          cartRepo.addToCart(item)
         }
     }
 }

@@ -5,41 +5,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
-import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.sample.restaurantordertakingapp.data.model.Category
-import com.sample.restaurantordertakingapp.data.model.MenuItem
-import com.sample.restaurantordertakingapp.ui.theme.screen.MenuScreen
+import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuScreen
 import com.sample.restaurantordertakingapp.ui.theme.theme.RestaurantOrderTakingAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -53,13 +22,14 @@ class MainActivity : ComponentActivity() {
             RestaurantOrderTakingAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
                    //Greeting("sandeep", modifier = Modifier.padding(it))
-                  //  MenuTabScreen(modifier = Modifier.padding(it))
+                   // MenuTabScreen(modifier = Modifier.padding(it))
                     MenuScreen(context = this.baseContext)
                 }
             }
         }
     }
 }
+/*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -111,3 +81,84 @@ fun MenuItemCardSkeleton(menuItems: MenuItem) {
 
 }
 
+*/
+
+
+/*
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+
+    // Determine title dynamically
+    val currentTitle = when {
+        currentRoute == Screen.Menu.route -> Screen.Menu.title
+        currentRoute == Screen.Cart.route -> Screen.Cart.title
+        currentRoute?.startsWith("detail/") == true -> Screen.Detail.title
+        else -> "App"
+    }
+
+    // Get cart count from ViewModel
+    val cartViewModel: CartViewModel = hiltViewModel()
+    val cartItems by cartViewModel.cartItems.collectAsState()
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(currentTitle) },
+                actions = {
+                    BadgedBox(
+                        badge = {
+                            if (cartItems.isNotEmpty()) {
+                                Badge { Text(cartItems.size.toString()) }
+                            }
+                        }
+                    ) {
+                        IconButton(onClick = {
+                            // navigate to cart only if not already there
+                            if (currentRoute != Screen.Cart.route) {
+                                navController.navigate(Screen.Cart.route)
+                            }
+                        }) {
+                            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
+                        }
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Menu.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(Screen.Menu.route) {
+                MenuScreen(
+                    onItemClick = { menuItem ->
+                        navController.navigate("detail/${menuItem.id}")
+                    }
+                )
+            }
+            composable(Screen.Cart.route) {
+                CartScreen(
+                    onBack = { navController.popBackStack() }
+                )
+            }
+            composable(
+                route = Screen.Detail.route,
+                arguments = listOf(navArgument("itemId") { type = NavType.StringType })
+            ) { backEntry ->
+                val itemId = backEntry.arguments?.getString("itemId") ?: ""
+                DetailScreen(
+                    itemId = itemId,
+                    onAddToCart = { menuItem, qty, isFull ->
+                        cartViewModel.addToCart(menuItem, qty, isFull)
+                    },
+                    onBack = { navController.popBackStack() }
+                )
+            }
+        }
+    }
+}*/

@@ -6,6 +6,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import com.google.gson.Gson
 import com.sample.restaurantordertakingapp.data.api.ApiService
+import com.sample.restaurantordertakingapp.data.model.CartItem
 import com.sample.restaurantordertakingapp.data.model.Menu
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.data.model.MenuResponse
@@ -97,7 +98,7 @@ class MenuRepository @Inject constructor(private val api: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    suspend fun addToCart(item: OrderItem) {
+    suspend fun addToCart(item: CartItem) {
 
     }
 
@@ -135,7 +136,6 @@ class MenuRepository @Inject constructor(private val api: ApiService) {
             .addOnSuccessListener { Log.d("sasa", "Menu uploaded to Firestore") }
             .addOnFailureListener { e -> Log.e("sasa", "Failed to upload", e) }
     }
-
 
 
 }

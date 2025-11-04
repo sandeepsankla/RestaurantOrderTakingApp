@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 
 @Dao
-interface CartItemDao {
+interface CartDao {
     @Insert
     suspend fun insert(item: CartItemEntity)
 

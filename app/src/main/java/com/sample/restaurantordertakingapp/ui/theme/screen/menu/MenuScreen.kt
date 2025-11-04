@@ -1,4 +1,4 @@
-package com.sample.restaurantordertakingapp.ui.theme.screen
+package com.sample.restaurantordertakingapp.ui.theme.screen.menu
 
 import android.content.Context
 import android.util.Log
@@ -23,6 +23,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,14 +36,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.sample.restaurantordertakingapp.data.model.Category
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.network.Resource
+import com.sample.restaurantordertakingapp.ui.theme.screen.menu_details.MenuItemDetailScreen1
 import com.sample.restaurantordertakingapp.utils.NetworkImage
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
-
-    viewModel.loadMenu()
+    LaunchedEffect(Unit){
+        viewModel.loadMenu()
+    }
     val menuState by viewModel.menuState.collectAsState()
     when (menuState) {
         is Resource.Loading -> {
@@ -114,15 +117,21 @@ fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: Men
 
         }
         if(showSheet && selectedItem != null){
-            MenuItemDetailScreen1(modifier = Modifier.fillMaxHeight(), menuItem = selectedItem!!, closeSheet = {
-                showSheet = !showSheet
-                scope.launch {
-                    sheetState.hide()
-                }
-            }, addToCart = {cartItem ->
-                //viewModel.addToCart(cartItem)
-                // Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
-            })
+            MenuItemDetailScreen1(
+                modifier = Modifier.fillMaxHeight(),
+                menuItem = selectedItem!!,
+                closeSheet = {
+                    showSheet = !showSheet
+                    scope.launch {
+                        sheetState.hide()
+                    }
+                },
+                addToCart = { cartItem ->
+                    scope.launch {
+                        viewModel.addToCart(cartItem)
+                    }
+                    // Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+                })
         }
     }
 }
@@ -140,8 +149,29 @@ fun MenuItemCard(menuItem: MenuItem, onClick: () -> Unit) {
             Spacer(Modifier.height(8.dp))
             Text(menuItem.name, style = MaterialTheme.typography.headlineSmall)
             Spacer(Modifier.height(4.dp))
-            Text("₹${menuItem.getFormattedPrice()}", style = MaterialTheme.typography.headlineSmall)
+            Text(menuItem.getFormattedPrice(), style = MaterialTheme.typography.headlineSmall)
 
         }
     }
 }
+
+/*@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MyAppTopBar(
+    title: String,
+    onCartClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    cartIcon: ImageVector = Icons.Default.ShoppingCart
+) {
+    TopAppBar(
+        title = {
+            Text(text = title, maxLines = 1)
+        },
+        actions = {
+            IconButton(onClick = onCartClick) {
+                Icon(imageVector = cartIcon, contentDescription = "Cart")
+            }
+        },
+        modifier = modifier
+    )
+}*/

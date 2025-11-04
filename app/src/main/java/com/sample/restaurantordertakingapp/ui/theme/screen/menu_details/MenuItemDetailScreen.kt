@@ -1,4 +1,4 @@
-package com.sample.restaurantordertakingapp.ui.theme.screen
+package com.sample.restaurantordertakingapp.ui.theme.screen.menu_details
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
@@ -40,13 +40,14 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
+import com.sample.restaurantordertakingapp.data.model.CartItem
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.data.model.OrderItem
 import com.sample.restaurantordertakingapp.utils.NetworkImage
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : () -> Unit, addToCart : (OrderItem) -> Unit) {
+fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : () -> Unit, addToCart : (CartItem) -> Unit) {
     ModalBottomSheet(onDismissRequest = {
         closeSheet()
     }) {
@@ -115,9 +116,9 @@ fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : (
             })
             Spacer(Modifier.height(16.dp))
             Button(onClick = {
-                val cartItem = OrderItem(id= menuItem.id, quantity =quantity, isFull, price = menuItem.price, selectedTable, takeAway = (selectedTable=="Takeaway") )
+                val cartItem = CartItem(id= menuItem.id, name   =menuItem.name, quantity =quantity, isFull =  isFull, price = menuItem.price, table = selectedTable, imageUrl = menuItem.imageUrl, takeAway = (selectedTable=="Takeaway") )
                 addToCart(cartItem)
-            }, modifier = Modifier.fillMaxWidth()) {
+            }, modifier = Modifier.fillMaxWidth().align(Alignment.End)) {
                 Text("Add to Cart", style = MaterialTheme.typography.headlineSmall)
             }
         }
@@ -269,11 +270,11 @@ fun TableChipsRow(
             .padding(horizontal = 12.dp, vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) */
-    FlowRow(mainAxisSpacing = 8.dp,
-        crossAxisSpacing = 8.dp,
+    FlowRow(mainAxisSpacing = 4.dp,
+        crossAxisSpacing = 4.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)) {
+            .padding(top = 8.dp)) {
         // optional "None / Takeaway" chip
         FilterChip(
             selected = selectedTable == null,

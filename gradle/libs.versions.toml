@@ -18,11 +18,10 @@ interceptorVersion = "4.2.0"
 multidexVersion = "2.0.1"
 coilVersion = "2.0.0"
 flowLayoutVersion = "0.36.0"
-firebseVersion = "20.2.0"
-firebaseCommonKtx = "22.0.1"
 firebaseBomVersion = "34.3.0"
-firebaseFirestoreKtx = "26.0.1"
-roomVersion = "2.8.1"
+roomVersion = "2.6.1"
+kspVersion = "2.0.21-1.0.27"
+materialIconVersion  = "1.5.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -61,18 +60,18 @@ firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-fires
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
-
-
+androidx-compose-material = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "materialIconVersion" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version = "2.1.0" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
 kotlin-kapt = { id = "kotlin-kapt" }
 google-gms  =  {id = "com.google.gms.google-services", version = "4.4.3"}
 android-room  =  {id = "androidx.room", version.ref = "roomVersion"}
+kotlin-ksp  =  {id = "com.google.devtools.ksp", version.ref = "kspVersion"}
 
 
 
