@@ -42,6 +42,7 @@ import com.sample.restaurantordertakingapp.data.model.Category
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.network.Resource
 import com.sample.restaurantordertakingapp.ui.theme.component.common.AppBarWithCartBadge
+import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu_details.MenuItemDetailScreen1
 import com.sample.restaurantordertakingapp.utils.NetworkImage
 import kotlinx.coroutines.launch
@@ -79,7 +80,7 @@ fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
 fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: MenuViewModel) {
     var selectedTab by remember { mutableIntStateOf(0) }
     var showSheet by remember { mutableStateOf(false) }
-    var cartCount by remember { mutableIntStateOf(0) } // todo sandeep replace with your ViewModel state
+    var cartCount by remember { mutableIntStateOf(2) } // todo sandeep replace with your ViewModel state
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true  // optionally avoid half expanded state
     )
@@ -91,7 +92,7 @@ fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: Men
             AppBarWithCartBadge(
                 appName = "My Restaurant",
                 cartCount = cartCount,
-                onCartClick = { /* Navigate to cart screen */ }
+                onCartClick = { CartScreen() }
             )
         }
     ){innerPadding ->
