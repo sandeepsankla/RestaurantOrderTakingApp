@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.sample.restaurantordertakingapp.data.model.CartItem
+import com.sample.restaurantordertakingapp.data.model.CartState
 import com.sample.restaurantordertakingapp.ui.theme.component.common.QuantitySelector
 
 

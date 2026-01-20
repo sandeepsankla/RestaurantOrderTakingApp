@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.google.gms)
     alias (libs.plugins.android.room)
     alias (libs.plugins.kotlin.ksp)
+    alias (libs.plugins.kotlin.parcelize)
     }
     //alias { libs.plugins.android.ksp }
     // kotlin("kapt") version libs.versions.kotlin.get()

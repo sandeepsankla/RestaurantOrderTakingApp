@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -26,11 +25,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +48,7 @@ import com.sample.restaurantordertakingapp.data.model.OrderItem
 import com.sample.restaurantordertakingapp.ui.theme.component.common.QuantitySelector
 import com.sample.restaurantordertakingapp.utils.NetworkImage
 
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : () -> Unit, addToCart : (CartItem) -> Unit) {
@@ -106,6 +109,131 @@ fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : (
             }
         }
     }
+}
+*/
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MenuItemDetailScreen1(
+    modifier: Modifier = Modifier,
+    menuItem: MenuItem,
+    closeSheet: () -> Unit,
+    addToCart: @Composable (CartItem) -> Unit
+) {
+
+    val scope = rememberCoroutineScope()
+    val sheetState = rememberModalBottomSheetState()
+
+
+    var quantity by remember { mutableIntStateOf(1) }
+    var isFull by remember { mutableStateOf(true) }
+    var selectedTable by remember { mutableStateOf<String?>(null) }
+    val tableList = (1..6).map { "Table $it" }
+
+    ModalBottomSheet(
+        onDismissRequest = closeSheet,
+        sheetState = sheetState,
+        modifier = modifier
+    ){
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp)
+        ) {
+            NetworkImage(
+                menuItem.imageUrl,
+                menuItem.name,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(2f)
+                    .clip(RoundedCornerShape(8.dp))
+            )
+
+            Spacer(Modifier.height(16.dp))
+
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    menuItem.name,
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    menuItem.getFormattedPrice(),
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Spacer(Modifier.height(8.dp))
+
+            // fixed padding call
+            menuItem.description?.let {
+                Text(
+                    text = it,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 16.dp)
+                )
+            }
+
+            Card(
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                QuantitySelector(
+                    quantity = quantity,
+                    onQuantityChange = { quantity = it },
+                    showLabel = true,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                )
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+            RadioButtonGroupWithBorder(onClick = { isFull = it })
+
+            Spacer(Modifier.height(12.dp))
+
+            TableChipsRow(tableList, selectedTable) { selectedTable = it }
+
+            Spacer(Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                Button(onClick = {
+                    val cartItem = CartItem(
+                        id = menuItem.id,
+                        name = menuItem.name,
+                        quantity = quantity,
+                        isFull = isFull,
+                        price = menuItem.price,
+                        table = selectedTable,
+                        imageUrl = menuItem.imageUrl,
+                        takeAway = (selectedTable == "Takeaway")
+                    )
+                    //todo sndp
+                  ///  addToCart(cartItem)
+                }) {
+                    Text("Add to Cart", style = MaterialTheme.typography.labelLarge)
+                }
+            }
+
+            Spacer(Modifier.height(12.dp))
+
+            // optional: a small dismiss button
+            TextButton(onClick = { closeSheet() }, modifier = Modifier.align(Alignment.End)) {
+                Text("Close")
+            }
+        }
+    }
+    // Make content scrollable just in case sheet height is limited
+
 }
 
 

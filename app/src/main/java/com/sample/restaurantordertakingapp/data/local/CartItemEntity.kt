@@ -10,7 +10,7 @@ data class CartItemEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val menuItemId: String,
     val name: String,
-    val price: Int,
+    val price: Int,   // unit price
     val quantity: Int ,
     val isFull: Boolean,
     val imageUrl: String? = null,

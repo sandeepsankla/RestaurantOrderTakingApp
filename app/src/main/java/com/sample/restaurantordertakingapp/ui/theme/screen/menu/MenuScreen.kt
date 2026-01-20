@@ -1,25 +1,19 @@
 package com.sample.restaurantordertakingapp.ui.theme.screen.menu
 
+import MenuTabScreen11
 import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -34,7 +28,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,14 +35,16 @@ import com.sample.restaurantordertakingapp.data.model.Category
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.network.Resource
 import com.sample.restaurantordertakingapp.ui.theme.component.common.AppBarWithCartBadge
-import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartScreen
+import com.sample.restaurantordertakingapp.ui.theme.component.menu.MenuItemCard
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu_details.MenuItemDetailScreen1
-import com.sample.restaurantordertakingapp.utils.NetworkImage
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
+fun MenuScreen(  onCartClick: () -> Unit,
+                onItemClick: (MenuItem) -> Unit ) {
+    val viewModel: MenuViewModel = hiltViewModel()
     LaunchedEffect(Unit){
         viewModel.loadMenu()
     }
@@ -65,22 +60,26 @@ fun MenuScreen(context: Context, viewModel: MenuViewModel = hiltViewModel()) {
         is Resource.Success -> {
             val items = (menuState as Resource.Success).data
             Log.d("sasa","$items")
-            MenuTabScreen(modifier = Modifier.padding(12.dp), categories = items.categories, viewModel)
-            // Suppose you also have category list stored or passed
-            // For simplicity, group items by category name (if you stored category in MenuItem)
-
+            MenuTabScreen11(modifier = Modifier.padding(12.dp),
+                categories = items.categories,
+                viewModel,
+                onCartClick =  onCartClick,
+                onMenuItemClick = {
+                    onItemClick(it)
+                }
+            )
         }
     }
 }
 
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+/*@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: MenuViewModel) {
     var selectedTab by remember { mutableIntStateOf(0) }
     var showSheet by remember { mutableStateOf(false) }
-    var cartCount by remember { mutableIntStateOf(2) } // todo sandeep replace with your ViewModel state
+    var cartCount by remember { mutableIntStateOf(5) } // todo sandeep replace with your ViewModel state
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true  // optionally avoid half expanded state
     )
@@ -90,9 +89,10 @@ fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: Men
     Scaffold(
         topBar = {
             AppBarWithCartBadge(
-                appName = "My Restaurant",
+                appName = "Tandoori Tadka House",
                 cartCount = cartCount,
-                onCartClick = { CartScreen() }
+                onCartClick =  { }
+
             )
         }
     ){innerPadding ->
@@ -110,12 +110,12 @@ fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: Men
 
                 // The grid of items for the selected category
                 val menuItems =
-                    if (categories.isNotEmpty()) categories[selectedTab].items else emptyList()
+                    if (categories.isNotEmpty()) categories[selectedTab].items
+                    else emptyList()
                 Spacer(modifier = Modifier.height(8.dp))
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(horizontal = 2.dp, vertical = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -150,50 +150,16 @@ fun MenuTabScreen(modifier: Modifier, categories: List<Category>, viewModel: Men
                         addToCart = { cartItem ->
                             scope.launch {
                                 viewModel.addToCart(cartItem)
+                                delay(1000)
+                                showSheet = !showSheet
+                                sheetState.hide()
+                               // Toast.makeText(, "Item added to cart", Toast.LENGTH_SHORT).show()
                             }
-                            // Toast.makeText(context, "Item added to cart", Toast.LENGTH_SHORT).show()
+                            //
                         })
                 }
             }
         }
-}
-@Composable
-fun MenuItemCard(menuItem: MenuItem, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
-            .clickable { onClick() }
-    ) {
-        Column(modifier = Modifier.padding(8.dp)) {
-            // Placeholder image
-            NetworkImage(menuItem.imageUrl, menuItem.name, modifier = Modifier.fillMaxWidth().height(80.dp))
-            Spacer(Modifier.height(8.dp))
-            Text(menuItem.name, style = MaterialTheme.typography.headlineSmall)
-            Spacer(Modifier.height(4.dp))
-            Text(menuItem.getFormattedPrice(), style = MaterialTheme.typography.headlineSmall)
-
-        }
-    }
-}
-
-/*@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyAppTopBar(
-    title: String,
-    onCartClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    cartIcon: ImageVector = Icons.Default.ShoppingCart
-) {
-    TopAppBar(
-        title = {
-            Text(text = title, maxLines = 1)
-        },
-        actions = {
-            IconButton(onClick = onCartClick) {
-                Icon(imageVector = cartIcon, contentDescription = "Cart")
-            }
-        },
-        modifier = modifier
-    )
 }*/
+
+

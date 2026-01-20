@@ -69,6 +69,7 @@ android-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersi
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
 kotlin-kapt = { id = "kotlin-kapt" }
+kotlin-parcelize = { id = "kotlin-parcelize" }
 google-gms  =  {id = "com.google.gms.google-services", version = "4.4.3"}
 android-room  =  {id = "androidx.room", version.ref = "roomVersion"}
 kotlin-ksp  =  {id = "com.google.devtools.ksp", version.ref = "kspVersion"}
