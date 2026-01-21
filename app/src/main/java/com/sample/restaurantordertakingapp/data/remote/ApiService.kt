@@ -1,4 +1,4 @@
-package com.sample.restaurantordertakingapp.data.api
+package com.sample.restaurantordertakingapp.data.remote
 
 import com.sample.restaurantordertakingapp.data.model.MenuResponse
 import com.sample.restaurantordertakingapp.data.model.OrderRequest

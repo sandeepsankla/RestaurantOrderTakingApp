@@ -1,7 +1,7 @@
 package com.sample.restaurantordertakingapp.utils
 
-import com.sample.restaurantordertakingapp.data.local.CartItemEntity
-import com.sample.restaurantordertakingapp.data.model.CartItem
+import com.sample.restaurantordertakingapp.data.local.enttity.CartItemEntity
+import com.sample.restaurantordertakingapp.domain.model.CartItem
 
 
 
@@ -15,7 +15,8 @@ import com.sample.restaurantordertakingapp.data.model.CartItem
             quantity = this.quantity,
             isFull = this.isFull,
             table = this.table,
-            takeAway = this.takeAway
+            takeAway = this.takeAway,
+            halfPrice = this.hashCode()
         )
     }
 

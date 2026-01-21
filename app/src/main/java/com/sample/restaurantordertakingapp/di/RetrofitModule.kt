@@ -1,7 +1,7 @@
 package com.sample.restaurantordertakingapp.di
 
 import android.content.Context
-import com.sample.restaurantordertakingapp.data.api.ApiService
+import com.sample.restaurantordertakingapp.data.remote.ApiService
 import com.sample.restaurantordertakingapp.network.LocalJsonInterceptor
 import dagger.Module
 import dagger.Provides
@@ -9,7 +9,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

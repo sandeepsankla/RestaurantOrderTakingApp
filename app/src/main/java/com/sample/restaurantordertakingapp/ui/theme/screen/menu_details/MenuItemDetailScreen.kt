@@ -42,7 +42,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import com.sample.restaurantordertakingapp.data.model.CartItem
+import com.sample.restaurantordertakingapp.domain.model.CartItem
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.data.model.OrderItem
 import com.sample.restaurantordertakingapp.ui.theme.component.common.QuantitySelector

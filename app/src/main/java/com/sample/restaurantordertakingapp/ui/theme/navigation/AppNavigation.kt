@@ -41,7 +41,7 @@ fun AppNavigation() {
     }
 
     // expose count; adapt type if your VM emits List -> size
-    val cartCount by cartViewModel.cartItems.collectAsStateWithLifecycle() // Int expected
+    val cartCount by cartViewModel.cartCount.collectAsStateWithLifecycle() // Int expected
 
     Scaffold(
         topBar = {
@@ -81,7 +81,6 @@ fun AppNavigation() {
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Menu.route) {
-                val scope = rememberCoroutineScope()
 
                 MenuScreen(
                     onCartClick = { navController.navigateSingleTop(Screen.Cart.route) },
@@ -106,7 +105,6 @@ fun AppNavigation() {
                     ?.savedStateHandle
                     ?.get<MenuItem>(KEY_MENU_ITEM)
 
-                val scope = rememberCoroutineScope()
 
                 if (menuItem != null) {
                     MenuItemDetailScreen1(
@@ -114,7 +112,7 @@ fun AppNavigation() {
                         menuItem = menuItem,
                         addToCart = { cartItem ->
                             // call suspend through VM scope; no LaunchedEffect needed
-                            scope.launch { cartViewModel.addToCart(cartItem) }
+                             cartViewModel.addToCart(cartItem)
                         },
                         closeSheet = { navController.popBackStack() }
                     )

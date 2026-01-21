@@ -3,7 +3,7 @@ package com.sample.restaurantordertakingapp.di
 import android.content.Context
 import androidx.room.Room
 import com.sample.restaurantordertakingapp.data.local.AppDatabase
-import com.sample.restaurantordertakingapp.data.local.CartDao
+import com.sample.restaurantordertakingapp.data.local.dao.CartDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

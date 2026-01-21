@@ -1,20 +1,16 @@
-package com.sample.restaurantordertakingapp.data.model
-
-import com.sample.restaurantordertakingapp.data.local.CartItemEntity
+package com.sample.restaurantordertakingapp.domain.model
 
 
 data class CartItem(
     val id: String,
     val imageUrl : String?,
     val quantity: Int,
-    val isFull: Boolean = true,
-    val price: Double,
-    val table: String?,
-    val takeAway: Boolean = false,
-    val name :String
-){
-
-}
+    val portion: PortionType,
+    val halfPrice: Int,
+    val fullPrice: Int,
+    val tableId: String?,
+    val name :String,
+)
 
 data class CartState(
     val items: List<CartItem> = emptyList(),

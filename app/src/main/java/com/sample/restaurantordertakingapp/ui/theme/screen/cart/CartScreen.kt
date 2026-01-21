@@ -18,7 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.*
-import com.sample.restaurantordertakingapp.data.model.CartState
+import com.sample.restaurantordertakingapp.domain.model.CartState
 import com.sample.restaurantordertakingapp.ui.theme.component.cart.CartItemRow
 import com.sample.restaurantordertakingapp.ui.theme.component.cart.PricingSummarySection
 import com.sample.restaurantordertakingapp.ui.theme.component.cart.TakeawayAddressSection

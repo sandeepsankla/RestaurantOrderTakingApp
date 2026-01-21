@@ -1,20 +1,21 @@
 package com.sample.restaurantordertakingapp.utils
 
-import com.sample.restaurantordertakingapp.data.model.CartItem
-import com.sample.restaurantordertakingapp.data.model.CartState
+import com.sample.restaurantordertakingapp.domain.model.CartItem
+import com.sample.restaurantordertakingapp.domain.model.CartState
 
 // Utils/CartUtils.kt
-fun createSampleCartState(): CartState {
+/*fun createSampleCartState(): CartState {
     val items = listOf(
         CartItem(
             id = "1",
             name = "Margherita Pizza",
-            price = 12.00,
+            price = 120.00,
             quantity = 1,
             table = "Table 1",
             imageUrl = "",
             isFull = true,
-            takeAway = true
+            takeAway = true,
+            halfPrice = 80
 
 
             // Add more items as needed
@@ -27,7 +28,8 @@ fun createSampleCartState(): CartState {
              table = "Table 2",
             imageUrl = "",
             isFull = true,
-            takeAway = true
+            takeAway = true,
+            halfPrice = 80
         )
     )
 
@@ -73,4 +75,4 @@ fun removeItemFromCart(cartState: CartState, itemId: String): CartState {
         tax = tax,
         total = total
     )
-}
+}*/

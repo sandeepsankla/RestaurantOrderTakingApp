@@ -1,6 +1,6 @@
 package com.sample.restaurantordertakingapp.ui.theme.screen.menu
 
-import MenuTabScreen11
+import MenuTabScreen
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -23,31 +23,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sample.restaurantordertakingapp.data.model.Category
 import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.network.Resource
-import com.sample.restaurantordertakingapp.ui.theme.component.common.AppBarWithCartBadge
-import com.sample.restaurantordertakingapp.ui.theme.component.menu.MenuItemCard
-import com.sample.restaurantordertakingapp.ui.theme.screen.menu_details.MenuItemDetailScreen1
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+
 
 
 @Composable
 fun MenuScreen(  onCartClick: () -> Unit,
                 onItemClick: (MenuItem) -> Unit ) {
     val viewModel: MenuViewModel = hiltViewModel()
-    LaunchedEffect(Unit){
+   /* LaunchedEffect(Unit){
         viewModel.loadMenu()
-    }
+    }*//**/
     val menuState by viewModel.menuState.collectAsState()
     when (menuState) {
         is Resource.Loading -> {
@@ -60,13 +49,10 @@ fun MenuScreen(  onCartClick: () -> Unit,
         is Resource.Success -> {
             val items = (menuState as Resource.Success).data
             Log.d("sasa","$items")
-            MenuTabScreen11(modifier = Modifier.padding(12.dp),
+            MenuTabScreen(
                 categories = items.categories,
-                viewModel,
-                onCartClick =  onCartClick,
-                onMenuItemClick = {
-                    onItemClick(it)
-                }
+                onItemClick = onItemClick,
+                onAddToCart = { viewModel.addToCart(it) },
             )
         }
     }
