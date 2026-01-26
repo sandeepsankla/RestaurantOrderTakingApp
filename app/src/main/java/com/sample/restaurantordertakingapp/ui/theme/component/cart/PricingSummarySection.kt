@@ -21,74 +21,18 @@ import com.sample.restaurantordertakingapp.domain.model.CartState
 // Components/PricingSummarySection.kt
 @Composable
 fun PricingSummarySection(
-    cartState: CartState //,
-    //onProceedToCheckout: () -> Unit
+    subtotal: Double,
+    tax: Double,
+    total: Double
 ) {
-    var proceedChecked by remember { mutableStateOf(false) }
-
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Text(
-            text = "Pricing Summary",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        // Subtotal
-        PriceRow("Subtotal", cartState.subtotal)
-
-        // GST
-        PriceRow("GST (5%)", cartState.tax)
-
-        // Divider
-        Divider(
-            color = Color.Gray,
-            thickness = 1.dp,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-
-        // Total
-        PriceRow(
-            label = "Total",
-            amount = cartState.total,
-            isTotal = true
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Proceed to Checkout Checkbox
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp)
-        ) {
-            Checkbox(
-                checked = proceedChecked,
-                onCheckedChange = { proceedChecked = it },
-                colors = CheckboxDefaults.colors(
-                    checkedColor = MaterialTheme.colorScheme.primary
-                )
-            )
-
-            Text(
-                text = "Proceed to Checkout",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = 8.dp)
-            )
-        }
-
-        Text(
-            text = "Secure checkout. No charges until order is confirmed.",
-            style = MaterialTheme.typography.bodySmall,
-            color = Color.Gray,
-            modifier = Modifier.padding(start = 40.dp, top = 4.dp)
-        )
+    Column(modifier = Modifier.padding(16.dp)) {
+        PriceRow("Subtotal", subtotal)
+        PriceRow("GST (5%)", tax)
+        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        PriceRow("Total", total, isTotal = true)
     }
 }
+
 
 @Composable
 fun PriceRow(

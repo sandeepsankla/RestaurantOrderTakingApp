@@ -1,6 +1,5 @@
 package com.sample.restaurantordertakingapp.data.remote
 
-import com.sample.restaurantordertakingapp.data.model.MenuResponse
 import com.sample.restaurantordertakingapp.data.model.OrderRequest
 import com.sample.restaurantordertakingapp.data.model.OrderResponse
 import com.sample.restaurantordertakingapp.data.model.OrderStatus
@@ -13,11 +12,11 @@ interface ApiService {
 
 
 
-    @GET("menu.json")
+   /* @GET("menu.json")
     suspend fun getMenuResponse(): MenuResponse
     @GET("menu")
     fun getMenu(): Flow<Resource<MenuResponse>>
-
+*/
     @POST("orders")
     fun placeOrder(@Body orderRequest: OrderRequest): Flow<Resource<OrderResponse>>
 

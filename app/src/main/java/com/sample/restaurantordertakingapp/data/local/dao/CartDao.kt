@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sample.restaurantordertakingapp.data.local.enttity.CartItemEntity
+import com.sample.restaurantordertakingapp.data.local.entity.CartItemEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,11 +20,11 @@ interface CartDao {
 
     // 🔹 Update quantity (called from ViewModel)
     @Query("UPDATE cart_items SET quantity = :quantity WHERE id = :itemId")
-    suspend fun updateQuantity(itemId: String, quantity: Int)
+    suspend fun updateQuantity(itemId: Int, quantity: Int)
 
     // 🔹 Remove single item
     @Query("DELETE FROM cart_items WHERE id = :itemId")
-    suspend fun deleteById(itemId: String)
+    suspend fun delete(itemId: Int)
 
     // 🔹 Optional: Clear cart (checkout / cancel)
     @Query("DELETE FROM cart_items")

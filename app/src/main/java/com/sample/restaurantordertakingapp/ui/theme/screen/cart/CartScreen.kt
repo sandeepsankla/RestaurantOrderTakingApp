@@ -4,78 +4,105 @@ import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.*
-import com.sample.restaurantordertakingapp.domain.model.CartState
 import com.sample.restaurantordertakingapp.ui.theme.component.cart.CartItemRow
 import com.sample.restaurantordertakingapp.ui.theme.component.cart.PricingSummarySection
 import com.sample.restaurantordertakingapp.ui.theme.component.cart.TakeawayAddressSection
-import com.sample.restaurantordertakingapp.utils.createSampleCartState
-import com.sample.restaurantordertakingapp.utils.removeItemFromCart
-import com.sample.restaurantordertakingapp.utils.updateCartQuantity
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(
+    state: CartUiState,
+    onQuantityChange: (itemId: Int, newQuantity: Int) -> Unit,
+    onRemoveItem: (itemId: Int) -> Unit
 ) {
-    var cartState by remember { mutableStateOf<CartState>(createSampleCartState()) }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Cart Items") }
+            )
+        }
+    ) { padding ->
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-    ) {
-        // Header
-        Text(
-            text = "Cart Items",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        )
+        when {
+            state.isLoading -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
 
-        // Cart Items List
-        LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 16.dp)
-        ) {
-            items(cartState.items) { item ->
-                CartItemRow(
-                    item = item,
-                    onQuantityChange = { newQuantity ->
-                        cartState = updateCartQuantity(cartState, item.id, newQuantity)
-                    },
-                    onRemove = {
-                        cartState = removeItemFromCart(cartState, item.id)
+            state.isEmpty -> {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("Your cart is empty")
+                }
+            }
+
+            else -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(padding)
+                        .background(Color.White)
+                ) {
+
+                    // ---- Cart items list ----
+                    LazyColumn(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 16.dp)
+                    ) {
+                        items(
+                            items = state.items,
+                            key = { it.id }
+                        ) { item ->
+
+                            CartItemRow(
+                                item = item,
+                                onQuantityChange = { qty ->
+                                    onQuantityChange(item.id, qty)
+                                },
+                                onRemove = {
+                                    onRemoveItem(item.id)
+                                }
+                            )
+
+                            HorizontalDivider(thickness = 0.5.dp, color = DividerDefaults.color)
+                        }
                     }
-                )
-                Divider(color = Color.LightGray, thickness = 0.5.dp)
+
+                    // ---- Pricing summary ----
+                    PricingSummarySection(
+                        subtotal = state.subtotal,
+                        tax = state.tax,
+                        total = state.total
+                    )
+
+                    // ---- Takeaway address ----
+                    TakeawayAddressSection()
+                }
             }
         }
-
-        // Pricing Summary
-        PricingSummarySection(
-            cartState = cartState//,
-           // onProceedToCheckout =
-        )
-
-        // Takeaway Address Section
-        TakeawayAddressSection()
     }
 }
 

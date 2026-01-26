@@ -1,31 +1,30 @@
 package com.sample.restaurantordertakingapp.data.repository
 
-import android.content.Context
-import android.util.Log
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
-import com.google.gson.Gson
-import com.sample.restaurantordertakingapp.data.remote.ApiService
-import com.sample.restaurantordertakingapp.domain.model.CartItem
-import com.sample.restaurantordertakingapp.data.model.Menu
-import com.sample.restaurantordertakingapp.data.model.MenuItem
-import com.sample.restaurantordertakingapp.data.model.MenuResponse
-import com.sample.restaurantordertakingapp.data.model.OrderItem
-import com.sample.restaurantordertakingapp.data.model.OrderRequest
-import com.sample.restaurantordertakingapp.data.model.OrderResponse
+
+import com.sample.restaurantordertakingapp.data.local.LocalMenuDataSource
+import com.sample.restaurantordertakingapp.data.mapper.menuDocumentToEntities
+import com.sample.restaurantordertakingapp.data.mapper.toDomain
+import com.sample.restaurantordertakingapp.data.remote.firebase.FirebaseMenuDataSource
+import com.sample.restaurantordertakingapp.di.IoDispatcher
+import com.sample.restaurantordertakingapp.domain.model.Menu
+import com.sample.restaurantordertakingapp.domain.repo.MenuRepository
 import com.sample.restaurantordertakingapp.network.Resource
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
 
-class MenuRepository @Inject constructor(private val api: ApiService) {
+class MenuRepositoryImpl @Inject constructor(
+    private val remote: FirebaseMenuDataSource,
+    private val local: LocalMenuDataSource,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
+) : MenuRepository {
 
+    /*
     fun fetchMenu(): Flow<Resource<List<MenuItem>>> =
         api.getMenu()
             .map { resource ->
@@ -78,7 +77,7 @@ class MenuRepository @Inject constructor(private val api: ApiService) {
             } catch (e: Exception) {
                 emit(Resource.Error(e.localizedMessage ?: "Error fetching menu"))
             }
-            /* .addOnSuccessListener { snapshot ->
+ .addOnSuccessListener { snapshot ->
                         isSuccess = true
                         menuResponse = snapshot.toObject(MenuResponse::class.java)
                     }
@@ -94,7 +93,8 @@ class MenuRepository @Inject constructor(private val api: ApiService) {
                 }
             } catch (e: Exception) {
                 emit(Resource.Error(e.localizedMessage ?: "Error fetching menu"))
-            }*/
+            }
+
         }.flowOn(Dispatchers.IO)
     }
 
@@ -133,6 +133,53 @@ class MenuRepository @Inject constructor(private val api: ApiService) {
             .addOnSuccessListener { Log.d("sasa", "Menu uploaded to Firestore") }
             .addOnFailureListener { e -> Log.e("sasa", "Failed to upload", e) }
     }
+*/
+    override fun fetchMenu(): Flow<Resource<Menu>> = flow {
+        emit(Resource.Loading)
+
+        // 1️⃣ Try local DB first
+        val localMenu = withContext(dispatcher) {
+            local.getMenuOnce()   // suspend fun (not Flow)
+        }
+
+        if (localMenu != null) {
+            // ✅ Data available locally
+            emit(Resource.Success(localMenu.toDomain()))
+            return@flow
+        }
+
+        // 2️⃣ Fetch from Firestore
+        val remoteMenu = withContext(dispatcher) {
+            remote.fetchMenu()
+        }
+
+        // 3️⃣ Save to Room
+        withContext(dispatcher) {
+            val (menuEntity, categories, items) =
+                remoteMenu.menuDocumentToEntities()
+
+            local.insertFullMenu(
+                menu = menuEntity,
+                categories = categories,
+                items = items
+            )
+        }
+
+        // 4️⃣ Read again from Room (single source of truth)
+        val savedMenu = withContext(dispatcher) {
+            local.getMenuOnce()
+        }
+
+        if (savedMenu != null) {
+            emit(Resource.Success(savedMenu.toDomain()))
+        } else {
+            emit(Resource.Error("Menu save failed"))
+        }
+
+    }.catch { e ->
+        emit(Resource.Error(e.localizedMessage ?: "Unknown error"))
+    }
+
 
 
 }

@@ -3,8 +3,12 @@ package com.sample.restaurantordertakingapp.ui.theme.screen.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.restaurantordertakingapp.domain.model.CartItem
-import com.sample.restaurantordertakingapp.domain.model.PortionType
-import com.sample.restaurantordertakingapp.domain.repo.CartRepository
+import com.sample.restaurantordertakingapp.domain.usecase.cart.AddToCartUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.cart.CalculateCartSummaryUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.cart.ObserveCartUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.cart.RemoveItemUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.cart.UpdateQuantityUseCase
+import com.sample.restaurantordertakingapp.ui.theme.screen.mapper.toDomain
 import com.sample.restaurantordertakingapp.ui.theme.screen.mapper.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,78 +21,56 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CartViewModel @Inject constructor(
-    private val cartRepo: CartRepository
+    private val observeCart: ObserveCartUseCase,
+    private val calculateSummary: CalculateCartSummaryUseCase,
+    private val addToCart: AddToCartUseCase,
+    private val updateQuantity: UpdateQuantityUseCase,
+    private val removeItem: RemoveItemUseCase
 ) : ViewModel() {
 
-    /**
-     * Single source of truth for Cart screen
-     */
+
     val uiState: StateFlow<CartUiState> =
-        cartRepo.observeCartItems()   // Flow<List<CartItem>>
-            .map { items->
+        observeCart()
+            .map { items ->
 
-            // ---- Domain → UI mapping ----
-                val uiItems = items.map { it.toUi() }
-
-                // ---- Pricing calculation (business logic) ----
-                val subtotal = items.sumOf { item ->
-                    val unitPrice =
-                        if (item.portion == PortionType.FULL)
-                            item.fullPrice
-                        else
-                            item.halfPrice
-
-                    unitPrice * item.quantity
-                }
-
-                val tax = subtotal * 0.05
-                val total = subtotal + tax
+                val summary = calculateSummary(items)
 
                 CartUiState(
-                    items = uiItems,
-                    subtotal = subtotal.toDouble(),
-                    tax = tax,
-                    total = total,
-                    isEmpty = items.isEmpty(),
+                    items = items.map { it.toUi() },
+                    subtotal = summary.subtotal,
+                    tax = summary.tax,
+                    total = summary.total,
+                    isEmpty = summary.isEmpty,
                     isLoading = false
                 )
             }
             .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = CartUiState(isLoading = true)
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5_000),
+                CartUiState(isLoading = true)
             )
 
-    /**
-     * Derived state (no separate DB call needed)
-     */
     val cartCount: StateFlow<Int> =
         uiState
             .map { it.items.sumOf { item -> item.quantity } }
             .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = 0
+                viewModelScope,
+                SharingStarted.WhileSubscribed(5_000),
+                0
             )
 
-    /**
-     * User actions
-     */
-    fun addToCart(item: CartItem) {
+    fun addItem(item: CartItemUi) =
         viewModelScope.launch(Dispatchers.IO) {
-            cartRepo.addToCart(item)
+            addToCart(item.toDomain())
         }
-    }
 
-    fun onQuantityChange(itemId: String, newQuantity: Int) {
+    fun onQuantityChange(itemId: Int, qty: Int) =
         viewModelScope.launch(Dispatchers.IO) {
-            cartRepo.updateQuantity(itemId, newQuantity)
+            updateQuantity(itemId, qty)
         }
-    }
 
-    fun onRemoveItem(itemId: String) {
+    fun onRemoveItem(itemId: Int) =
         viewModelScope.launch(Dispatchers.IO) {
-            cartRepo.removeItem(itemId)
+            removeItem(itemId)
         }
-    }
 }

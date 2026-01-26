@@ -13,11 +13,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.sample.restaurantordertakingapp.data.model.MenuItem
+import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
 import com.sample.restaurantordertakingapp.utils.NetworkImage
 
 @Composable
-fun MenuItemCard(menuItem: MenuItem, onClick: () -> Unit) {
+fun MenuItemCard(menuItem: MenuItemUi, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

@@ -10,8 +10,19 @@ fun CartItem.toUi(): CartItemUi =
         name = name,
         imageUrl = imageUrl,
         quantity = quantity,
-        fullPriceText = "₹$120",
-        halfPriceText = "₹$halfPrice",
+        fullPrice = fullPrice,
+        halfPrice = halfPrice,
         selectedPortion = PortionType.FULL,
         tableText = tableId ?: "Takeaway"
     )
+fun CartItemUi.toDomain(): CartItem =
+    CartItem(  id = id,
+        name = name,
+        imageUrl = imageUrl,
+        quantity = quantity,
+        fullPrice = fullPrice,
+        halfPrice = halfPrice,
+        portion = selectedPortion,
+        tableId = tableText
+    )
+

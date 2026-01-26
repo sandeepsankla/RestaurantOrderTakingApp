@@ -2,7 +2,7 @@ package com.sample.restaurantordertakingapp.domain.model
 
 
 data class CartItem(
-    val id: String,
+    val id: Int,
     val imageUrl : String?,
     val quantity: Int,
     val portion: PortionType,

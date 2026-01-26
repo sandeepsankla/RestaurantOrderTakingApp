@@ -15,11 +15,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.sample.restaurantordertakingapp.domain.model.CartItem
 import com.sample.restaurantordertakingapp.ui.theme.component.common.QuantitySelector
+import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartItemUi
 
 
 @Composable
 fun CartItemRow(
-    item: CartItem,
+    item: CartItemUi,
     onQuantityChange: (Int) -> Unit,
     onRemove: () -> Unit,
     modifier: Modifier = Modifier,
@@ -52,7 +53,7 @@ fun CartItemRow(
                 )
 
                 // In Stock badge (optional)
-                if (item!= null && showInStock) {
+                if (showInStock) {
                     Text(
                         text = "In Stock",
                         style = MaterialTheme.typography.bodySmall,
@@ -67,7 +68,7 @@ fun CartItemRow(
             ) {
                 // Total Price for this item
                 Text(
-                    text = "$${"%.2f".format(item.price * item.quantity)}",
+                    text = "₹%.2f".format(item.fullPrice * item.quantity),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary

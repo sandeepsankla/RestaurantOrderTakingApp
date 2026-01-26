@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.sample.restaurantordertakingapp.data.local.AppDatabase
 import com.sample.restaurantordertakingapp.data.local.dao.CartDao
+import com.sample.restaurantordertakingapp.data.local.dao.MenuDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,4 +33,9 @@ object DatabaseProvider {
     fun provideCartDao(database: AppDatabase): CartDao {
         return database.cartDao()
     }
+
+    @Provides
+    fun provideMenuDao(db: AppDatabase): MenuDao =
+        db.menuDao()
+
 }

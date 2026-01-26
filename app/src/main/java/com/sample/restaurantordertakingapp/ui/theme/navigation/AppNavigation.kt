@@ -1,20 +1,16 @@
 package com.sample.restaurantordertakingapp.ui.theme.navigation
 
 import android.annotation.SuppressLint
-import com.sample.restaurantordertakingapp.data.model.MenuItem
 import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartViewModel
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu_details.MenuItemDetailScreen1
-import kotlinx.coroutines.launch
 
 //@file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -23,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.*
 import com.sample.restaurantordertakingapp.ui.theme.component.common.AppBarWithCartBadge
+import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
 
 private const val KEY_MENU_ITEM = "menuItem" // SavedStateHandle key
 
@@ -96,14 +93,21 @@ fun AppNavigation() {
             }
 
             composable(Screen.Cart.route) {
-                CartScreen()
+                    val vm: CartViewModel = hiltViewModel()
+                    val state by vm.uiState.collectAsStateWithLifecycle()
+
+                    CartScreen(
+                        state = state,
+                        onQuantityChange = vm::onQuantityChange,
+                        onRemoveItem = vm::onRemoveItem
+                    )
             }
 
             composable(Screen.Detail.route) {
                 val menuItem = navController
                     .previousBackStackEntry
                     ?.savedStateHandle
-                    ?.get<MenuItem>(KEY_MENU_ITEM)
+                    ?.get<MenuItemUi>(KEY_MENU_ITEM)
 
 
                 if (menuItem != null) {
@@ -112,7 +116,7 @@ fun AppNavigation() {
                         menuItem = menuItem,
                         addToCart = { cartItem ->
                             // call suspend through VM scope; no LaunchedEffect needed
-                             cartViewModel.addToCart(cartItem)
+                             cartViewModel.addItem(cartItem)
                         },
                         closeSheet = { navController.popBackStack() }
                     )

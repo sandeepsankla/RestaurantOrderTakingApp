@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
@@ -32,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -42,10 +39,10 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import com.sample.restaurantordertakingapp.domain.model.CartItem
-import com.sample.restaurantordertakingapp.data.model.MenuItem
-import com.sample.restaurantordertakingapp.data.model.OrderItem
+import com.sample.restaurantordertakingapp.domain.model.PortionType
 import com.sample.restaurantordertakingapp.ui.theme.component.common.QuantitySelector
+import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartItemUi
+import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
 import com.sample.restaurantordertakingapp.utils.NetworkImage
 
 /*
@@ -117,12 +114,10 @@ fun MenuItemDetailScreen1(modifier: Modifier, menuItem: MenuItem, closeSheet : (
 @Composable
 fun MenuItemDetailScreen1(
     modifier: Modifier = Modifier,
-    menuItem: MenuItem,
+    menuItem: MenuItemUi,
     closeSheet: () -> Unit,
-    addToCart: @Composable (CartItem) -> Unit
+    addToCart: (CartItemUi) -> Unit
 ) {
-
-    val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState()
 
 
@@ -207,18 +202,22 @@ fun MenuItemDetailScreen1(
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(onClick = {
-                    val cartItem = CartItem(
-                        id = menuItem.id,
-                        name = menuItem.name,
-                        quantity = quantity,
-                        isFull = isFull,
-                        price = menuItem.price,
-                        table = selectedTable,
-                        imageUrl = menuItem.imageUrl,
-                        takeAway = (selectedTable == "Takeaway")
-                    )
-                    //todo sndp
-                  ///  addToCart(cartItem)
+                    val cartItem : CartItemUi? = selectedTable?.let {
+                        CartItemUi(
+                            id = menuItem.id,
+                            name = menuItem.name,
+                            quantity = quantity,
+                            halfPrice = menuItem.halfPrice,
+                            fullPrice = menuItem.fullPrice,
+                            selectedPortion =  if(isFull) PortionType.FULL else PortionType.HALF,
+                            imageUrl = menuItem.imageUrl,
+                            tableText = it
+                        )
+                    }
+                    if (cartItem != null) {
+                        addToCart(cartItem)
+                    }
+
                 }) {
                     Text("Add to Cart", style = MaterialTheme.typography.labelLarge)
                 }
@@ -280,6 +279,7 @@ fun RadioButtonGroupWithBorder(onClick : (isFullSelected : Boolean) -> Unit) {
     }
 }
 
+/*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuItemDetailScreen(
@@ -365,6 +365,7 @@ fun MenuItemDetailScreen(
         }
     }
 }
+*/
 
 
 @Composable

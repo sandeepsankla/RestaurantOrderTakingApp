@@ -1,6 +1,6 @@
-package com.sample.restaurantordertakingapp.data.model
+package com.sample.restaurantordertakingapp.data.remote.firebase.model
 
-data class OrderItem(
+data class OrderItemDocument(
     val id: String,
     val quantity: Int,
     val isFull: Boolean = true,
@@ -12,5 +12,3 @@ data class OrderItem(
         return price * quantity
     }
 }
-
-

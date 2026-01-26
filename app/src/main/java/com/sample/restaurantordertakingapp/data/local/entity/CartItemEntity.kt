@@ -1,4 +1,4 @@
-package com.sample.restaurantordertakingapp.data.local.enttity
+package com.sample.restaurantordertakingapp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "cart_items")
 data class CartItemEntity(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    val menuItemId: String,
+    val menuItemId: Int,
     val name: String,
     val fullPrice: Int,   // unit price
     val halfPrice: Int,   // unit price

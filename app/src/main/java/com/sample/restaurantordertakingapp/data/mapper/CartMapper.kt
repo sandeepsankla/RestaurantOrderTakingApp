@@ -1,6 +1,6 @@
 package com.sample.restaurantordertakingapp.data.mapper
 
-import com.sample.restaurantordertakingapp.data.local.enttity.CartItemEntity
+import com.sample.restaurantordertakingapp.data.local.entity.CartItemEntity
 import com.sample.restaurantordertakingapp.domain.model.CartItem
 import com.sample.restaurantordertakingapp.domain.model.PortionType
 
