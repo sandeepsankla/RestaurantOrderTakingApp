@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "08b604d6d6e787bec057228fb3358ab7",
+    "identityHash": "cc60ee76f4b66c21c257f095e800568d",
     "entities": [
       {
         "tableName": "cart_items",
@@ -144,12 +144,12 @@
       },
       {
         "tableName": "menu_item",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `categoryId` INTEGER NOT NULL, `name` TEXT NOT NULL, `halfPrice` INTEGER NOT NULL, `fullPrice` INTEGER NOT NULL, `description` TEXT, `imageUrl` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`categoryId`) REFERENCES `category`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `categoryId` INTEGER NOT NULL, `name` TEXT NOT NULL, `halfPrice` INTEGER NOT NULL, `fullPrice` INTEGER NOT NULL, `description` TEXT, `imageUrl` TEXT, PRIMARY KEY(`id`), FOREIGN KEY(`categoryId`) REFERENCES `category`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -214,7 +214,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '08b604d6d6e787bec057228fb3358ab7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cc60ee76f4b66c21c257f095e800568d')"
     ]
   }
 }

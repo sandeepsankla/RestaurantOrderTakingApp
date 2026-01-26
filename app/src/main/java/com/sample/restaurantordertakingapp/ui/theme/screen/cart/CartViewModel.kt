@@ -29,8 +29,7 @@ class CartViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    val uiState: StateFlow<CartUiState> =
-        observeCart()
+    val uiState: StateFlow<CartUiState> = observeCart()
             .map { items ->
 
                 val summary = calculateSummary(items)
@@ -60,7 +59,7 @@ class CartViewModel @Inject constructor(
             )
 
     fun addItem(item: CartItemUi) =
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             addToCart(item.toDomain())
         }
 

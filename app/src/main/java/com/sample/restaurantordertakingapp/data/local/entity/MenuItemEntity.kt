@@ -16,7 +16,7 @@ import androidx.room.PrimaryKey
     ]
 )
 data class MenuItemEntity(
-    @PrimaryKey val id: String,
+    @PrimaryKey val id: Int,
     val categoryId: Int,
     val name: String,
     val halfPrice: Int,

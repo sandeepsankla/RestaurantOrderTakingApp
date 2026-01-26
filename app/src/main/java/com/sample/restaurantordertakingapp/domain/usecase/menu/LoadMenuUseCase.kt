@@ -4,8 +4,9 @@ import com.sample.restaurantordertakingapp.domain.model.Menu
 import com.sample.restaurantordertakingapp.domain.repo.MenuRepository
 import com.sample.restaurantordertakingapp.network.Resource
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class LoadMenuUseCase(
+class LoadMenuUseCase @Inject constructor(
     private val menuRepository: MenuRepository
 ) {
     operator fun invoke(): Flow<Resource<Menu>> {

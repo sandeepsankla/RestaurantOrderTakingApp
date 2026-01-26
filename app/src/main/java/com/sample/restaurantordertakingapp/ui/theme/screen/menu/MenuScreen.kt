@@ -24,6 +24,11 @@ fun MenuScreen(
         }
 
         is Resource.Error -> {
+           /* MenuError(
+                message = (menuState as Resource.Error).message,
+                onRetry = { viewModel.loadMenu() }
+            )*/
+
             Text("Error: ${state.message}")
         }
 

@@ -20,6 +20,7 @@ import com.sample.restaurantordertakingapp.utils.NetworkImage
 fun MenuItemCard(menuItem: MenuItemUi, onClick: () -> Unit) {
     Card(
         modifier = Modifier
+            .padding(4.dp)
             .fillMaxWidth()
             .aspectRatio(1f)
             .clickable { onClick() }
