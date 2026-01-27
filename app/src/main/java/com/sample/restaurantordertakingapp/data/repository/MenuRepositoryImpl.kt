@@ -2,6 +2,7 @@ package com.sample.restaurantordertakingapp.data.repository
 
 
 import com.sample.restaurantordertakingapp.data.local.LocalMenuDataSource
+import com.sample.restaurantordertakingapp.data.local.pref.MenuVersionStore
 import com.sample.restaurantordertakingapp.data.mapper.menuDocumentToEntities
 import com.sample.restaurantordertakingapp.data.mapper.toDomain
 import com.sample.restaurantordertakingapp.data.remote.firebase.FirebaseMenuDataSource
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class MenuRepositoryImpl @Inject constructor(
     private val remote: FirebaseMenuDataSource,
     private val local: LocalMenuDataSource,
+    private val versionStore: MenuVersionStore,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : MenuRepository {
 
@@ -136,17 +138,20 @@ class MenuRepositoryImpl @Inject constructor(
 */
     override fun fetchMenu(): Flow<Resource<Menu>> = flow {
         emit(Resource.Loading)
+        val localVersion = versionStore.getLocalVersion()
+        val remoteVersion = remote.fetchMenuVersion()
+
 
         // 1️⃣ Try local DB first
-        val localMenu = withContext(dispatcher) {
-            local.getMenuOnce()   // suspend fun (not Flow)
+        // ✅ Same version → Room se load
+        if (localVersion == remoteVersion) {
+            val localMenu = local.getMenuOnce()
+            if (localMenu != null) {
+                emit(Resource.Success(localMenu.toDomain()))
+                return@flow
+            }
         }
 
-        if (localMenu != null) {
-            // ✅ Data available locally
-            emit(Resource.Success(localMenu.toDomain()))
-            return@flow
-        }
 
         // 2️⃣ Fetch from Firestore
         val remoteMenu = withContext(dispatcher) {
@@ -164,17 +169,15 @@ class MenuRepositoryImpl @Inject constructor(
                 items = items
             )
         }
+        // Save version
+        versionStore.saveLocalVersion(remoteMenu.menuVersion)
 
         // 4️⃣ Read again from Room (single source of truth)
-        val savedMenu = withContext(dispatcher) {
+       /* val savedMenu = withContext(dispatcher) {
             local.getMenuOnce()
-        }
+        }*/
 
-        if (savedMenu != null) {
-            emit(Resource.Success(savedMenu.toDomain()))
-        } else {
-            emit(Resource.Error("Menu save failed"))
-        }
+        emit(Resource.Success(remoteMenu.toDomain()))
 
     }.catch { e ->
         emit(Resource.Error(e.localizedMessage ?: "Unknown error"))

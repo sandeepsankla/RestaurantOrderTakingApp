@@ -5,7 +5,9 @@ import com.sample.restaurantordertakingapp.data.local.relation.CategoryWithItems
 import com.sample.restaurantordertakingapp.data.local.entity.MenuEntity
 import com.sample.restaurantordertakingapp.data.local.entity.MenuItemEntity
 import com.sample.restaurantordertakingapp.data.local.relation.MenuWithCategories
+import com.sample.restaurantordertakingapp.data.remote.firebase.model.CategoryDocument
 import com.sample.restaurantordertakingapp.data.remote.firebase.model.MenuDocument
+import com.sample.restaurantordertakingapp.data.remote.firebase.model.MenuItemDocument
 import com.sample.restaurantordertakingapp.domain.model.Menu
 import com.sample.restaurantordertakingapp.domain.model.Category
 import com.sample.restaurantordertakingapp.domain.model.MenuItem
@@ -104,7 +106,7 @@ fun MenuDocument.menuDocumentToEntities(): Triple<
                 categoryId = category.id,
                 name = item.name,
                 halfPrice = item.halfPrice ,
-                fullPrice = item.fullPrice ,
+                fullPrice = item.fullPrice ?:0,
                 description = item.description.orEmpty(),
                 imageUrl = item.imageUrl
             )
@@ -112,6 +114,33 @@ fun MenuDocument.menuDocumentToEntities(): Triple<
     }
 
     return Triple(menuEntity, categoryEntities, itemEntities)
+}
+
+
+fun MenuDocument.toDomain(): Menu {
+    return Menu(
+        categories = categories.map { it.toDomain() }
+    )
+}
+
+private fun CategoryDocument.toDomain(): Category {
+    return Category(
+        id = id,
+        name = name,
+        menuId = 1, //todo sandeep
+        items = items.map { it.toDomain() }
+    )
+}
+
+private fun MenuItemDocument.toDomain(): MenuItem {
+    return MenuItem(
+        id = id,
+        name = name,
+        halfPrice = halfPrice,
+        fullPrice = fullPrice?:0,
+        description = description,
+        imageUrl = imageUrl
+    )
 }
 
 

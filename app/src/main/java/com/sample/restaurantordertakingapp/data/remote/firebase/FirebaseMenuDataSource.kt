@@ -20,4 +20,15 @@ class FirebaseMenuDataSource  @Inject constructor(
         return snapshot.toObject(MenuDocument::class.java)
             ?: throw IllegalStateException("Menu not found")
     }
+
+    suspend fun fetchMenuVersion(): Int {
+        val snapshot = firestore
+            .collection("menus")
+            .document("default")
+            .get()
+            .await()
+
+        return snapshot.getLong("menuVersion")?.toInt() ?: 0
+    }
+
 }
