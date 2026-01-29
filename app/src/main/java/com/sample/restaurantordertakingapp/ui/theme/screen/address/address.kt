@@ -23,23 +23,9 @@ fun AddressScreen(
     onBack: () -> Unit,
     onPlaceOrder: () -> Unit
 ) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Takeaway Address") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = null)
-                    }
-                }
-            )
-        }
-    ) { padding ->
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp)
         ) {
@@ -54,5 +40,5 @@ fun AddressScreen(
                 Text("Place Order")
             }
         }
-    }
+
 }

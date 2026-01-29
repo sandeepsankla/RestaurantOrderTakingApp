@@ -32,23 +32,9 @@ fun TakeawayAddressSection() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(horizontal = 8.dp, vertical = 16.dp)
     ) {
-        Text(
-            text = "Takeaway Address",
-            style = MaterialTheme.typography.headlineSmall,
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-
-        // Society and Flat No Row
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            // Society
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            Column{
                 Text(
                     text = "Society",
                     style = MaterialTheme.typography.bodyMedium,
@@ -67,10 +53,12 @@ fun TakeawayAddressSection() {
                 )
             }
 
+        Spacer(modifier = Modifier.height(12.dp))
+
             // Flat No
-            Column(
+          /*  Column(
                 modifier = Modifier.weight(1f)
-            ) {
+            ) {*/
                 Text(
                     text = "Flat No",
                     style = MaterialTheme.typography.bodyMedium,
@@ -87,21 +75,11 @@ fun TakeawayAddressSection() {
                         unfocusedContainerColor = Color.Transparent
                     )
                 )
-            }
-        }
+          //  }
+      //  }
 
         Spacer(modifier = Modifier.height(12.dp))
-
-        // Tower and Mobile No Row
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            // Tower
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
+        Text(
                     text = "Tower",
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(bottom = 4.dp)
@@ -117,12 +95,7 @@ fun TakeawayAddressSection() {
                         unfocusedContainerColor = Color.Transparent
                     )
                 )
-            }
-
-            // Mobile No
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+        Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = "Mobile No",
                     style = MaterialTheme.typography.bodyMedium,
@@ -131,7 +104,7 @@ fun TakeawayAddressSection() {
                 OutlinedTextField(
                     value = mobileNo,
                     onValueChange = { mobileNo = it },
-                    placeholder = { Text("Enter mobile number") },
+                    placeholder = { Text("Enter mobile no.") },
                     modifier = Modifier.fillMaxWidth(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
@@ -140,8 +113,6 @@ fun TakeawayAddressSection() {
                         unfocusedContainerColor = Color.Transparent
                     )
                 )
-            }
-        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
