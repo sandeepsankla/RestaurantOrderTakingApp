@@ -1,12 +1,15 @@
 package com.sample.restaurantordertakingapp.ui.theme.screen.menu
 
 import MenuTabScreen
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.sample.restaurantordertakingapp.network.Resource
+import com.sample.restaurantordertakingapp.ui.theme.component.common.LoadingView
 import com.sample.restaurantordertakingapp.ui.theme.screen.mapper.toDomain
 
 
@@ -20,7 +23,7 @@ fun MenuScreen(
 
     when (val state = menuState) {
         is Resource.Loading -> {
-            // MenuSkeleton()
+            LoadingView(PaddingValues(10.dp))
         }
 
         is Resource.Error -> {

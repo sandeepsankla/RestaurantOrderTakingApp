@@ -20,10 +20,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RestaurantOrderTakingAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) {
+                //Scaffold(modifier = Modifier.fillMaxSize()) {
                     //MenuScreen()
                     AppNavigation()
-                }
+                //}
             }
         }
     }

@@ -5,9 +5,6 @@ import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartViewModel
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu_details.MenuItemDetailScreen1
-
-//@file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
-
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.*
 import com.sample.restaurantordertakingapp.ui.theme.component.common.AppBarWithCartBadge
+import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
 
 private const val KEY_MENU_ITEM = "menuItem" // SavedStateHandle key
@@ -40,36 +38,31 @@ fun AppNavigation() {
     // expose count; adapt type if your VM emits List -> size
     val cartCount by cartViewModel.cartCount.collectAsStateWithLifecycle() // Int expected
 
+    val currentRoute =
+        navController.currentBackStackEntryAsState().value?.destination?.route
+
+
+    val showBackButton = currentRoute == "cart" || currentRoute == "address"
+    val showCartIcon = currentRoute == "menu"
+
+    val title = when (currentRoute) {
+        "cart" -> "Cart Items"
+        "address" -> "Takeaway Address"
+        else -> "Tandoori Tadka House"
+    }
     Scaffold(
         topBar = {
             AppBarWithCartBadge(
-                appName = "Tandoori Tadka House",
+                appName = title,
                 cartCount = cartCount,
+                showCartIcon = showCartIcon,
+                showBackButton = showBackButton,
+                navController =  navController,
                 onCartClick = {
                     if (backStackEntry?.destination?.route != Screen.Cart.route)
                     navController.navigateSingleTop(Screen.Cart.route)
                 }
             )
-
-           /* CenterAlignedTopAppBar(
-                //title = { Text(currentTitle) },
-                title = { Text("hello i am sandy") },
-                actions = {
-                    BadgedBox(
-                        badge = {
-                            if (cartCount > 0) Badge { Text(cartCount.toString()) }
-                        }
-                    ) {
-                        IconButton(onClick = {
-                            if (backStackEntry?.destination?.route != Screen.Cart.route) {
-                                navController.navigateSingleTop(Screen.Cart.route)
-                            }
-                        }) {
-                            Icon(Icons.Filled.ShoppingCart, contentDescription = "Cart")
-                        }
-                    }
-                }
-            )*/
         }
     ) { innerPadding ->
         NavHost(
@@ -99,8 +92,20 @@ fun AppNavigation() {
                     CartScreen(
                         state = state,
                         onQuantityChange = vm::onQuantityChange,
-                        onRemoveItem = vm::onRemoveItem
+                        onRemoveItem = vm::onRemoveItem,
+                        onProceed = {
+                            navController.navigate("address")
+                        }
                     )
+            }
+
+            composable("address") {
+                AddressScreen(
+                    onBack = { navController.popBackStack() },
+                    onPlaceOrder = {
+                        // place order logic
+                    }
+                )
             }
 
             composable(Screen.Detail.route) {

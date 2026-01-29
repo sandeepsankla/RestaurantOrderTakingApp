@@ -19,10 +19,15 @@ data class CartItemUi(
     // 👇 display-only text
     val tableText: String
 ){
-    fun getFullPriceText(): String =
-        "₹$fullPrice"
+    val unitPrice: Int
+        get() = if (selectedPortion == PortionType.FULL) fullPrice else halfPrice
 
-    fun getHalfPriceText(): String =
-        "₹$halfPrice"
+    val totalPrice: Int
+        get() = unitPrice * quantity
 
+    fun getUnitPriceText(): String =
+        "₹%,d".format(unitPrice)
+
+    fun getTotalPriceText(): String =
+        "₹%,d".format(totalPrice)
 }

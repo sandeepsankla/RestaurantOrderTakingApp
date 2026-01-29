@@ -52,7 +52,7 @@ fun PriceRow(
             fontWeight = if (isTotal) FontWeight.Bold else FontWeight.Normal
         )
         Text(
-            text = "$${"%.2f".format(amount)}",
+            text = "₹ ${"%.2f".format(amount)}",
             style = if (isTotal) MaterialTheme.typography.titleMedium else MaterialTheme.typography.bodyMedium,
             fontWeight = if (isTotal) FontWeight.Bold else FontWeight.Normal
         )
