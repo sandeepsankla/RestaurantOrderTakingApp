@@ -123,7 +123,7 @@ fun MenuItemDetailScreen1(
 
     var quantity by remember { mutableIntStateOf(1) }
     var isFull by remember { mutableStateOf(true) }
-    var selectedTable by remember { mutableStateOf<String?>(null) }
+    var selectedTable by remember { mutableStateOf<String>("Takeaway") }
     val tableList = (1..6).map { "Table $it" }
 
     ModalBottomSheet(
@@ -158,7 +158,7 @@ fun MenuItemDetailScreen1(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    menuItem.getFormattedPrice(),
+                    text  = menuItem.getFormattedTotalPrice(isFull, quantity),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -189,11 +189,13 @@ fun MenuItemDetailScreen1(
 
             Spacer(Modifier.height(16.dp))
 
-            RadioButtonGroupWithBorder(onClick = { isFull = it })
+            RadioButtonGroupWithBorder(menuItem,onClick = { isFull = it })
 
             Spacer(Modifier.height(12.dp))
 
-            TableChipsRow(tableList, selectedTable) { selectedTable = it }
+            TableChipsRow(tableList, selectedTable)
+            {
+                selectedTable = it }
 
             Spacer(Modifier.height(16.dp))
 
@@ -204,7 +206,8 @@ fun MenuItemDetailScreen1(
                 Button(onClick = {
                     val cartItem : CartItemUi? = selectedTable?.let {
                         CartItemUi(
-                            id = menuItem.id,
+                            id = 0,
+                            menuItemId = menuItem.id,
                             name = menuItem.name,
                             quantity = quantity,
                             halfPrice = menuItem.halfPrice,
@@ -237,8 +240,8 @@ fun MenuItemDetailScreen1(
 
 
 @Composable
-fun RadioButtonGroupWithBorder(onClick : (isFullSelected : Boolean) -> Unit) {
-    val radioOptions = listOf("Half", "Full")
+fun RadioButtonGroupWithBorder(menuItem: MenuItemUi,onClick : (isFullSelected : Boolean) -> Unit) {
+    val radioOptions = listOf(menuItem.getFormattedOptionLabel(true), menuItem.getFormattedOptionLabel(false))
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
     Card ( shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.selectableGroup().padding(horizontal = 8.dp, vertical = 8.dp)) {
@@ -249,7 +252,7 @@ fun RadioButtonGroupWithBorder(onClick : (isFullSelected : Boolean) -> Unit) {
                             selected = (text == selectedOption),
                             onClick = {
                                 onOptionSelected(text)
-                                if(text == "Full"){onClick(true)} else { onClick(false)} // Handle clicks on the Row for better accessibility
+                                if(text.contains("Full")){onClick(true)} else { onClick(false)} // Handle clicks on the Row for better accessibility
 
                             },
                             role = Role.RadioButton
@@ -371,8 +374,8 @@ fun MenuItemDetailScreen(
 @Composable
 fun TableChipsRow(
     tables: List<String>,
-    selectedTable: String?,
-    onSelect: (String?) -> Unit
+    selectedTable: String,
+    onSelect: (String) -> Unit
 ) {
    /* // horizontal scrollable row of chips
     Row(
@@ -389,8 +392,8 @@ fun TableChipsRow(
             .padding(top = 8.dp)) {
         // optional "None / Takeaway" chip
         FilterChip(
-            selected = selectedTable == null,
-            onClick = { onSelect(null) },
+            selected = selectedTable == "Takeaway",
+            onClick = { onSelect("Takeaway") },
             label = { Text("Takeaway") }
         )
 
@@ -399,7 +402,7 @@ fun TableChipsRow(
                 selected = table == selectedTable,
                 onClick = {
                     // toggle selection: selecting again clears selection (optional)
-                    if (table == selectedTable) onSelect(null) else onSelect(table)
+                    if (table == selectedTable) onSelect("Takeaway") else onSelect(table)
                 },
                 label = { Text(table) }
             )

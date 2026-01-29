@@ -7,6 +7,7 @@ import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartItemUi
 fun CartItem.toUi(): CartItemUi =
     CartItemUi(
         id = id,
+        menuItemId = menuItemId,
         name = name,
         imageUrl = imageUrl,
         quantity = quantity,
@@ -17,6 +18,7 @@ fun CartItem.toUi(): CartItemUi =
     )
 fun CartItemUi.toDomain(): CartItem =
     CartItem(  id = id,
+        menuItemId = menuItemId,
         name = name,
         imageUrl = imageUrl,
         quantity = quantity,

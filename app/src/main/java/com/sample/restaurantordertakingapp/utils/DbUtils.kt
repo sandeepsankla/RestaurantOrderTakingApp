@@ -7,7 +7,8 @@ import com.sample.restaurantordertakingapp.domain.model.PortionType
 
 fun CartItemEntity.toCartItem(): CartItem {
         return CartItem(
-            id = this.menuItemId,
+            id = this.id,
+            menuItemId = this.menuItemId,
             imageUrl = this.imageUrl,
             name = this.name,
             halfPrice = this.halfPrice,
@@ -20,7 +21,8 @@ fun CartItemEntity.toCartItem(): CartItem {
 
 fun CartItem.toEntity(): CartItemEntity {
     return CartItemEntity(
-        menuItemId = this.id,
+        id = this.id,
+        menuItemId = this.menuItemId,
         name = this.name,
         halfPrice = this.halfPrice,
         fullPrice = this.fullPrice,

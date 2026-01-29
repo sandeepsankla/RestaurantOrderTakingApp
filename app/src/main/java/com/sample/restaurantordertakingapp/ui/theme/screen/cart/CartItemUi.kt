@@ -4,6 +4,7 @@ import com.sample.restaurantordertakingapp.domain.model.PortionType
 
 data class CartItemUi(
     val id: Int,
+    val menuItemId: Int,
     val name: String,
     val imageUrl: String?,
     val quantity: Int,

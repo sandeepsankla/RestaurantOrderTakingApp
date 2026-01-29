@@ -6,7 +6,8 @@ import com.sample.restaurantordertakingapp.domain.model.PortionType
 
 fun CartItemEntity.toDomain(): CartItem =
     CartItem(
-        id = menuItemId,
+        id = id,
+        menuItemId = menuItemId,
         name = name,
         imageUrl = imageUrl,
         quantity = quantity,
@@ -18,7 +19,8 @@ fun CartItemEntity.toDomain(): CartItem =
 
 fun CartItem.toEntity(): CartItemEntity =
     CartItemEntity(
-        menuItemId = id,
+        id = id,
+        menuItemId = menuItemId,
         name = name,
         imageUrl = imageUrl,
         quantity = quantity,

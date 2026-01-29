@@ -31,7 +31,7 @@ fun MenuItemCard(menuItem: MenuItemUi, onClick: () -> Unit) {
             Spacer(Modifier.height(8.dp))
             Text(menuItem.name, style = MaterialTheme.typography.headlineSmall)
             Spacer(Modifier.height(4.dp))
-            Text(menuItem.getFormattedPrice(), style = MaterialTheme.typography.headlineSmall)
+            Text(menuItem.getUnitPrice(true).toString(), style = MaterialTheme.typography.headlineSmall)
 
         }
     }
