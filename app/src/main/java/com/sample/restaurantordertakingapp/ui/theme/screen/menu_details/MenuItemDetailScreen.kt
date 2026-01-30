@@ -189,7 +189,9 @@ fun MenuItemDetailScreen1(
 
             Spacer(Modifier.height(16.dp))
 
-            RadioButtonGroupWithBorder(menuItem,onClick = { isFull = it })
+            RadioButtonGroupWithBorder(menuItem,onClick = {
+                isFull = it }
+            )
 
             Spacer(Modifier.height(12.dp))
 

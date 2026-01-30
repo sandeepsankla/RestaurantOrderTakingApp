@@ -30,9 +30,9 @@ class PlaceOrderUseCase(
         val addressEntity = AddressEntity(
             orderId = orderId,
             society = address.society,
-            flatNo = address.flat,
+            flatNo = address.flatNo,
             tower = address.tower,
-            mobile = address.mobileNo.toString()
+            mobile = address.mobile.toString()
         )
 
         val orderItems = cartItems.map {

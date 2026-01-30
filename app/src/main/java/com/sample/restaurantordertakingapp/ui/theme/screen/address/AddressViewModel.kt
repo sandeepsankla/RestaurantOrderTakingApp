@@ -35,25 +35,22 @@ class AddressViewModel @Inject constructor(
         uiState = uiState.copy(mobile = value.take(10))
     }
 
-    fun onPlaceOrderClick(
-        onSuccess: () -> Unit
-    ) {
+    fun onPlaceOrderClick() {
         if (!uiState.isValid()) {
-            uiState = uiState.copy(error = "Enter valid mobile number")
+            uiState = uiState.copy(error = "Please enter valid mobile number")
             return
         }
 
         viewModelScope.launch {
-            uiState = uiState.copy(isLoading = true)
+            uiState = uiState.copy(isLoading = true, error = null)
 
             placeOrderUseCase(uiState.toAddressUi())
 
-            uiState = uiState.copy(isLoading = false)
-            onSuccess()
+            uiState = uiState.copy(
+                isLoading = false,
+                isSuccess = true   // 🔥 UI react karega
+            )
         }
     }
 
-    fun saveAddress(addressUi: AddressUi) {
-
-    }
 }

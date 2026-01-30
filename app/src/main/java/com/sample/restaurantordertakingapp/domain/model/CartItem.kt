@@ -20,34 +20,6 @@ data class CartItem(
 
 }
 
-data class CartState(
-    val items: List<CartItem> = emptyList(),
-    val subtotal: Double = 0.0,
-    val tax: Double = 0.0,
-    val total: Double = 0.0
-)
-
-data class CartDetails(
-    val cartItems: List<CartItem>,
-    val address: Address,
-    val priceDetails: PriceDetails
-)
-
-data class Address(
-    val society: String?,
-    val tower: String?,
-    val flat: String?,
-    val mobileNo: Int
-)
-
-data class PriceDetails(
-    val subTotal : Double,
-    val gst : Double,
-    val total : Double,
-    val discount : Double
-)
-
-
 
 
 

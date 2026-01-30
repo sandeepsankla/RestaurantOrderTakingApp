@@ -13,7 +13,7 @@ fun CartItem.toUi(): CartItemUi =
         quantity = quantity,
         fullPrice = fullPrice,
         halfPrice = halfPrice,
-        selectedPortion = PortionType.FULL,
+        selectedPortion = portion,
         tableText = tableId ?: "Takeaway"
     )
 fun CartItemUi.toDomain(): CartItem =

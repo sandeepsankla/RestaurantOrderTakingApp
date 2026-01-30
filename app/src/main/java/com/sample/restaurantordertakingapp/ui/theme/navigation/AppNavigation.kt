@@ -19,6 +19,7 @@ import com.sample.restaurantordertakingapp.ui.theme.component.common.AppBarWithC
 import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressViewModel
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
+import kotlinx.coroutines.delay
 
 private const val KEY_MENU_ITEM = "menuItem" // SavedStateHandle key
 
@@ -103,6 +104,19 @@ fun AppNavigation() {
             composable("address") {
                 val viewModel: AddressViewModel = hiltViewModel()
                 val state = viewModel.uiState
+                LaunchedEffect(state.isSuccess) {
+                    if (state.isSuccess) {
+                        delay(1500)
+                        navController.navigate(Screen.Menu.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                inclusive = true
+                            }
+                            launchSingleTop = true
+                        }
+                    }
+                }
+
+
                 AddressScreen(
                     state = state,
                     onSocietyChange = viewModel::onSocietyChange,
@@ -111,9 +125,7 @@ fun AppNavigation() {
                     onMobileChange = viewModel::onMobileChange,
                     onBack = { navController.popBackStack() },
                     onPlaceOrder = {
-                        viewModel.onPlaceOrderClick {
-                            navController.popBackStack() // order placed → go back
-                        }
+                        viewModel.onPlaceOrderClick()
                     }
                 )
             }

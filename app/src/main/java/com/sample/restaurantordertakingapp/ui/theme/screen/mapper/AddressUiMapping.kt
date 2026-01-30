@@ -6,9 +6,9 @@ import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressUiStat
 fun AddressUiState.toAddressUi(): Address {
     return Address(
         society = society.takeIf { it.isNotBlank() },
-        flat = flatNo.takeIf { it.isNotBlank() },
+        flatNo = flatNo.takeIf { it.isNotBlank() },
         tower = tower.takeIf { it.isNotBlank() },
-        mobileNo = mobile.toInt()
+        mobile = mobile
     )
 }
 
