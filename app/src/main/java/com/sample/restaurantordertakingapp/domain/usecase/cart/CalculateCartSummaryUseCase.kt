@@ -18,7 +18,10 @@ operator fun invoke(items: List<CartItem>): CartSummary {
         unitPrice * item.quantity
     }.toDouble()
 
-    val tax = subtotal * 0.05
+    //val tax = subtotal * 0.05
+    //todo for tax
+
+    val tax = 1.0
     val total = subtotal + tax
 
     return CartSummary(

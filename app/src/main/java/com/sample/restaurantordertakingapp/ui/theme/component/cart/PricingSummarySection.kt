@@ -20,7 +20,7 @@ fun PricingSummarySection(
 ) {
     Column(modifier = Modifier.padding(16.dp)) {
         PriceRow("Subtotal", subtotal)
-        PriceRow("GST (5%)", tax)
+        //PriceRow("GST (5%)", tax)
         Divider(modifier = Modifier.padding(vertical = 8.dp))
         PriceRow("Total", total, isTotal = true)
     }

@@ -5,7 +5,8 @@ data class Order(
     val id: String,
     val items: List<OrderItem>,
     val totalAmount: Int,
-    val status: String
+    val status: String,
+    val createdAt: Long
 )
 
 data class OrderItem(

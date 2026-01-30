@@ -1,10 +1,10 @@
 package com.sample.restaurantordertakingapp.domain.usecase.order
 
-import com.sample.restaurantordertakingapp.data.local.entity.AddressEntity
-import com.sample.restaurantordertakingapp.data.local.entity.OrderEntity
-import com.sample.restaurantordertakingapp.data.local.entity.OrderItemEntity
+
 import com.sample.restaurantordertakingapp.domain.model.Address
-import com.sample.restaurantordertakingapp.domain.model.CartItem
+import com.sample.restaurantordertakingapp.domain.model.Order
+import com.sample.restaurantordertakingapp.domain.model.OrderItem
+import com.sample.restaurantordertakingapp.domain.model.PortionType
 import com.sample.restaurantordertakingapp.domain.repo.CartRepository
 import com.sample.restaurantordertakingapp.domain.repo.OrderRepository
 import java.util.UUID
@@ -16,39 +16,30 @@ class PlaceOrderUseCase(
 
     suspend operator fun invoke(address: Address) {
 
-        val cartItems : List<CartItem>  = cartRepo.getAllCartItems()
-
+        val cartItems = cartRepo.getAllCartItems()
         val orderId = UUID.randomUUID().toString()
 
-        val order = OrderEntity(
-            orderId = orderId,
+        val order = Order(
+            id = orderId,
             totalAmount = cartItems.sumOf { it.totalPrice },
+            status = "CREATED",
             createdAt = System.currentTimeMillis(),
-            orderStatus = "CREATED"
+            items = cartItems.map {
+                OrderItem(
+                    name = it.name,
+                    quantity = it.quantity,
+                    price = it.unitPrice,
+                    orderType =
+                        if (it.tableId == "takeaway") "Takeaway"
+                        else it.tableId ?: "Takeaway",
+                    isFull = it.portion == PortionType.FULL
+                )
+            }
         )
+        address.orderId = orderId
+        orderRepo.createOrder(order, address)
 
-        val addressEntity = AddressEntity(
-            orderId = orderId,
-            society = address.society,
-            flatNo = address.flatNo,
-            tower = address.tower,
-            mobile = address.mobile.toString()
-        )
-
-        val orderItems = cartItems.map {
-            OrderItemEntity(
-                orderId = orderId,
-                itemName = it.name,
-                quantity = it.quantity,
-                price = it.unitPrice,
-                orderType =  if(it.tableId  ==  "takeaway") "Takeaway" else it.tableId ?: "takeAway",
-                tableNo = it.tableId
-            )
-        }
-
-        orderRepo.createOrder(order, addressEntity, orderItems)
-
-        cartRepo.clearCart() // ✅ CRITICAL
+        cartRepo.clearCart() // ✅ correct place
     }
 }
 

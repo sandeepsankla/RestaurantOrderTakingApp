@@ -8,7 +8,8 @@ fun AddressUiState.toAddressUi(): Address {
         society = society.takeIf { it.isNotBlank() },
         flatNo = flatNo.takeIf { it.isNotBlank() },
         tower = tower.takeIf { it.isNotBlank() },
-        mobile = mobile
+        mobile = mobile,
+        orderId = ""
     )
 }
 
