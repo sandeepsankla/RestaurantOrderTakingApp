@@ -34,4 +34,7 @@ interface CartDao {
     @Query("SELECT IFNULL(SUM(quantity), 0) FROM cart_items")
     fun observeCartCount(): Flow<Int>
 
+    @Query("SELECT * FROM cart_items")
+    suspend fun getCartItems(): List<CartItemEntity>
+
 }

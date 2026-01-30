@@ -56,9 +56,6 @@ fun TakeawayAddressSection() {
         Spacer(modifier = Modifier.height(12.dp))
 
             // Flat No
-          /*  Column(
-                modifier = Modifier.weight(1f)
-            ) {*/
                 Text(
                     text = "Flat No",
                     style = MaterialTheme.typography.bodyMedium,
@@ -75,8 +72,6 @@ fun TakeawayAddressSection() {
                         unfocusedContainerColor = Color.Transparent
                     )
                 )
-          //  }
-      //  }
 
         Spacer(modifier = Modifier.height(12.dp))
         Text(
@@ -106,6 +101,7 @@ fun TakeawayAddressSection() {
                     onValueChange = { mobileNo = it },
                     placeholder = { Text("Enter mobile no.") },
                     modifier = Modifier.fillMaxWidth(),
+                   // isError = mobileNo.isNotEmpty() && !uiState.isValid(),
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                     colors = TextFieldDefaults.colors(

@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "ba4149bc49ba724d60b05a4f8e8286ae",
+    "version": 2,
+    "identityHash": "f19d471ccc2fc7415d3839bdc4b0fabb",
     "entities": [
       {
         "tableName": "cart_items",
@@ -211,43 +211,184 @@
         ]
       },
       {
-        "tableName": "AddressDao",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` ()",
-        "fields": [],
+        "tableName": "addresses",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `society` TEXT, `flatNo` TEXT, `tower` TEXT, `mobile` TEXT NOT NULL, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderId",
+            "columnName": "orderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "society",
+            "columnName": "society",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "flatNo",
+            "columnName": "flatNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "tower",
+            "columnName": "tower",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mobile",
+            "columnName": "mobile",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "orders",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "orderId"
+            ],
+            "referencedColumns": [
+              "orderId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "orders",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`orderId` TEXT NOT NULL, `totalAmount` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `orderStatus` TEXT NOT NULL, PRIMARY KEY(`orderId`))",
+        "fields": [
+          {
+            "fieldPath": "orderId",
+            "columnName": "orderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "totalAmount",
+            "columnName": "totalAmount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderStatus",
+            "columnName": "orderStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
         "primaryKey": {
           "autoGenerate": false,
-          "columnNames": []
+          "columnNames": [
+            "orderId"
+          ]
         },
         "indices": [],
         "foreignKeys": []
       },
       {
-        "tableName": "OrderDao",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` ()",
-        "fields": [],
+        "tableName": "order_items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `menuItemId` INTEGER NOT NULL, `name` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `unitPrice` INTEGER NOT NULL, `orderType` TEXT NOT NULL, `tableNo` TEXT, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderId",
+            "columnName": "orderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "menuItemId",
+            "columnName": "menuItemId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "quantity",
+            "columnName": "quantity",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "unitPrice",
+            "columnName": "unitPrice",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderType",
+            "columnName": "orderType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tableNo",
+            "columnName": "tableNo",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
         "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": []
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
         },
         "indices": [],
-        "foreignKeys": []
-      },
-      {
-        "tableName": "OrderItemDao",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` ()",
-        "fields": [],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": []
-        },
-        "indices": [],
-        "foreignKeys": []
+        "foreignKeys": [
+          {
+            "table": "orders",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "orderId"
+            ],
+            "referencedColumns": [
+              "orderId"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ba4149bc49ba724d60b05a4f8e8286ae')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f19d471ccc2fc7415d3839bdc4b0fabb')"
     ]
   }
 }

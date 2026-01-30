@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.map
 
 @Singleton
 class CartRepositoryImpl @Inject constructor(
@@ -33,7 +34,21 @@ class CartRepositoryImpl @Inject constructor(
             cartDao.delete(itemId)
         }
 
+    override suspend fun clearCart() =
+        withContext(ioDispatcher) {
+            cartDao.clearCart()
+        }
+
+
+
     override fun observeCartItems(): Flow<List<CartItem>> =
         cartDao.observeCartItems()
             .map { list -> list.map { it.toDomain() } }
+
+    override suspend fun getAllCartItems(): List<CartItem> =
+        withContext(ioDispatcher) {
+            cartDao.getCartItems()
+                .map { it.toDomain() }
+        }
+
 }

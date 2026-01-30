@@ -30,4 +30,5 @@ data class CartItemUi(
 
     fun getTotalPriceText(): String =
         "₹%,d".format(totalPrice)
+
 }

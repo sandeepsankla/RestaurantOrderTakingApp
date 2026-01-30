@@ -1,11 +1,13 @@
 package com.sample.restaurantordertakingapp.di
 
 import com.sample.restaurantordertakingapp.domain.repo.CartRepository
+import com.sample.restaurantordertakingapp.domain.repo.OrderRepository
 import com.sample.restaurantordertakingapp.domain.usecase.cart.AddToCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.CalculateCartSummaryUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.ObserveCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.RemoveItemUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.UpdateQuantityUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.order.PlaceOrderUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -34,14 +36,15 @@ object UseCaseModule {
         cartRepository: CartRepository
     ): RemoveItemUseCase {
         return RemoveItemUseCase(cartRepository)
+    } @Provides
+    fun providePlaceOrderUseCase                                (
+        cartRepo: CartRepository,
+        orderRepo: OrderRepository
+
+    ): PlaceOrderUseCase {
+        return PlaceOrderUseCase(cartRepo, orderRepo)
     }
 
-    @Provides
-    fun provideUpdateQuantityUseCase(
-        cartRepository: CartRepository
-    ): UpdateQuantityUseCase {
-        return UpdateQuantityUseCase(cartRepository)
-    }
 
 
     @Provides
