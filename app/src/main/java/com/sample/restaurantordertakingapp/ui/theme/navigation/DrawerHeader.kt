@@ -19,6 +19,7 @@ fun DrawerHeader() {
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
     ) {
+        Spacer(Modifier.height(24.dp))
         Text(
             text = "Tandoori Tadka House",
             style = MaterialTheme.typography.titleLarge,

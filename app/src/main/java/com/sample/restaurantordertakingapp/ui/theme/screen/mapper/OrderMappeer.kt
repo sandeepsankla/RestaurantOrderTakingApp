@@ -8,8 +8,8 @@ fun Order.toOrderUi(): OrderUi {
         id = id,
         totalAmount = totalAmount,
         status = status,
-        itemsText = items.joinToString { item ->
-            "${item.name} x${item.quantity}"
+        itemsText = items.joinToString(separator = "\n") { item ->
+            "${item.name} x ${item.quantity} (${item.orderType} - ${item.getPortion()})"
         }
     )
 }

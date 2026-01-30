@@ -13,7 +13,9 @@ fun OrderWithItems.toDomain(): Order {
             OrderItem(
                 name = it.itemName,
                 quantity = it.quantity,
-                price = it.price
+                price = it.price,
+                orderType = it.orderType,
+                isFull = it.isFull
             )
         }
     )

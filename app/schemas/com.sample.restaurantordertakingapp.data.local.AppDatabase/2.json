@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "880e56a3c1094c060188f14768b77a3f",
+    "identityHash": "af69e66e591947fd131b58e765294112",
     "entities": [
       {
         "tableName": "cart_items",
@@ -312,7 +312,7 @@
       },
       {
         "tableName": "order_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `itemName` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `orderType` TEXT NOT NULL, `tableNo` TEXT, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `itemName` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `orderType` TEXT NOT NULL, `tableNo` TEXT, `isFull` INTEGER NOT NULL, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -355,6 +355,12 @@
             "columnName": "tableNo",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "isFull",
+            "columnName": "isFull",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -392,7 +398,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '880e56a3c1094c060188f14768b77a3f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'af69e66e591947fd131b58e765294112')"
     ]
   }
 }

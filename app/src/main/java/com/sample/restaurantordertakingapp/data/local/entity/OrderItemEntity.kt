@@ -24,6 +24,7 @@ data class OrderItemEntity(
     val quantity: Int = 0,
     val price: Int = 0,
     val orderType: String = "",
-    val tableNo: String?= ""
+    val tableNo: String?= "",
+    val isFull : Boolean = true
 )
 

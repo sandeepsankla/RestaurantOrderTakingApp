@@ -11,8 +11,14 @@ data class Order(
 data class OrderItem(
     val name: String,
     val quantity: Int,
-    val price: Int
-)
+    val price: Int,
+    val orderType: String,
+    val isFull: Boolean
+){
+    fun getPortion(): String {
+        return if (isFull) "Full" else "Half"
+    }
+}
 
 
 enum class OrderStatus {
