@@ -53,7 +53,7 @@ fun AppDrawer(
 
         Divider()
 
-        // 🔴 LOGOUT (BOTTOM)
+
         DrawerLogoutItem(
             onClick = onLogoutClick
         )

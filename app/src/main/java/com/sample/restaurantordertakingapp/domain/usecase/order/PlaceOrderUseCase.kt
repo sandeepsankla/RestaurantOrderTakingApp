@@ -38,10 +38,9 @@ class PlaceOrderUseCase(
         val orderItems = cartItems.map {
             OrderItemEntity(
                 orderId = orderId,
-                menuItemId = it.menuItemId,
-                name = it.name,
+                itemName = it.name,
                 quantity = it.quantity,
-                unitPrice = it.unitPrice,
+                price = it.unitPrice,
                 orderType =  if(it.tableId  ==  "takeaway") "Takeaway" else it.tableId ?: "takeAway",
                 tableNo = it.tableId
             )

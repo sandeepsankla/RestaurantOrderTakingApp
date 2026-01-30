@@ -7,8 +7,11 @@ import com.sample.restaurantordertakingapp.data.local.dao.OrderItemDao
 import com.sample.restaurantordertakingapp.data.local.entity.AddressEntity
 import com.sample.restaurantordertakingapp.data.local.entity.OrderEntity
 import com.sample.restaurantordertakingapp.data.local.entity.OrderItemEntity
+import com.sample.restaurantordertakingapp.data.local.relation.OrderWithItems
+import com.sample.restaurantordertakingapp.data.mapper.toDomain
 import com.sample.restaurantordertakingapp.data.remote.firebase.FirebaseMenuDataSource
 import com.sample.restaurantordertakingapp.di.IoDispatcher
+import com.sample.restaurantordertakingapp.domain.model.Order
 import com.sample.restaurantordertakingapp.domain.repo.OrderRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
@@ -32,4 +35,11 @@ class OrderRepositoryImpl @Inject constructor(
         addressDao.insertAddress(address)
         orderItemDao.insertOrderItems(items)
     }
+
+    override suspend fun getOrders(): List<Order> =
+         orderDao.getOrdersWithItems()
+            .map { it.toDomain() }
+
+
+
 }

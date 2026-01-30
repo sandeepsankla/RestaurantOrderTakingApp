@@ -32,12 +32,12 @@ fun OrderItem(order: OrderUi) {
             Spacer(Modifier.height(4.dp))
 
             Text(
-                text = "Items: ${order.items}",
+                text = "Items: ${order.itemsText}",
                 style = MaterialTheme.typography.bodyMedium
             )
 
             Text(
-                text = "Total: ₹${order.amount}",
+                text = "Total: ₹${order.totalAmount}",
                 style = MaterialTheme.typography.bodyMedium
             )
 

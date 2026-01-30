@@ -5,15 +5,7 @@ import androidx.room.Relation
 import com.sample.restaurantordertakingapp.data.local.entity.CategoryEntity
 import com.sample.restaurantordertakingapp.data.local.entity.MenuEntity
 
-/*
-MenuEntitydata class MenuWithCategories(
-    @Embedded val menu: MenuEntity,
-    @Relation(
-        parentColumn = "id",
-        entityColumn = "menuId"
-    )
-    val categories: List<CategoryWithItems>
-)*/
+
 data class MenuWithCategories(
     @Embedded val menu: MenuEntity,
     @Relation(

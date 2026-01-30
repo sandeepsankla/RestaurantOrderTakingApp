@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "f19d471ccc2fc7415d3839bdc4b0fabb",
+    "identityHash": "880e56a3c1094c060188f14768b77a3f",
     "entities": [
       {
         "tableName": "cart_items",
@@ -312,7 +312,7 @@
       },
       {
         "tableName": "order_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `menuItemId` INTEGER NOT NULL, `name` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `unitPrice` INTEGER NOT NULL, `orderType` TEXT NOT NULL, `tableNo` TEXT, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `itemName` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `orderType` TEXT NOT NULL, `tableNo` TEXT, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -327,14 +327,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "menuItemId",
-            "columnName": "menuItemId",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
+            "fieldPath": "itemName",
+            "columnName": "itemName",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -345,8 +339,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "unitPrice",
-            "columnName": "unitPrice",
+            "fieldPath": "price",
+            "columnName": "price",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -369,7 +363,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_order_items_orderId",
+            "unique": false,
+            "columnNames": [
+              "orderId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_order_items_orderId` ON `${TABLE_NAME}` (`orderId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "orders",
@@ -388,7 +392,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f19d471ccc2fc7415d3839bdc4b0fabb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '880e56a3c1094c060188f14768b77a3f')"
     ]
   }
 }
