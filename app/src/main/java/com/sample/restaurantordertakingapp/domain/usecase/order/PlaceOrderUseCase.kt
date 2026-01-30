@@ -3,12 +3,10 @@ package com.sample.restaurantordertakingapp.domain.usecase.order
 import com.sample.restaurantordertakingapp.data.local.entity.AddressEntity
 import com.sample.restaurantordertakingapp.data.local.entity.OrderEntity
 import com.sample.restaurantordertakingapp.data.local.entity.OrderItemEntity
+import com.sample.restaurantordertakingapp.domain.model.Address
 import com.sample.restaurantordertakingapp.domain.model.CartItem
 import com.sample.restaurantordertakingapp.domain.repo.CartRepository
 import com.sample.restaurantordertakingapp.domain.repo.OrderRepository
-import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressUi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import java.util.UUID
 
 class PlaceOrderUseCase(
@@ -16,7 +14,7 @@ class PlaceOrderUseCase(
     private val orderRepo: OrderRepository
 ) {
 
-    suspend operator fun invoke(address: AddressUi) {
+    suspend operator fun invoke(address: Address) {
 
         val cartItems : List<CartItem>  = cartRepo.getAllCartItems()
 
@@ -32,9 +30,9 @@ class PlaceOrderUseCase(
         val addressEntity = AddressEntity(
             orderId = orderId,
             society = address.society,
-            flatNo = address.flatNo,
+            flatNo = address.flat,
             tower = address.tower,
-            mobile = address.mobile
+            mobile = address.mobileNo.toString()
         )
 
         val orderItems = cartItems.map {
@@ -55,6 +53,3 @@ class PlaceOrderUseCase(
     }
 }
 
-private fun Flow<List<CartItem>>.sumOf(function: Any): Int {
-    TODO("Not yet implemented")
-}

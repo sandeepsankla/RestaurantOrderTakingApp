@@ -17,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.*
 import com.sample.restaurantordertakingapp.ui.theme.component.common.AppBarWithCartBadge
 import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressScreen
+import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressViewModel
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
 
 private const val KEY_MENU_ITEM = "menuItem" // SavedStateHandle key
@@ -100,10 +101,19 @@ fun AppNavigation() {
             }
 
             composable("address") {
+                val viewModel: AddressViewModel = hiltViewModel()
+                val state = viewModel.uiState
                 AddressScreen(
+                    state = state,
+                    onSocietyChange = viewModel::onSocietyChange,
+                    onFlatNoChange = viewModel::onFlatNoChange,
+                    onTowerChange = viewModel::onTowerChange,
+                    onMobileChange = viewModel::onMobileChange,
                     onBack = { navController.popBackStack() },
                     onPlaceOrder = {
-                        // place order logic
+                        viewModel.onPlaceOrderClick {
+                            navController.popBackStack() // order placed → go back
+                        }
                     }
                 )
             }

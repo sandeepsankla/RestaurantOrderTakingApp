@@ -34,10 +34,10 @@ data class CartDetails(
 )
 
 data class Address(
-    val society: String,
-    val tower : String,
-    val flat : String,
-    val mobileNo : Int
+    val society: String?,
+    val tower: String?,
+    val flat: String?,
+    val mobileNo: Int
 )
 
 data class PriceDetails(

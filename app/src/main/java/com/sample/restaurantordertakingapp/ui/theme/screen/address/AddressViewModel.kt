@@ -52,4 +52,8 @@ class AddressViewModel @Inject constructor(
             onSuccess()
         }
     }
+
+    fun saveAddress(addressUi: AddressUi) {
+
+    }
 }

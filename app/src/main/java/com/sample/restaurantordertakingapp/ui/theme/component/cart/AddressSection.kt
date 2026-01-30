@@ -1,132 +1,91 @@
 package com.sample.restaurantordertakingapp.ui.theme.component.cart
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.*
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.*
 
-// Components/TakeawayAddressSection.kt
-@Composable
-fun TakeawayAddressSection() {
-    var society by remember { mutableStateOf("") }
-    var flatNo by remember { mutableStateOf("") }
-    var tower by remember { mutableStateOf("") }
-    var mobileNo by remember { mutableStateOf("") }
-    var saveAddress by remember { mutableStateOf(true) }
 
+@Composable
+fun TakeawayAddressSection(
+    society: String,
+    onSocietyChange: (String) -> Unit,
+
+    flatNo: String,
+    onFlatNoChange: (String) -> Unit,
+
+    tower: String,
+    onTowerChange: (String) -> Unit,
+
+    mobileNo: String,
+    onMobileNoChange: (String) -> Unit
+
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 16.dp)
     ) {
-            Column{
-                Text(
-                    text = "Society",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                OutlinedTextField(
-                    value = society,
-                    onValueChange = { society = it },
-                    placeholder = { Text("Enter society") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
-                    )
-                )
-            }
 
-        Spacer(modifier = Modifier.height(12.dp))
+        Text("Society")
+        OutlinedTextField(
+            value = society,
+            onValueChange = onSocietyChange,
+            placeholder = { Text("Enter society") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
 
-            // Flat No
-                Text(
-                    text = "Flat No",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                OutlinedTextField(
-                    value = flatNo,
-                    onValueChange = { flatNo = it },
-                    placeholder = { Text("Enter flat no") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
-                    )
-                )
+        Spacer(Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-                    text = "Tower",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                OutlinedTextField(
-                    value = tower,
-                    onValueChange = { tower = it },
-                    placeholder = { Text("Enter tower") },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
-                    )
-                )
-        Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    text = "Mobile No",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                OutlinedTextField(
-                    value = mobileNo,
-                    onValueChange = { mobileNo = it },
-                    placeholder = { Text("Enter mobile no.") },
-                    modifier = Modifier.fillMaxWidth(),
-                   // isError = mobileNo.isNotEmpty() && !uiState.isValid(),
-                    singleLine = true,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent
-                    )
-                )
+        Text("Flat No")
+        OutlinedTextField(
+            value = flatNo,
+            onValueChange = onFlatNoChange,
+            placeholder = { Text("Enter flat no") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(Modifier.height(12.dp))
 
-        // Save Address Checkbox
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Text("Tower")
+        OutlinedTextField(
+            value = tower,
+            onValueChange = onTowerChange,
+            placeholder = { Text("Enter tower") },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+
+        Spacer(Modifier.height(12.dp))
+
+        Text("Mobile No")
+        OutlinedTextField(
+            value = mobileNo,
+            onValueChange = { onMobileNoChange(it.filter(Char::isDigit)) },
+            placeholder = { Text("Enter mobile no") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+
+        Spacer(Modifier.height(16.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(
-                checked = saveAddress,
-                onCheckedChange = { saveAddress = it },
-                colors = CheckboxDefaults.colors(
-                    checkedColor = MaterialTheme.colorScheme.primary
-                )
+                checked = true,
+                onCheckedChange = {
+                    //todo later
+                }
             )
-            Text(
-                text = "Save Address",
-                style = MaterialTheme.typography.bodyMedium
-            )
+            Text("Save Address")
         }
     }
 }
