@@ -9,7 +9,7 @@ sealed class Screen(val route: String, val title: String) {
     data object Cart : Screen("cart", "Cart")
     data object Detail : Screen("detail", "Item detail")
 
-    // Helper function to create the route with argument
-    fun createDetailRoute(itemId: String) = "detail/$itemId"
+    data object Address : Screen("address", "Address")
+    data object Orders : Screen("orders", "Orders")
 }
 
