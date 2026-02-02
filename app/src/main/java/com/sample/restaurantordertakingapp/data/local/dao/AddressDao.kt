@@ -16,3 +16,7 @@ interface AddressDao {
     @Query("SELECT * FROM addresses WHERE orderId = :orderId")
     suspend fun getAddressForOrder(orderId: String): AddressEntity?
 }
+
+
+
+

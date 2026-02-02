@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "af69e66e591947fd131b58e765294112",
+    "identityHash": "b7214d5777895bff554d94bf083a9a95",
     "entities": [
       {
         "tableName": "cart_items",
@@ -274,11 +274,23 @@
       },
       {
         "tableName": "orders",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`orderId` TEXT NOT NULL, `totalAmount` INTEGER NOT NULL, `createdAt` INTEGER NOT NULL, `orderStatus` TEXT NOT NULL, PRIMARY KEY(`orderId`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`orderId` TEXT NOT NULL, `orderNumber` INTEGER NOT NULL, `orderDate` TEXT NOT NULL, `totalAmount` INTEGER NOT NULL, `status` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, PRIMARY KEY(`orderId`))",
         "fields": [
           {
             "fieldPath": "orderId",
             "columnName": "orderId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderNumber",
+            "columnName": "orderNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "orderDate",
+            "columnName": "orderDate",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -289,15 +301,15 @@
             "notNull": true
           },
           {
-            "fieldPath": "createdAt",
-            "columnName": "createdAt",
-            "affinity": "INTEGER",
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "orderStatus",
-            "columnName": "orderStatus",
-            "affinity": "TEXT",
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -307,12 +319,23 @@
             "orderId"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_orders_orderDate_orderNumber",
+            "unique": true,
+            "columnNames": [
+              "orderDate",
+              "orderNumber"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_orders_orderDate_orderNumber` ON `${TABLE_NAME}` (`orderDate`, `orderNumber`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
         "tableName": "order_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `itemName` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `orderType` TEXT NOT NULL, `tableNo` TEXT, `isFull` INTEGER NOT NULL, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `orderId` TEXT NOT NULL, `name` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` INTEGER NOT NULL, `orderType` TEXT NOT NULL, `tableNo` TEXT, `isFull` INTEGER NOT NULL, FOREIGN KEY(`orderId`) REFERENCES `orders`(`orderId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -327,8 +350,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "itemName",
-            "columnName": "itemName",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -398,7 +421,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'af69e66e591947fd131b58e765294112')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b7214d5777895bff554d94bf083a9a95')"
     ]
   }
 }

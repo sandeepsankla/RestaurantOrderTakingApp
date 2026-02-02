@@ -44,7 +44,7 @@ class AddressViewModel @Inject constructor(
         viewModelScope.launch {
             uiState = uiState.copy(isLoading = true, error = null)
 
-            placeOrderUseCase(uiState.toAddressUi())
+            placeOrderUseCase(address = uiState.toAddressUi())
 
             uiState = uiState.copy(
                 isLoading = false,
@@ -52,5 +52,7 @@ class AddressViewModel @Inject constructor(
             )
         }
     }
-
+    fun onNavigationHandled() {
+        uiState = uiState.copy(isSuccess = false)
+    }
 }

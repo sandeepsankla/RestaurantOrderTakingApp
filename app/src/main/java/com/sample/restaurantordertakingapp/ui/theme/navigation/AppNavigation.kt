@@ -17,6 +17,8 @@ import androidx.navigation.compose.*
 import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.address.AddressViewModel
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
+import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuViewModel
+import com.sample.restaurantordertakingapp.ui.theme.screen.menu.NotificationPermissionHandler
 import com.sample.restaurantordertakingapp.ui.theme.screen.order.OrdersScreen
 import com.sample.restaurantordertakingapp.ui.theme.screen.order.OrdersViewModel
 import kotlinx.coroutines.delay
@@ -30,6 +32,11 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val mainViewModel: MenuViewModel = hiltViewModel()
+    // 🔔 ask permission ONCE when app starts
+    NotificationPermissionHandler {
+        mainViewModel.startListeningForOrders()
+    }
 
     val cartViewModel: CartViewModel = hiltViewModel()
     val cartCount by cartViewModel.cartCount.collectAsStateWithLifecycle()
@@ -139,6 +146,8 @@ fun AppNavigation() {
                                 }
                                 launchSingleTop = true
                             }
+                            // 🔥 THIS LINE FIXES YOUR BUG
+                            viewModel.onNavigationHandled()
                         }
                     }
 
@@ -182,9 +191,8 @@ fun AppNavigation() {
 
                 composable (route = Screen.Orders.route ){
                   val  ordersVm: OrdersViewModel = hiltViewModel()
-                    val state = ordersVm.uiState
-
-                    OrdersScreen(state)
+                  val state by ordersVm.uiState.collectAsStateWithLifecycle()
+                    OrdersScreen(state, ordersVm::refresh, ordersVm::onOrderStatusClick)
                 }
             }
         }

@@ -10,23 +10,27 @@ import com.sample.restaurantordertakingapp.domain.model.Address
 import com.sample.restaurantordertakingapp.domain.model.Order
 import com.sample.restaurantordertakingapp.domain.model.OrderItem
 
-fun OrderWithItems.toDomain(): Order {
-    return Order(
-        id = order.orderId,
-        items = items.map {
-            OrderItem(
-                name = it.itemName,
-                quantity = it.quantity,
-                price = it.price,
-                orderType = it.orderType,
-                isFull = it.isFull
-            )
-        },
-        totalAmount = order.totalAmount,
-        status = order.orderStatus,
-        createdAt = order.createdAt
+fun Order.toOrderEntity(): OrderEntity =
+    OrderEntity(
+        orderId = id,
+        orderNumber = orderNumber,
+        orderDate = orderDate,
+        totalAmount = totalAmount,
+        status = status,
+        createdAt = createdAt
     )
-}
+
+fun OrderItem.toEntity(orderId: String): OrderItemEntity =
+    OrderItemEntity(
+        orderId = orderId,
+        name = name,
+        quantity = quantity,
+        price = price,
+        orderType = orderType,
+        tableNo = tableNo,
+        isFull = isFull
+    )
+
 
 fun Order.toFirebaseDto(): FirebaseOrderDto {
     return FirebaseOrderDto(
@@ -45,14 +49,7 @@ fun Order.toFirebaseDto(): FirebaseOrderDto {
         }
     )
 }
-fun Order.toOrderEntity(): OrderEntity {
-    return OrderEntity(
-        orderId = id,
-        totalAmount = totalAmount,
-        createdAt = createdAt,
-        orderStatus = status
-    )
-}
+
 
 fun Address.toAddressEntity(): AddressEntity {
     return AddressEntity(
@@ -68,7 +65,7 @@ fun Order.toOrderItemEntities(): List<OrderItemEntity> {
     return items.map { item ->
         OrderItemEntity(
             orderId = id,
-            itemName = item.name,
+            name = item.name,
             quantity = item.quantity,
             price = item.price,
             orderType = item.orderType,
@@ -77,6 +74,46 @@ fun Order.toOrderItemEntities(): List<OrderItemEntity> {
         )
     }
 }
+/*
+fun FirebaseOrderDto.toDomain(): Order {
+    return Order(
+        id = orderId,
+        totalAmount = totalAmount,
+        status = status,
+        createdAt = createdAt,
+        items = items.map {
+            OrderItem(
+                name = it.name,
+                quantity = it.quantity,
+                price = it.price,
+                orderType = it.orderType,
+                isFull = it.portion == "Full"
+            )
+        }
+    )
+}
+*/
+
+fun OrderWithItems.toDomain(): Order =
+    Order(
+        id = order.orderId,
+        orderNumber = order.orderNumber,
+        orderDate = order.orderDate,
+        totalAmount = order.totalAmount,
+        status = order.status,
+        createdAt = order.createdAt,
+        items = items.map {
+            OrderItem(
+                name = it.name,
+                quantity = it.quantity,
+                price = it.price,
+                orderType = it.orderType,
+                tableNo = it.tableNo,
+                isFull = it.isFull
+            )
+        }
+    )
+
 
 
 

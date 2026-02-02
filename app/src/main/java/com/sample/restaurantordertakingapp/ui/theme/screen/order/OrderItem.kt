@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.sample.restaurantordertakingapp.domain.model.OrderStatus
 
 @Composable
 fun OrderItem(order: OrderUi) {
@@ -25,7 +26,7 @@ fun OrderItem(order: OrderUi) {
         ) {
 
             Text(
-                text = "Order #${order.id}",
+                text = "Order #${order.orderId}",
                 style = MaterialTheme.typography.titleMedium
             )
 
@@ -44,12 +45,13 @@ fun OrderItem(order: OrderUi) {
             Spacer(Modifier.height(6.dp))
 
             Text(
-                text = order.status,
-                color = if (order.status == "Completed")
+                text = order.status.name,
+                color = if (order.status.equals(OrderStatus.DELIVERED.name))
                     Color(0xFF2E7D32)
                 else
                     Color(0xFFF57C00),
                 style = MaterialTheme.typography.bodySmall
+
             )
         }
     }

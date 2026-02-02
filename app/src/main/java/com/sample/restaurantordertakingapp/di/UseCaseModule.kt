@@ -7,8 +7,9 @@ import com.sample.restaurantordertakingapp.domain.usecase.cart.CalculateCartSumm
 import com.sample.restaurantordertakingapp.domain.usecase.cart.ObserveCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.RemoveItemUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.UpdateQuantityUseCase
-import com.sample.restaurantordertakingapp.domain.usecase.order.GetOrdersUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.order.ObserveOrdersUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.order.PlaceOrderUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.order.UpdateOrderStatusUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,8 +55,14 @@ object UseCaseModule {
         CalculateCartSummaryUseCase()
 
     @Provides
-    fun provideGetOrderUseCase(
+    fun provideObserveOrdersUseCase(
         orderRepository: OrderRepository
-    ): GetOrdersUseCase =
-        GetOrdersUseCase(orderRepository)
+    ): ObserveOrdersUseCase =
+        ObserveOrdersUseCase(orderRepository)
+
+    @Provides
+    fun provideUpdateOrderStatusUseCase(
+        orderRepository: OrderRepository
+    ): UpdateOrderStatusUseCase =
+        UpdateOrderStatusUseCase(orderRepository)
 }

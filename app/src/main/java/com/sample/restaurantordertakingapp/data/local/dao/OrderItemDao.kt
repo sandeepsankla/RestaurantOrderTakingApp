@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.sample.restaurantordertakingapp.data.local.entity.OrderItemEntity
 
-@Dao
+/*@Dao
 interface OrderItemDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -14,4 +14,12 @@ interface OrderItemDao {
 
     @Query("SELECT * FROM order_items WHERE orderId = :orderId")
     suspend fun getItemsForOrder(orderId: String): List<OrderItemEntity>
+}*/
+
+@Dao
+interface OrderItemDao {
+
+    @Insert(onConflict = OnConflictStrategy.ABORT)
+    suspend fun insertItems(items: List<OrderItemEntity>)
 }
+

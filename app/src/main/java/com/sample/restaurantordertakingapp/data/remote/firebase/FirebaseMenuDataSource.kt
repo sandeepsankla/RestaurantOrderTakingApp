@@ -2,7 +2,6 @@ package com.sample.restaurantordertakingapp.data.remote.firebase
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sample.restaurantordertakingapp.data.remote.firebase.model.MenuDocument
-import com.sample.restaurantordertakingapp.data.remote.firebase.model.MenuResponseDocument
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 

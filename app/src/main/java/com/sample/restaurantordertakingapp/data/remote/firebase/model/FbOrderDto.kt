@@ -1,9 +1,11 @@
 package com.sample.restaurantordertakingapp.data.remote.firebase.model
 
+import com.sample.restaurantordertakingapp.domain.model.OrderStatus
+
 data class FirebaseOrderDto(
     val orderId: String = "",
     val totalAmount: Int = 0,
-    val status: String = "",
+    val status: OrderStatus = OrderStatus.CREATED,
     val createdAt: Long = 0L,
     val items: List<FirebaseOrderItemDto> = emptyList()
 )
