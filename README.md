@@ -184,5 +184,3 @@ You are free to fork and adapt it for your own restaurant needs.
 Developed with a strong focus on **clean code**, **long-term maintainability**, and **real-world reliability**.
 
 ---
-
-Just tell me 👍
