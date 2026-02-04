@@ -11,7 +11,7 @@ class StartOrderSyncUseCase @Inject constructor(
     suspend operator fun invoke(
         onNewOrder: (Order) -> Unit
     ) {
-        orderRepository.startOrderSync(onNewOrder)
+       // orderRepository.startOrderSync(onNewOrder)
     }
 }
 

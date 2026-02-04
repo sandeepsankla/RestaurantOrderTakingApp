@@ -1,5 +1,6 @@
 package com.sample.restaurantordertakingapp.data.mapper
 
+import android.annotation.SuppressLint
 import com.sample.restaurantordertakingapp.data.local.entity.AddressEntity
 import com.sample.restaurantordertakingapp.data.local.entity.OrderEntity
 import com.sample.restaurantordertakingapp.data.local.entity.OrderItemEntity
@@ -9,6 +10,10 @@ import com.sample.restaurantordertakingapp.data.remote.firebase.model.FirebaseOr
 import com.sample.restaurantordertakingapp.domain.model.Address
 import com.sample.restaurantordertakingapp.domain.model.Order
 import com.sample.restaurantordertakingapp.domain.model.OrderItem
+import com.sample.restaurantordertakingapp.domain.model.OrderStatus
+import com.sample.restaurantordertakingapp.utils.DateProvider
+import java.text.SimpleDateFormat
+import java.util.Date
 
 fun Order.toOrderEntity(): OrderEntity =
     OrderEntity(
@@ -36,19 +41,20 @@ fun Order.toFirebaseDto(): FirebaseOrderDto {
     return FirebaseOrderDto(
         orderId = id,
         totalAmount = totalAmount,
-        status = status,
-        createdAt = System.currentTimeMillis(),
+        status = status.name,   // enum → String
+        createdAt = createdAt,
         items = items.map {
             FirebaseOrderItemDto(
                 name = it.name,
                 quantity = it.quantity,
                 price = it.price,
                 orderType = it.orderType,
-                portion = if (it.isFull) "Full" else "Half"
+                portion = if (it.isFull) "FULL" else "HALF"
             )
         }
     )
 }
+
 
 
 fun Address.toAddressEntity(): AddressEntity {
@@ -113,6 +119,33 @@ fun OrderWithItems.toDomain(): Order =
             )
         }
     )
+
+
+@SuppressLint("SimpleDateFormat")
+fun FirebaseOrderDto.toOrderEntity(): OrderEntity {
+    return OrderEntity(
+        orderId = orderId,
+        orderNumber = orderNumber,   // ✅ USE SAME NUMBER
+        totalAmount = totalAmount,
+        status = OrderStatus.valueOf(status),
+        createdAt = createdAt,
+        isSynced = true,
+        orderDate = SimpleDateFormat("yyyy-MM-dd").format(Date(createdAt))
+    )
+}
+
+
+fun FirebaseOrderItemDto.toEntity(orderId: String): OrderItemEntity {
+    return OrderItemEntity(
+        orderId = orderId,
+        name = name,
+        quantity = quantity,
+        price = price,
+        orderType = orderType,
+        tableNo = null,
+        isFull = portion == "FULL"
+    )
+}
 
 
 

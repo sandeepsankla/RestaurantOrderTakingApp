@@ -23,7 +23,7 @@ import javax.inject.Inject
 class MenuViewModel  @Inject constructor(
     private val loadMenuUseCase: LoadMenuUseCase,
     private val addToCartUseCase: AddToCartUseCase,
-    private val startOrderSyncUseCase: StartOrderSyncUseCase,
+    ///private val startOrderSyncUseCase: StartOrderSyncUseCase,
     private val notificationHelper: NotificationHelper
 ) :ViewModel() {
 
@@ -35,17 +35,17 @@ class MenuViewModel  @Inject constructor(
         loadMenu()
     }
 
-    fun startListeningForOrders() {
+   /* fun startListeningForOrders() {
         viewModelScope.launch {
             startOrderSyncUseCase { order ->
                 try {
-                    notificationHelper.showNewOrderNotification(order.id)
+                    notificationHelper.showNewOrderNotification(order.orderNumber)
                 } catch (e: SecurityException) {
                     Log.e("OrderSync", "Notification permission denied: ${e.message}")
                 }
             }
         }
-    }
+    }*/
 
     fun loadMenu() {
         viewModelScope.launch {

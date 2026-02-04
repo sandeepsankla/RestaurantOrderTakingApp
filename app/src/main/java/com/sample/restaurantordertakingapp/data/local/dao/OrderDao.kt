@@ -40,11 +40,12 @@ interface OrderDao {
     * --------------------------------------------------------- */
 
     @Query("""
-        SELECT MAX(orderNumber)
-        FROM orders
-        WHERE orderDate = :orderDate
-    """)
+    SELECT MAX(orderNumber)
+    FROM orders
+    WHERE orderDate = :orderDate
+""")
     suspend fun getLastOrderNumberForDate(orderDate: String): Int?
+
 
 
     /* ---------------------------------------------------------
@@ -72,10 +73,11 @@ interface OrderDao {
      * --------------------------------------------------------- */
 
     @Query("""
-        UPDATE orders
-        SET status = :status
-        WHERE orderId = :orderId
-    """)
+    UPDATE orders
+    SET status = :status,
+        isSynced = 0
+    WHERE orderId = :orderId
+""")
     suspend fun updateOrderStatus(
         orderId: String,
         status: OrderStatus
@@ -91,18 +93,43 @@ interface OrderDao {
         orderItemDao.insertItems(items)
     }
 
+    @Query("""
+    SELECT * FROM orders
+    WHERE isSynced = 0
+    ORDER BY createdAt ASC
+""")
+    suspend fun getUnsyncedOrders(): List<OrderEntity>
 
-  /*  @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insertOrder(order: OrderEntity)
-
+    @Query("""
+    UPDATE orders
+    SET isSynced = 1
+    WHERE orderId = :orderId
+""")
+    suspend fun markOrderSynced(orderId: String)
 
 
     @Transaction
     @Query("""
-        SELECT * FROM orders
-        ORDER BY createdAt DESC
-    """)
-    fun observeOrdersWithItems(): Flow<List<OrderWithItems>>*/
+    SELECT * FROM orders
+    WHERE isSynced = 0
+    ORDER BY createdAt ASC
+""")
+    suspend fun getUnsyncedOrdersWithItems(): List<OrderWithItems>
 
+    @Query("""
+    SELECT COUNT(*) FROM orders
+    WHERE orderId = :orderId
+""")
+    suspend fun orderExists(orderId: String): Int
+
+    @Transaction
+    @Query("""
+        SELECT * FROM orders
+        WHERE orderId = :orderId
+        LIMIT 1
+    """)
+    suspend fun getOrderWithItems(
+        orderId: String
+    ): OrderWithItems?
 
 }

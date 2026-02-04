@@ -2,14 +2,15 @@ package com.sample.restaurantordertakingapp.di
 
 import com.sample.restaurantordertakingapp.domain.repo.CartRepository
 import com.sample.restaurantordertakingapp.domain.repo.OrderRepository
+import com.sample.restaurantordertakingapp.domain.repo.OrderSyncRepository
 import com.sample.restaurantordertakingapp.domain.usecase.cart.AddToCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.CalculateCartSummaryUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.ObserveCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.RemoveItemUseCase
-import com.sample.restaurantordertakingapp.domain.usecase.cart.UpdateQuantityUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.order.ObserveOrdersUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.order.PlaceOrderUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.order.UpdateOrderStatusUseCase
+import com.sample.restaurantordertakingapp.utils.NotificationHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,10 +44,12 @@ object UseCaseModule {
     @Provides
     fun providePlaceOrderUseCase(
         cartRepo: CartRepository,
-        orderRepo: OrderRepository
+        orderRepo: OrderRepository,
+       orderSyncRepository: OrderSyncRepository,
+       notificationHelper: NotificationHelper
 
     ): PlaceOrderUseCase {
-        return PlaceOrderUseCase(cartRepo, orderRepo)
+        return PlaceOrderUseCase(cartRepo, orderRepo, orderSyncRepository, notificationHelper)
     }
 
 
@@ -62,7 +65,8 @@ object UseCaseModule {
 
     @Provides
     fun provideUpdateOrderStatusUseCase(
-        orderRepository: OrderRepository
+        orderRepository: OrderRepository,
+        orderSyncRepository: OrderSyncRepository
     ): UpdateOrderStatusUseCase =
-        UpdateOrderStatusUseCase(orderRepository)
+        UpdateOrderStatusUseCase(orderRepository, orderSyncRepository)
 }

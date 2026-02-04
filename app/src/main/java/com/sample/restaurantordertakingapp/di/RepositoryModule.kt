@@ -2,10 +2,14 @@ package com.sample.restaurantordertakingapp.di
 
 import com.sample.restaurantordertakingapp.data.repository.CartRepositoryImpl
 import com.sample.restaurantordertakingapp.data.repository.MenuRepositoryImpl
+import com.sample.restaurantordertakingapp.data.repository.OrderPullRepositoryImpl
 import com.sample.restaurantordertakingapp.data.repository.OrderRepositoryImpl
+import com.sample.restaurantordertakingapp.data.repository.OrderSyncRepositoryImpl
 import com.sample.restaurantordertakingapp.domain.repo.CartRepository
 import com.sample.restaurantordertakingapp.domain.repo.MenuRepository
+import com.sample.restaurantordertakingapp.domain.repo.OrderPullRepository
 import com.sample.restaurantordertakingapp.domain.repo.OrderRepository
+import com.sample.restaurantordertakingapp.domain.repo.OrderSyncRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -21,4 +25,8 @@ abstract class RepositoryModule {
     abstract fun bindMenuRepository(impl: MenuRepositoryImpl): MenuRepository
     @Binds
     abstract fun bindOrderRepository(impl: OrderRepositoryImpl): OrderRepository
+    @Binds
+    abstract fun bindOrderSyncRepository(impl: OrderSyncRepositoryImpl): OrderSyncRepository
+    @Binds
+    abstract fun bindOrderPullRepository(impl: OrderPullRepositoryImpl): OrderPullRepository
 }

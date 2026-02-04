@@ -125,13 +125,8 @@ class OrderRepositoryImpl @Inject constructor(
         order
     }
 
-
-
     override fun observeOrders(): Flow<List<Order>> =
         orderDao.observeOrdersWithItems()
             .map { list -> list.map { it.toDomain() } }
 
-    override fun startOrderSync(onNewOrder: (Order) -> Unit) {
-
-    }
 }

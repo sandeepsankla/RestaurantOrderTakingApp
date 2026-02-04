@@ -24,7 +24,7 @@ interface OrderRepository {
     ): Order
 
     fun observeOrders(): Flow<List<Order>>
-    fun startOrderSync(onNewOrder: (Order) -> Unit)
+
 
 
     /* suspend fun startOrderSync(

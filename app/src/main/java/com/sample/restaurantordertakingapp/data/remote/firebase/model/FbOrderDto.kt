@@ -4,11 +4,13 @@ import com.sample.restaurantordertakingapp.domain.model.OrderStatus
 
 data class FirebaseOrderDto(
     val orderId: String = "",
+    val orderNumber: Int = 0,     // ✅ ADD THIS
     val totalAmount: Int = 0,
-    val status: OrderStatus = OrderStatus.CREATED,
+    val status: String = "",
     val createdAt: Long = 0L,
     val items: List<FirebaseOrderItemDto> = emptyList()
 )
+
 
 data class FirebaseOrderItemDto(
     val name: String = "",

@@ -24,5 +24,6 @@ data class OrderEntity(
     val orderDate: String,          // yyyy-MM-dd
     val totalAmount: Int,
     val status: OrderStatus,
-    val createdAt: Long
+    val createdAt: Long,
+    val isSynced: Boolean = false
 )

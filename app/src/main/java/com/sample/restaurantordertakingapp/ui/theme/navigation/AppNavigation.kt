@@ -34,9 +34,12 @@ fun AppNavigation() {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val mainViewModel: MenuViewModel = hiltViewModel()
     // 🔔 ask permission ONCE when app starts
-    NotificationPermissionHandler {
-        mainViewModel.startListeningForOrders()
-    }
+    NotificationPermissionHandler(
+        onGranted = {
+           // mainViewModel.startListeningForOrders()
+        }
+    )
+
 
     val cartViewModel: CartViewModel = hiltViewModel()
     val cartCount by cartViewModel.cartCount.collectAsStateWithLifecycle()
