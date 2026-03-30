@@ -1,186 +1,208 @@
+# 🍽️ Tandoori Tadka House — Restaurant Order Taking App
 
-# 🍽️ Tandoori Tadka – Restaurant Order Taking App
+[![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://android.com)
+[![Kotlin](https://img.shields.io/badge/Language-Kotlin-purple?logo=kotlin)](https://kotlinlang.org)
+[![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-blue)](https://developer.android.com/jetpack/compose)
+[![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture%20%2B%20MVVM-orange)](https://developer.android.com/topic/architecture)
+[![Firebase](https://img.shields.io/badge/Backend-Firebase-yellow?logo=firebase)](https://firebase.google.com)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-A **production-ready Android app** built for **real restaurant usage**, designed to handle order creation, tracking, and status updates with **Clean Architecture**, **offline-first support**, and **modern Android best practices**.
-
-This app is actively used in a restaurant environment to manage takeaway and dine-in orders efficiently.
+> A production-grade Android application for restaurant order management — supporting both **Dine-In** (table-wise) and **Takeaway** ordering with real-time Firebase sync and offline-first architecture.
 
 ---
 
-## 🚀 Features
+## 📱 Screenshots
 
-### 🧾 Order Management
+<table>
+  <tr>
+    <td align="center"><b>Menu</b></td>
+    <td align="center"><b>Item Detail</b></td>
+    <td align="center"><b>Cart</b></td>
+    <td align="center"><b>Address</b></td>
+    <td align="center"><b>My Orders</b></td>
+  </tr>
+  <tr>
+    <td><img src="assets/menu-page.png" width="180"/></td>
+    <td><img src="assets/item-detail.png" width="180"/></td>
+    <td><img src="assets/cart.png" width="180"/></td>
+    <td><img src="assets/address.png" width="180"/></td>
+    <td><img src="assets/order-status.png" width="180"/></td>
+  </tr>
+</table>
 
-* Create orders with multiple items
-* Auto-generated **readable order numbers** (Order #1, #2, #3… reset daily)
-* Offline-first order creation (works without internet)
+---
 
-### 🔄 Order Lifecycle
+## ✨ Features
 
-* **CREATED → READY → DELIVERED**
-* Forward-only status updates (business-rule enforced)
-* One-tap status update from Orders screen
+### 🛒 Ordering
+- **Dine-In ordering** — table-wise order placement (Table 1–6)
+- **Takeaway ordering** — with delivery address capture
+- **Half / Full portion** selection per item with dynamic pricing
+- **Quantity control** — increment / decrement with real-time total update
+- **Cart management** — add, remove, update items before checkout
 
-### 📦 Address Handling
+### 📋 Menu
+- **Category-based menu** — Starters, Main Course, Desserts
+- **Item detail bottom sheet** — image, price, portion & table selection
+- **Real-time menu** fetched from Firebase Firestore
 
-* Capture and save takeaway address with each order
-* Address linked safely to order using foreign keys
-
-### 📋 Orders Screen
-
-* Clean, readable cart-style UI
-* Latest orders shown first
-* Manual **Swipe to Refresh**
-* Status chip for quick visibility
+### 📦 Order Management
+- **Real-time order status** — Pending → Ready → Delivered
+- **Mark as Delivered** — one-tap order completion
+- **Order history** — complete list of all past orders
+- **Instant Firebase push** on every new order
 
 ### 🔔 Notifications
-
-* Notification shown when new order arrives
-* Tapping notification opens **Orders screen directly**
-
-### 🎨 UI/UX
-
-* Minimal, distraction-free design
-* Light grey background for better readability
-* White cards with clear typography
-* Icons instead of heavy images (fast & clean)
+- **New order notifications** — triggered on successful order placement
+- Background sync via WorkManager
 
 ---
 
 ## 🏗️ Architecture
 
-This app strictly follows **Clean Architecture** principles.
+This app follows **Clean Architecture** with **MVVM** pattern:
 
 ```
-UI (Compose)
-   ↓
-ViewModel
-   ↓
-UseCase
-   ↓
-Repository
-   ↓
-Local DB (Room) / Remote (Firebase – planned)
+app/
+├── data/
+│   ├── local/          ← Room Database (offline-first)
+│   ├── remote/         ← Firebase Firestore
+│   └── repository/     ← Repository implementations
+├── domain/
+│   ├── model/          ← Data models (Order, CartItem, Address...)
+│   ├── repository/     ← Repository interfaces
+│   └── usecase/        ← Business logic (PlaceOrderUseCase, etc.)
+├── presentation/
+│   ├── viewmodel/      ← ViewModels (StateFlow + Coroutines)
+│   └── ui/             ← Jetpack Compose screens
+└── di/                 ← Hilt dependency injection modules
 ```
-
-### Why Clean Architecture?
-
-* Easy to maintain
-* Easy to test
-* No accidental coupling
-* Real production stability (no hidden bugs)
 
 ---
 
-## 🧠 Key Architectural Decisions
+## 🧪 Unit Tests
 
-* **Room is the source of truth**
-* Orders are saved locally first (offline-safe)
-* UI observes data via `Flow`
-* Business rules live inside **UseCases**
-* ViewModels never access DAOs or Repositories directly
-* Firebase sync is isolated (not blocking UI)
+Comprehensive unit test suite using **JUnit 5 + MockK + Coroutines Test**:
+
+```
+✅ PlaceOrderUseCase  — 14 test cases
+✅ CartItem           —  3 test cases (computed price properties)
+✅ OrderItem          —  2 test cases (portion logic)
+```
+
+**Test coverage includes:**
+- Happy path — successful order placement (dine-in & takeaway)
+- Edge cases — empty cart, null address fields, zero price
+- Error cases — Firebase failure, DB error, cart fetch failure
+- Execution sequence — correct order of operations verified
+
+```bash
+./gradlew testDebugUnitTest
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
-* **Kotlin**
-* **Jetpack Compose**
-* **Material 3**
-* **Room (SQLite)**
-* **Hilt (DI)**
-* **Kotlin Coroutines & Flow**
-* **Accompanist SwipeRefresh**
-* **Firebase (for sync & notifications – extensible)**
+| Category | Technology |
+|---|---|
+| Language | Kotlin 1.9 |
+| UI | Jetpack Compose + Material 3 |
+| Architecture | Clean Architecture + MVVM |
+| DI | Hilt (Dagger) |
+| Database | Room (offline-first) |
+| Backend | Firebase Firestore + Realtime DB |
+| Notifications | Firebase FCM |
+| Networking | Retrofit + OkHttp |
+| Image Loading | Coil |
+| Async | Kotlin Coroutines + Flow |
+| Testing | JUnit 5 + MockK + Coroutines Test |
+| Build | Gradle KTS + KSP |
 
 ---
 
-## 📱 Screens & Flow
+## 🚀 Getting Started
 
-### Order Flow
+### Prerequisites
+- Android Studio Hedgehog or newer
+- JDK 17+
+- Firebase project (Firestore enabled)
 
-1. Select items
-2. Enter address
-3. Place order
-4. Order saved locally
-5. Order appears in Orders list
-6. Status updated as order progresses
+### Setup
 
-### Orders Screen
-
-* Shows all active & completed orders
-* Swipe down to refresh
-* Tap button to move order to next status
-
----
-
-## 🔐 Reliability & Performance
-
-* Atomic database transactions
-* No network dependency for order creation
-* Battery-friendly (no background polling)
-* Manual refresh avoids unnecessary sync
-* Safe foreign-key relationships
-
----
-
-## 📂 Project Structure (Simplified)
-
+**1. Clone the repo**
+```bash
+git clone https://github.com/sandeep-sankla/RestaurantOrderTakingApp.git
+cd RestaurantOrderTakingApp
 ```
-domain/
- ├── model
- ├── repository
- └── usecase
 
-data/
- ├── local (Room)
- ├── mapper
- └── repository
+**2. Add Firebase config**
+```
+Download google-services.json from Firebase Console
+→ Place it in app/ folder
+```
 
-ui/
- ├── orders
- ├── cart
- └── address
+**3. Build & Run**
+```bash
+./gradlew assembleDebug
 ```
 
 ---
 
-## 🧪 Testing Ready
+## 📐 Key Design Decisions
 
-* Domain layer is framework-independent
-* Repositories & UseCases can be unit-tested
-* UI logic is state-driven (`UiState`)
+### Offline-First Architecture
+Orders are saved to **Room DB first**, then synced to Firebase — ensuring the app works even with poor connectivity.
+
+### PlaceOrderUseCase
+Core business logic is fully isolated in a single UseCase — making it independently testable without Android dependencies:
+
+```kotlin
+class PlaceOrderUseCase @Inject constructor(
+    private val cartRepository: CartRepository,
+    private val orderRepository: OrderRepository,
+    private val orderSyncRepository: OrderSyncRepository,
+    private val notificationHelper: NotificationHelper
+) {
+    suspend operator fun invoke(address: Address) {
+        // 1. Validate cart
+        // 2. Map cart items → order items
+        // 3. Calculate total
+        // 4. Create order (Room + Firestore)
+        // 5. Sync to Firebase instantly
+        // 6. Show notification
+        // 7. Clear cart
+    }
+}
+```
+
+### Half / Full Portion Pricing
+Dynamic unit price computed as a property — no redundant storage:
+
+```kotlin
+val unitPrice: Int
+    get() = if (portion == PortionType.FULL) fullPrice else halfPrice
+
+val totalPrice: Int
+    get() = unitPrice * quantity
+```
 
 ---
 
-## 🔮 Future Improvements
+## 🤝 Contributing
 
-* Firebase bidirectional sync
-* Admin dashboard
-* Analytics (daily order count, revenue)
-* Order detail screen
-* Tablet-optimized UI
-* Printer integration
+Pull requests are welcome! For major changes, please open an issue first.
 
 ---
 
-## 👨‍🍳 Real-World Usage
+## 👨‍💻 Author
 
-This app is **not a demo project**.
-It is designed and structured to be used in a **real restaurant setup**, handling real orders and real workflows.
-
----
-
-## 📜 License
-
-This project is open-source and available for learning and extension.
-You are free to fork and adapt it for your own restaurant needs.
+**Sandeep Sankla**
+Senior Android Engineer | 9+ years experience
+[LinkedIn](https://linkedin.com/in/sandeep-sankla) · [GitHub](https://github.com/sandeep-sankla)
 
 ---
 
-## 🙌 Author
+## 📄 License
 
-Developed with a strong focus on **clean code**, **long-term maintainability**, and **real-world reliability**.
-
----
+MIT License — see [LICENSE](LICENSE) for details.
