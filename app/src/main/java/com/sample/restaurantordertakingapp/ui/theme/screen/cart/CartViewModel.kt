@@ -2,7 +2,6 @@ package com.sample.restaurantordertakingapp.ui.theme.screen.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sample.restaurantordertakingapp.domain.model.CartItem
 import com.sample.restaurantordertakingapp.domain.usecase.cart.AddToCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.CalculateCartSummaryUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.ObserveCartUseCase

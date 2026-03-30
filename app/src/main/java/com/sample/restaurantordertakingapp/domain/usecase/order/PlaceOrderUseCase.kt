@@ -1,5 +1,6 @@
 package com.sample.restaurantordertakingapp.domain.usecase.order
 
+import android.annotation.SuppressLint
 import com.sample.restaurantordertakingapp.domain.model.Address
 import com.sample.restaurantordertakingapp.domain.model.OrderItem
 import com.sample.restaurantordertakingapp.domain.model.PortionType
@@ -50,6 +51,7 @@ class PlaceOrderUseCase @Inject constructor(
     private val notificationHelper: NotificationHelper
 ) {
 
+    @SuppressLint("SuspiciousIndentation")
     suspend operator fun invoke(address: Address) {
 
         val cartItems = cartRepository.getAllCartItems()

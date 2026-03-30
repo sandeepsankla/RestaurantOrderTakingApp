@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "9210215941f114cee5fa655c830ed3c5",
+    "identityHash": "38d8f36febd58980e4b826bb56310417",
     "entities": [
       {
         "tableName": "cart_items",
@@ -325,18 +325,7 @@
             "orderId"
           ]
         },
-        "indices": [
-          {
-            "name": "index_orders_orderDate_orderNumber",
-            "unique": true,
-            "columnNames": [
-              "orderDate",
-              "orderNumber"
-            ],
-            "orders": [],
-            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_orders_orderDate_orderNumber` ON `${TABLE_NAME}` (`orderDate`, `orderNumber`)"
-          }
-        ],
+        "indices": [],
         "foreignKeys": []
       },
       {
@@ -427,7 +416,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9210215941f114cee5fa655c830ed3c5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '38d8f36febd58980e4b826bb56310417')"
     ]
   }
 }

@@ -132,4 +132,19 @@ interface OrderDao {
         orderId: String
     ): OrderWithItems?
 
+
+   /* @Transaction
+    suspend fun createOrder(orderDate: String): OrderEntity {
+        val maxNumber = getMaxOrderNumber(orderDate) ?: 0
+        val newNumber = maxNumber + 1
+
+        val order = OrderEntity(
+            orderId = UUID.randomUUID().toString(),
+            orderDate = orderDate,
+            orderNumber = newNumber
+        )
+
+        insertOrder(order)
+        return order
+    }*/
 }

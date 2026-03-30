@@ -13,10 +13,10 @@ data class OrderEntity(
     val orderStatus: String =""// CREATED, SYNCED
 )*/
 @Entity(
-    tableName = "orders",
-    indices = [
+    tableName = "orders"
+    /*indices = [
         Index(value = ["orderDate", "orderNumber"], unique = true)
-    ]
+    ]*/
 )
 data class OrderEntity(
     @PrimaryKey val orderId: String,
