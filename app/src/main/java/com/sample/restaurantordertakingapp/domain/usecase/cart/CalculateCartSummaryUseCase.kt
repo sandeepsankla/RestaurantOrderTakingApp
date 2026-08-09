@@ -1,6 +1,6 @@
 package com.sample.restaurantordertakingapp.domain.usecase.cart
 
-import CartSummary
+import com.sample.restaurantordertakingapp.domain.model.CartSummary
 import com.sample.restaurantordertakingapp.domain.model.CartItem
 import com.sample.restaurantordertakingapp.domain.model.PortionType
 import javax.inject.Inject

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "38d8f36febd58980e4b826bb56310417",
+    "identityHash": "f99f67a42f9160e942cddd7df77fd093",
     "entities": [
       {
         "tableName": "cart_items",
@@ -127,7 +127,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_category_menuId",
+            "unique": false,
+            "columnNames": [
+              "menuId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_category_menuId` ON `${TABLE_NAME}` (`menuId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "menu",
@@ -195,7 +205,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_menu_item_categoryId",
+            "unique": false,
+            "columnNames": [
+              "categoryId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_menu_item_categoryId` ON `${TABLE_NAME}` (`categoryId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "category",
@@ -257,7 +277,17 @@
             "id"
           ]
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_addresses_orderId",
+            "unique": false,
+            "columnNames": [
+              "orderId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_addresses_orderId` ON `${TABLE_NAME}` (`orderId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "orders",
@@ -416,7 +446,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '38d8f36febd58980e4b826bb56310417')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f99f67a42f9160e942cddd7df77fd093')"
     ]
   }
 }

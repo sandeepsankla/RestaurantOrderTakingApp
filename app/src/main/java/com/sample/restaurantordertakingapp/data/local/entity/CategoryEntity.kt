@@ -2,6 +2,7 @@ package com.sample.restaurantordertakingapp.data.local.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -13,7 +14,8 @@ import androidx.room.PrimaryKey
             childColumns = ["menuId"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["menuId"])]
 )
 data class CategoryEntity(
     @PrimaryKey val id: Int,

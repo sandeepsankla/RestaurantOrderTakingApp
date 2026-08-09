@@ -36,7 +36,7 @@ fun AppNavigation() {
     // 🔔 ask permission ONCE when app starts
     NotificationPermissionHandler(
         onGranted = {
-           // mainViewModel.startListeningForOrders()
+            mainViewModel.startListeningForOrders()
         }
     )
 

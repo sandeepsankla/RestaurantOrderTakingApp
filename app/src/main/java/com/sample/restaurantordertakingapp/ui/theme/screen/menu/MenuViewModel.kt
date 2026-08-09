@@ -23,7 +23,7 @@ import javax.inject.Inject
 class MenuViewModel  @Inject constructor(
     private val loadMenuUseCase: LoadMenuUseCase,
     private val addToCartUseCase: AddToCartUseCase,
-    ///private val startOrderSyncUseCase: StartOrderSyncUseCase,
+    private val startOrderSyncUseCase: StartOrderSyncUseCase,
     private val notificationHelper: NotificationHelper
 ) :ViewModel() {
 
@@ -35,7 +35,7 @@ class MenuViewModel  @Inject constructor(
         loadMenu()
     }
 
-   /* fun startListeningForOrders() {
+    fun startListeningForOrders() {
         viewModelScope.launch {
             startOrderSyncUseCase { order ->
                 try {
@@ -45,7 +45,7 @@ class MenuViewModel  @Inject constructor(
                 }
             }
         }
-    }*/
+    }
 
     fun loadMenu() {
         viewModelScope.launch {
