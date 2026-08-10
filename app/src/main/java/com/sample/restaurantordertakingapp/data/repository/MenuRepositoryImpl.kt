@@ -144,13 +144,13 @@ class MenuRepositoryImpl @Inject constructor(
 
         // 1️⃣ Try local DB first
         // ✅ Same version → Room se load
-        if (localVersion == remoteVersion) {
+        /*if (localVersion == remoteVersion) {
             val localMenu = local.getMenuOnce()
             if (localMenu != null) {
                 emit(Resource.Success(localMenu.toDomain()))
                 return@flow
             }
-        }
+        }*/
 
 
         // 2️⃣ Fetch from Firestore

@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
 import com.sample.restaurantordertakingapp.ui.theme.component.common.BottomSheetWrapper
 import com.sample.restaurantordertakingapp.ui.theme.component.menu.MenuItemCard
 import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartItemUi
@@ -23,12 +24,15 @@ fun MenuTabScreen(
     var selectedItem by remember { mutableStateOf<MenuItemUi?>(null) }
 
     Column {
-        TabRow(selectedTabIndex = selectedTab) {
+        ScrollableTabRow(
+            selectedTabIndex = selectedTab,
+            edgePadding = 8.dp
+        ) {
             categories.forEachIndexed { i, cat ->
                 Tab(
                     selected = selectedTab == i,
                     onClick = { selectedTab = i },
-                    text = { Text(cat.name) }
+                    text = { Text(cat.name, maxLines = 1) }
                 )
             }
         }

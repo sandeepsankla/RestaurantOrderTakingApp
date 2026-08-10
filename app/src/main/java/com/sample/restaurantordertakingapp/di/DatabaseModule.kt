@@ -28,7 +28,11 @@ object DatabaseProvider {
             context.applicationContext,
             AppDatabase::class.java,
             "app_db"
-        ).build()
+        )
+            // Local DB sirf cache hai (orders Firestore me sync hote hain, menu re-fetch
+            // hota hai). Schema badalne par crash ke bajaye DB reset — safe for this app.
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

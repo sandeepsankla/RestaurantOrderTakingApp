@@ -1,5 +1,4 @@
-
-
+package com.sample.restaurantordertakingapp.domain.model
 
 data class CartSummary(
     val subtotal: Double,

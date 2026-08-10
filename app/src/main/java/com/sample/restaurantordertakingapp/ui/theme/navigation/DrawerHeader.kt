@@ -23,7 +23,8 @@ fun DrawerHeader() {
         Text(
             text = "Tandoori Tadka House",
             style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(Modifier.height(4.dp))
         Text(

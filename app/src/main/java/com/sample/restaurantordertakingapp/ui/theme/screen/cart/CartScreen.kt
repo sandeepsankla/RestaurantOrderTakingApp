@@ -8,6 +8,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
@@ -24,16 +28,24 @@ fun CartScreen(
     state: CartUiState,
     onQuantityChange: (Int, Int) -> Unit,
     onRemoveItem: (Int) -> Unit,
-    onProceed: () -> Unit
+    onProceed: (String?) -> Unit
 ) {
+    var selectedPay by remember { mutableStateOf<String?>(null) }
+
     Scaffold(
         bottomBar = {
             if (!state.isEmpty && !state.isLoading) {
-                CartBottomBar(
-                    total = state.total,
-                    onProceed = onProceed,
-                    modifier = Modifier
-                )
+                Column {
+                    PaymentSelector(
+                        selected = selectedPay,
+                        onSelect = { selectedPay = if (selectedPay == it) null else it }
+                    )
+                    CartBottomBar(
+                        total = state.total,
+                        onProceed = { onProceed(selectedPay) },
+                        modifier = Modifier
+                    )
+                }
             }
         }
     ) { padding ->
@@ -82,6 +94,21 @@ fun CartScreen(
 
 
 
+
+@Composable
+private fun PaymentSelector(selected: String?, onSelect: (String) -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text("Payment:", style = MaterialTheme.typography.labelLarge)
+        FilterChip(selected = selected == "CASH", onClick = { onSelect("CASH") }, label = { Text("💵 Cash") })
+        FilterChip(selected = selected == "UPI", onClick = { onSelect("UPI") }, label = { Text("📲 UPI") })
+    }
+}
 
 /*
 fun CartScreen(

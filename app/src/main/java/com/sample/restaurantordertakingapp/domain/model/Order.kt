@@ -8,7 +8,11 @@ data class Order(
     val totalAmount: Int,
     val status: OrderStatus,
     val createdAt: Long,
-    val items: List<OrderItem>
+    val items: List<OrderItem>,
+    val tandoorReady: Boolean = false,
+    val kitchenReady: Boolean = false,
+    val fulfillmentStep: Int = 0,
+    val paymentMethod: String? = null
 )
 data class OrderItem(
     val name: String,

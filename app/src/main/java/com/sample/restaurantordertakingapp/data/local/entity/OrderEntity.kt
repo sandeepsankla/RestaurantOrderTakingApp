@@ -25,5 +25,9 @@ data class OrderEntity(
     val totalAmount: Int,
     val status: OrderStatus,
     val createdAt: Long,
-    val isSynced: Boolean = false
+    val isSynced: Boolean = false,
+    val tandoorReady: Boolean = false,   // Tandoor station ne bana diya
+    val kitchenReady: Boolean = false,   // Kitchen station ne bana diya
+    val fulfillmentStep: Int = 0,        // reception: serve/payment/delivered progress
+    val paymentMethod: String? = null    // CASH / UPI / UDHAAR
 )

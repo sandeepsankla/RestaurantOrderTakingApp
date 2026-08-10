@@ -1,0 +1,787 @@
+{
+  "menuVersion": 5,
+  "categories": [
+    {
+      "id": 1,
+      "name": "Noodles",
+      "items": [
+        {
+          "id": 101,
+          "name": "Veg Noodles",
+          "halfPrice": 80,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/i787w1.png"
+        },
+        {
+          "id": 102,
+          "name": "Singapori Noodles",
+          "halfPrice": 90,
+          "fullPrice": 140,
+          "imageUrl": "https://files.catbox.moe/i787w1.png"
+        },
+        {
+          "id": 103,
+          "name": "Hakka Noodles",
+          "halfPrice": 90,
+          "fullPrice": 140,
+          "imageUrl": "https://files.catbox.moe/i787w1.png"
+        },
+        {
+          "id": 104,
+          "name": "Chilly Garlic Noodles",
+          "halfPrice": 90,
+          "fullPrice": 140,
+          "imageUrl": "https://files.catbox.moe/ylrwly.png"
+        },
+        {
+          "id": 105,
+          "name": "Paneer Butter Chowmein",
+          "halfPrice": 100,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/i787w1.png"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Momos",
+      "items": [
+        {
+          "id": 201,
+          "name": "Veg Steam Momos",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/gs1w3u.png"
+        },
+        {
+          "id": 202,
+          "name": "Veg Fried Momos",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/qxvwue.png"
+        },
+        {
+          "id": 203,
+          "name": "Veg Kurkure Momos",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/22q846.png"
+        },
+        {
+          "id": 204,
+          "name": "Paneer Steam Momos",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/0tehcj.png"
+        },
+        {
+          "id": 205,
+          "name": "Paneer Fried Momos",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/43yduv.png"
+        },
+        {
+          "id": 206,
+          "name": "Paneer Kurkure Momos",
+          "halfPrice": 0,
+          "fullPrice": 140,
+          "imageUrl": "https://files.catbox.moe/22q846.png"
+        },
+        {
+          "id": 207,
+          "name": "Veg Tandoori Momos",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/gs1w3u.png"
+        },
+        {
+          "id": 208,
+          "name": "Paneer Tandoori Momos",
+          "halfPrice": 0,
+          "fullPrice": 140,
+          "imageUrl": "https://files.catbox.moe/gs1w3u.png"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Tandoori Snacks",
+      "items": [
+        {
+          "id": 301,
+          "name": "Malai Chap",
+          "halfPrice": 120,
+          "fullPrice": 170,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 302,
+          "name": "Masala Chap",
+          "halfPrice": 120,
+          "fullPrice": 170,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 303,
+          "name": "Afgani Chap",
+          "halfPrice": 130,
+          "fullPrice": 180,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 304,
+          "name": "Achari Chaap",
+          "halfPrice": 120,
+          "fullPrice": 170,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 305,
+          "name": "Malai Masala Chaap",
+          "halfPrice": 140,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 306,
+          "name": "Paneer Tikka",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 307,
+          "name": "Malai Paneer Tikka",
+          "halfPrice": 160,
+          "fullPrice": 210,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 308,
+          "name": "Mushrom Tikka",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Chinese Snacks",
+      "items": [
+        {
+          "id": 401,
+          "name": "Chilly potato",
+          "halfPrice": 0,
+          "fullPrice": 130,
+          "imageUrl": "https://files.catbox.moe/7c2ege.png"
+        },
+        {
+          "id": 402,
+          "name": "Honey Chilly Potato",
+          "halfPrice": 0,
+          "fullPrice": 140,
+          "imageUrl": "https://files.catbox.moe/7c2ege.png"
+        },
+        {
+          "id": 403,
+          "name": "French Fries",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/7c2ege.png"
+        },
+        {
+          "id": 404,
+          "name": "Chilly Panner Gravy",
+          "halfPrice": 0,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/qzz9ea.png"
+        },
+        {
+          "id": 405,
+          "name": "Chilly Paneer Dry",
+          "halfPrice": 0,
+          "fullPrice": 220,
+          "imageUrl": "https://files.catbox.moe/i8k9dv.png"
+        },
+        {
+          "id": 406,
+          "name": "Manchurian Gravy",
+          "halfPrice": 0,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/qzz9ea.png"
+        },
+        {
+          "id": 407,
+          "name": "Manchurian Dry",
+          "halfPrice": 0,
+          "fullPrice": 170,
+          "imageUrl": "https://files.catbox.moe/qzz9ea.png"
+        },
+        {
+          "id": 408,
+          "name": "Chilly Mushroom",
+          "halfPrice": 0,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/qzz9ea.png"
+        },
+        {
+          "id": 409,
+          "name": "Crispy Corn",
+          "halfPrice": 0,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/qzz9ea.png"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Rice + Combo",
+      "items": [
+        {
+          "id": 501,
+          "name": "Veg Fried Rice",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/c7r5dl.png"
+        },
+        {
+          "id": 502,
+          "name": "Paneer Fried Rice",
+          "halfPrice": 0,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/43yduv.png"
+        },
+        {
+          "id": 503,
+          "name": "Manchurian + Fried Rice",
+          "halfPrice": 0,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/qzz9ea.png"
+        },
+        {
+          "id": 504,
+          "name": "Manchurian + Noodles",
+          "halfPrice": 0,
+          "fullPrice": 180,
+          "imageUrl": "https://files.catbox.moe/i787w1.png"
+        },
+        {
+          "id": 505,
+          "name": "Chilly Paneer + Fried Rice",
+          "halfPrice": 0,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/43yduv.png"
+        },
+        {
+          "id": 506,
+          "name": "Chilly Paneer + Noodles",
+          "halfPrice": 0,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/i787w1.png"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Burger & Rolls",
+      "items": [
+        {
+          "id": 601,
+          "name": "Aloo Tikki Burger",
+          "halfPrice": 0,
+          "fullPrice": 50,
+          "imageUrl": "https://files.catbox.moe/2177j6.png"
+        },
+        {
+          "id": 602,
+          "name": "Paneer Burger",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 603,
+          "name": "Veg Cheese Burger",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/2177j6.png"
+        },
+        {
+          "id": 604,
+          "name": "Paneer Cheese Burger",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 605,
+          "name": "Spring Roll",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/2177j6.png"
+        },
+        {
+          "id": 606,
+          "name": "Chaap Roll",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 607,
+          "name": "Paneer Tikka Roll",
+          "halfPrice": 0,
+          "fullPrice": 140,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 608,
+          "name": "Kathi Veg Roll",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/2177j6.png"
+        },
+        {
+          "id": 609,
+          "name": "Kathi Paneer Roll",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Main Course",
+      "items": [
+        {
+          "id": 701,
+          "name": "Dal Tadka",
+          "halfPrice": 80,
+          "fullPrice": 130,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 702,
+          "name": "Dal Makhni",
+          "halfPrice": 130,
+          "fullPrice": 180,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 703,
+          "name": "Aloo Jeera",
+          "halfPrice": 80,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/c7r5dl.png"
+        },
+        {
+          "id": 704,
+          "name": "Aloo Matar",
+          "halfPrice": 100,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 705,
+          "name": "Aloo Gobhi",
+          "halfPrice": 100,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 706,
+          "name": "Chana Masala",
+          "halfPrice": 100,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 707,
+          "name": "Rajma Masala",
+          "halfPrice": 100,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 708,
+          "name": "Dum Aloo",
+          "halfPrice": 0,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 709,
+          "name": "Mix Veg",
+          "halfPrice": 140,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 710,
+          "name": "Malai Kofta",
+          "halfPrice": 0,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 711,
+          "name": "Matar Mushroom",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 712,
+          "name": "Kadai Mushroom",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        },
+        {
+          "id": 713,
+          "name": "Twa Chap Gravy",
+          "halfPrice": 140,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 714,
+          "name": "Shahi chap",
+          "halfPrice": 140,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 715,
+          "name": "Kadai Chap",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 716,
+          "name": "Sev Bhaji",
+          "halfPrice": 100,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/6cr1zv.png"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Breads",
+      "items": [
+        {
+          "id": 801,
+          "name": "Tandoori Butter Roti",
+          "halfPrice": 0,
+          "fullPrice": 12,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 802,
+          "name": "Missi Roti",
+          "halfPrice": 0,
+          "fullPrice": 30,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 803,
+          "name": "Pyaz Roti",
+          "halfPrice": 0,
+          "fullPrice": 15,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 804,
+          "name": "Rumali Roti",
+          "halfPrice": 0,
+          "fullPrice": 15,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 805,
+          "name": "Lachha Pararha",
+          "halfPrice": 0,
+          "fullPrice": 30,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 806,
+          "name": "Aloo pyaz Paratha",
+          "halfPrice": 0,
+          "fullPrice": 60,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 807,
+          "name": "Gobhi Paratha",
+          "halfPrice": 0,
+          "fullPrice": 60,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 808,
+          "name": "Paneer Paratha",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 809,
+          "name": "Mix Paratha",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 810,
+          "name": "Green Chilly paratha",
+          "halfPrice": 0,
+          "fullPrice": 50,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 811,
+          "name": "Butter Naan",
+          "halfPrice": 0,
+          "fullPrice": 40,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 812,
+          "name": "Garlic Naan",
+          "halfPrice": 0,
+          "fullPrice": 60,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        },
+        {
+          "id": 813,
+          "name": "Paneer Naan",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 814,
+          "name": "Mix Naan",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/60vphw.png"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Paneer Se",
+      "items": [
+        {
+          "id": 901,
+          "name": "Shahi Paneer",
+          "halfPrice": 140,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 902,
+          "name": "Kadai Paneer",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 903,
+          "name": "Matar Paneer",
+          "halfPrice": 140,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 904,
+          "name": "Palak Paneer",
+          "halfPrice": 140,
+          "fullPrice": 190,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 905,
+          "name": "Paneer butter Masala",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 906,
+          "name": "Paneer Lababdar",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 907,
+          "name": "Paneer 2 Payaja",
+          "halfPrice": 150,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 908,
+          "name": "Paneer Bhurji",
+          "halfPrice": 0,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 909,
+          "name": "Paneer Kasturi",
+          "halfPrice": 0,
+          "fullPrice": 200,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 910,
+          "name": "Shahi Kajui Paneer",
+          "halfPrice": 0,
+          "fullPrice": 210,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Raita N Salad",
+      "items": [
+        {
+          "id": 1001,
+          "name": "Boondi Raita",
+          "halfPrice": 0,
+          "fullPrice": 80,
+          "imageUrl": "https://files.catbox.moe/wir8e0.png"
+        },
+        {
+          "id": 1002,
+          "name": "Mix Raita",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/wir8e0.png"
+        },
+        {
+          "id": 1003,
+          "name": "Peanut masala",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/wir8e0.png"
+        },
+        {
+          "id": 1004,
+          "name": "Masala Papad",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/wir8e0.png"
+        },
+        {
+          "id": 1005,
+          "name": "Green Salad",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/wir8e0.png"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Rice + Combo",
+      "items": [
+        {
+          "id": 1101,
+          "name": "Jeera Rice",
+          "halfPrice": 0,
+          "fullPrice": 100,
+          "imageUrl": "https://files.catbox.moe/c7r5dl.png"
+        },
+        {
+          "id": 1102,
+          "name": "Veg Pulav",
+          "halfPrice": 0,
+          "fullPrice": 130,
+          "imageUrl": "https://files.catbox.moe/c7r5dl.png"
+        },
+        {
+          "id": 1103,
+          "name": "Matar Pulav",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "imageUrl": "https://files.catbox.moe/c7r5dl.png"
+        },
+        {
+          "id": 1104,
+          "name": "Veg Briyani",
+          "halfPrice": 0,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/c7r5dl.png"
+        },
+        {
+          "id": 1105,
+          "name": "Soya chaap Briyani",
+          "halfPrice": 0,
+          "fullPrice": 160,
+          "imageUrl": "https://files.catbox.moe/oxcs9h.png"
+        },
+        {
+          "id": 1106,
+          "name": "Shahi Paneer + Chawal",
+          "halfPrice": 0,
+          "fullPrice": 180,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 1107,
+          "name": "Palak Paneer + Chawal",
+          "halfPrice": 0,
+          "fullPrice": 180,
+          "imageUrl": "https://files.catbox.moe/5a0zvu.png"
+        },
+        {
+          "id": 1108,
+          "name": "Rajma/Chole + Chawal",
+          "halfPrice": 0,
+          "fullPrice": 150,
+          "imageUrl": "https://files.catbox.moe/c7r5dl.png"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Thali",
+      "items": [
+        {
+          "id": 1201,
+          "name": "Thali 1 - Dal Tadka + Shahi Paneer",
+          "halfPrice": 0,
+          "fullPrice": 120,
+          "description": "4 Butter roti + salad, chutney",
+          "imageUrl": "https://files.catbox.moe/f5i7bp.png"
+        },
+        {
+          "id": 1202,
+          "name": "Thali 2 - Dal Tadka + Shahi Paneer",
+          "halfPrice": 0,
+          "fullPrice": 150,
+          "description": "4 Butter roti + Raita/Rice",
+          "imageUrl": "https://files.catbox.moe/f5i7bp.png"
+        },
+        {
+          "id": 1203,
+          "name": "Thali 3 - Paneer Butter Masala + Dal Makhni",
+          "halfPrice": 0,
+          "fullPrice": 210,
+          "description": "1 Butter naan + 2 Butter Roti + Rice + Raita",
+          "imageUrl": "https://files.catbox.moe/f5i7bp.png"
+        }
+      ]
+    }
+  ]
+}

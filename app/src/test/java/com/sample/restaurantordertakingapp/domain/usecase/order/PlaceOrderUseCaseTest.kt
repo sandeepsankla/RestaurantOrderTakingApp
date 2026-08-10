@@ -106,7 +106,7 @@ class PlaceOrderUseCaseTest {
             coVerify {
                 orderRepository.createOrder(
                     items = match { items ->
-                        items.first().orderType == "T5" &&
+                        items.first().orderType == "DINE_IN" &&
                                 items.first().tableNo == "T5" &&
                                 items.first().isFull == true
                     },

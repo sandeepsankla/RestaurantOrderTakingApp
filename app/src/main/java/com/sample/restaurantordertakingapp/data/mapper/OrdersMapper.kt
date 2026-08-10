@@ -22,7 +22,11 @@ fun Order.toOrderEntity(): OrderEntity =
         orderDate = orderDate,
         totalAmount = totalAmount,
         status = status,
-        createdAt = createdAt
+        createdAt = createdAt,
+        tandoorReady = tandoorReady,
+        kitchenReady = kitchenReady,
+        fulfillmentStep = fulfillmentStep,
+        paymentMethod = paymentMethod
     )
 
 fun OrderItem.toEntity(orderId: String): OrderItemEntity =
@@ -108,6 +112,10 @@ fun OrderWithItems.toDomain(): Order =
         totalAmount = order.totalAmount,
         status = order.status,
         createdAt = order.createdAt,
+        tandoorReady = order.tandoorReady,
+        kitchenReady = order.kitchenReady,
+        fulfillmentStep = order.fulfillmentStep,
+        paymentMethod = order.paymentMethod,
         items = items.map {
             OrderItem(
                 name = it.name,

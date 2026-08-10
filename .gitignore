@@ -13,3 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Firebase Admin private key — NEVER commit
+scripts/serviceAccount.json
+scripts/node_modules/

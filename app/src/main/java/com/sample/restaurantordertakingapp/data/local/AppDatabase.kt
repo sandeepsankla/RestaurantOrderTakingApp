@@ -18,7 +18,7 @@ import com.sample.restaurantordertakingapp.data.local.entity.OrderItemEntity
 
 @Database(entities = [CartItemEntity::class, MenuEntity::class,
     CategoryEntity::class, MenuItemEntity::class, AddressEntity::class,
-    OrderEntity::class, OrderItemEntity::class], version = 2)
+    OrderEntity::class, OrderItemEntity::class], version = 6)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun cartDao(): CartDao
     abstract fun menuDao(): MenuDao

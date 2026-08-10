@@ -15,16 +15,12 @@
 
 <table>
   <tr>
-    <td align="center"><b>Menu</b></td>
-    <td align="center"><b>Item Detail</b></td>
-    <td align="center"><b>Cart</b></td>
-    <td align="center"><b>Orders</b></td>
+    <td align="center"><b>Menu (Firestore + offline cache)</b></td>
+    <td align="center"><b>Kitchen — Tandoor / Kitchen stations</b></td>
   </tr>
   <tr>
-    <td><img src="assets/menu-page.png" width="190"/></td>
-    <td><img src="assets/item-detail.png" width="190"/></td>
-    <td><img src="assets/cart.png" width="190"/></td>
-    <td><img src="assets/order-status.png" width="190"/></td>
+    <td><img src="assets/menu.jpeg" width="240"/></td>
+    <td><img src="assets/order.jpeg" width="240"/></td>
   </tr>
 </table>
 

@@ -83,6 +83,18 @@ interface OrderDao {
         status: OrderStatus
     )
 
+    @Query("UPDATE orders SET tandoorReady = :ready WHERE orderId = :orderId")
+    suspend fun setTandoorReady(orderId: String, ready: Boolean)
+
+    @Query("UPDATE orders SET kitchenReady = :ready WHERE orderId = :orderId")
+    suspend fun setKitchenReady(orderId: String, ready: Boolean)
+
+    @Query("UPDATE orders SET fulfillmentStep = :step WHERE orderId = :orderId")
+    suspend fun setFulfillmentStep(orderId: String, step: Int)
+
+    @Query("UPDATE orders SET paymentMethod = :method WHERE orderId = :orderId")
+    suspend fun setPaymentMethod(orderId: String, method: String)
+
     @Transaction
     suspend fun insertOrderWithItems(
         order: OrderEntity,
