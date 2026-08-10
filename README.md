@@ -1,13 +1,13 @@
-# 🍽️ Tandoori Tadka House — Restaurant Order Taking App
+# 🍽️ Tandoori Tadka House — Restaurant Order Management
 
 [![Android](https://img.shields.io/badge/Platform-Android-green?logo=android)](https://android.com)
-[![Kotlin](https://img.shields.io/badge/Language-Kotlin-purple?logo=kotlin)](https://kotlinlang.org)
+[![Kotlin](https://img.shields.io/badge/Language-Kotlin%202.0-purple?logo=kotlin)](https://kotlinlang.org)
 [![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-blue)](https://developer.android.com/jetpack/compose)
-[![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture%20%2B%20MVVM-orange)](https://developer.android.com/topic/architecture)
-[![Firebase](https://img.shields.io/badge/Backend-Firebase-yellow?logo=firebase)](https://firebase.google.com)
+[![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2B%20MVVM-orange)](https://developer.android.com/topic/architecture)
+[![Firebase](https://img.shields.io/badge/Backend-Firestore-yellow?logo=firebase)](https://firebase.google.com)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-> A production-grade Android application for restaurant order management — supporting both **Dine-In** (table-wise) and **Takeaway** ordering with real-time Firebase sync and offline-first architecture.
+> An Android order-management app **built for and running in a real restaurant**. Reception takes orders; the kitchen and tandoor stations see only what they need to cook — with real-time Firestore sync and an offline-first menu.
 
 ---
 
@@ -18,83 +18,91 @@
     <td align="center"><b>Menu</b></td>
     <td align="center"><b>Item Detail</b></td>
     <td align="center"><b>Cart</b></td>
-    <td align="center"><b>Address</b></td>
-    <td align="center"><b>My Orders</b></td>
+    <td align="center"><b>Orders</b></td>
   </tr>
   <tr>
-    <td><img src="assets/menu-page.png" width="180"/></td>
-    <td><img src="assets/item-detail.png" width="180"/></td>
-    <td><img src="assets/cart.png" width="180"/></td>
-    <td><img src="assets/address.png" width="180"/></td>
-    <td><img src="assets/order-status.png" width="180"/></td>
+    <td><img src="assets/menu-page.png" width="190"/></td>
+    <td><img src="assets/item-detail.png" width="190"/></td>
+    <td><img src="assets/cart.png" width="190"/></td>
+    <td><img src="assets/order-status.png" width="190"/></td>
   </tr>
 </table>
+
+---
+
+## 🎯 What makes it different — role-based, station-aware workflow
+
+This isn't a demo cart app. It models how a real kitchen actually runs.
+
+- **Device roles** — on first launch each device is set up as **Reception** or **Kitchen** (PIN-protected switch). A Kitchen device shows *only* the orders screen; everything else is hidden.
+- **Station routing** — inside Kitchen, orders split into **Tandoor** and **Kitchen** tabs. Each order item is routed by type (tandoori snacks, breads, tikka, tandoori momos, thali → Tandoor; the rest → Kitchen).
+- **Independent per-station "Ready"** — the tandoor marking its part ready does **not** clear the kitchen's part, and vice-versa. Solves the real problem of one station closing another's ticket.
+- **Reception fulfillment flow** — a *Serve & Payment* screen with type-aware steps:
+  - **Takeaway:** Payment Taken → Delivered
+  - **Dine-in:** Serving on Table → Payment Collected
+- **Call Kitchen** — reception taps a button, the kitchen device **rings** with the message ("Order ready?", "Jaldi karo", custom) — a cross-device attention signal over Firestore.
 
 ---
 
 ## ✨ Features
 
 ### 🛒 Ordering
-- **Dine-In ordering** — table-wise order placement (Table 1–6)
-- **Takeaway ordering** — with delivery address capture
-- **Half / Full portion** selection per item with dynamic pricing
-- **Quantity control** — increment / decrement with real-time total update
-- **Cart management** — add, remove, update items before checkout
+- **Dine-in** (table-wise, Table 1–6) and **Takeaway**
+- **Half / Full** portion selection with dynamic pricing
+- Quantity control with live total; add / update / remove in cart
+- **One-tap order** straight from the cart
 
 ### 📋 Menu
-- **Category-based menu** — Starters, Main Course, Desserts
-- **Item detail bottom sheet** — image, price, portion & table selection
-- **Real-time menu** fetched from Firebase Firestore
+- **12 categories** served from **Firebase Firestore**
+- **Offline-first** — cached in Room; re-fetched only when the menu version changes
+- Dish images + item-detail bottom sheet (portion & table selection)
 
-### 📦 Order Management
-- **Real-time order status** — Pending → Ready → Delivered
-- **Mark as Delivered** — one-tap order completion
-- **Order history** — complete list of all past orders
-- **Instant Firebase push** on every new order
+### 👨‍🍳 Kitchen
+- Tandoor / Kitchen station tabs with keyword-based item routing
+- Independent per-station "Mark Ready" with Preparing / Ready state
+
+### 🧾 Reception
+- Serve & Payment flow (takeaway vs dine-in steps)
+- Call Kitchen attention alarm
 
 ### 🔔 Notifications
-- **New order notifications** — triggered on successful order placement
-- Background sync via WorkManager
+- New-order local notification with **sound + vibration** (dedicated high-importance channel)
 
 ---
 
 ## 🏗️ Architecture
 
-This app follows **Clean Architecture** with **MVVM** pattern:
+**Clean Architecture + MVVM**, one-way data flow with `StateFlow` + Coroutines.
 
 ```
 app/
 ├── data/
-│   ├── local/          ← Room Database (offline-first)
-│   ├── remote/         ← Firebase Firestore
-│   └── repository/     ← Repository implementations
+│   ├── local/        ← Room DB, DAOs, entities (offline cache)
+│   ├── remote/       ← Firebase Firestore data sources
+│   ├── mapper/       ← entity ⇄ domain ⇄ DTO mappers
+│   └── repository/   ← Repository implementations
 ├── domain/
-│   ├── model/          ← Data models (Order, CartItem, Address...)
-│   ├── repository/     ← Repository interfaces
-│   └── usecase/        ← Business logic (PlaceOrderUseCase, etc.)
-├── presentation/
-│   ├── viewmodel/      ← ViewModels (StateFlow + Coroutines)
-│   └── ui/             ← Jetpack Compose screens
-└── di/                 ← Hilt dependency injection modules
+│   ├── model/        ← Order, CartItem, CartSummary, Address, CallSignal…
+│   ├── pricing/      ← CartPricing (single source of truth for money math)
+│   ├── repo/         ← Repository interfaces
+│   └── usecase/      ← PlaceOrder, CalculateCartSummary, LoadMenu…
+├── ui/               ← Jetpack Compose screens, ViewModels, navigation
+├── utils/            ← NotificationHelper, DateProvider…
+└── di/               ← Hilt modules
 ```
 
 ---
 
 ## 🧪 Unit Tests
 
-Comprehensive unit test suite using **JUnit 5 + MockK + Coroutines Test**:
+**JUnit 5 + MockK + kotlinx-coroutines-test** on the pure domain layer (no Android deps):
 
 ```
-✅ PlaceOrderUseCase  — 14 test cases
-✅ CartItem           —  3 test cases (computed price properties)
-✅ OrderItem          —  2 test cases (portion logic)
+✅ PlaceOrderUseCase          — 15 tests  (happy / edge / error / execution-order)
+✅ CalculateCartSummaryUseCase —  8 tests  (subtotal, tax, empty-cart invariants)
 ```
 
-**Test coverage includes:**
-- Happy path — successful order placement (dine-in & takeaway)
-- Edge cases — empty cart, null address fields, zero price
-- Error cases — Firebase failure, DB error, cart fetch failure
-- Execution sequence — correct order of operations verified
+Covers the happy path (dine-in & takeaway), edge cases (empty cart, null address fields, zero price/qty) and failure cases (Firebase / DB / cart-fetch errors), and verifies the exact order of side effects.
 
 ```bash
 ./gradlew testDebugUnitTest
@@ -106,56 +114,56 @@ Comprehensive unit test suite using **JUnit 5 + MockK + Coroutines Test**:
 
 | Category | Technology |
 |---|---|
-| Language | Kotlin 1.9 |
+| Language | Kotlin 2.0 |
 | UI | Jetpack Compose + Material 3 |
 | Architecture | Clean Architecture + MVVM |
 | DI | Hilt (Dagger) |
-| Database | Room (offline-first) |
-| Backend | Firebase Firestore + Realtime DB |
-| Notifications | Firebase FCM |
-| Networking | Retrofit + OkHttp |
-| Image Loading | Coil |
-| Async | Kotlin Coroutines + Flow |
+| Local cache | Room (offline-first) |
+| Backend | Firebase Firestore (menu, order sync, cross-device signals) |
+| Image loading | Coil |
+| Async | Kotlin Coroutines + Flow / StateFlow |
 | Testing | JUnit 5 + MockK + Coroutines Test |
-| Build | Gradle KTS + KSP |
+| Build | Gradle KTS + KSP + KAPT |
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Android Studio Hedgehog or newer
-- JDK 17+
-- Firebase project (Firestore enabled)
+**Prerequisites:** Android Studio (Hedgehog+), JDK 17, a Firebase project with Firestore.
 
-### Setup
-
-**1. Clone the repo**
 ```bash
-git clone https://github.com/sandeep-sankla/RestaurantOrderTakingApp.git
+git clone https://github.com/sandeepsankla/RestaurantOrderTakingApp.git
 cd RestaurantOrderTakingApp
 ```
 
-**2. Add Firebase config**
-```
-Download google-services.json from Firebase Console
-→ Place it in app/ folder
-```
+1. Add your `google-services.json` to `app/`.
+2. Seed the menu: a `menus/default` document in Firestore (`menuVersion` + `categories`). A Node upload script lives in `scripts/`.
+3. Build & run:
 
-**3. Build & Run**
 ```bash
 ./gradlew assembleDebug
 ```
+
+On first launch, pick **Reception** or **Kitchen** and set a 4-digit PIN.
 
 ---
 
 ## 📐 Key Design Decisions
 
-### Offline-First Architecture
-Orders are saved to **Room DB first**, then synced to Firebase — ensuring the app works even with poor connectivity.
+### Single source of truth for pricing
+Cart summary and the placed-order total both flow through one `CartPricing` object, so the amount a customer sees can never drift from the amount that's stored.
 
-### PlaceOrderUseCase
-Core business logic is fully isolated in a single UseCase — making it independently testable without Android dependencies:
+```kotlin
+object CartPricing {
+    const val TAX_RATE: Double = 0.0            // one knob for tax
+    fun subtotal(items: List<CartItem>) = items.sumOf { it.totalPrice }
+    fun tax(subtotal: Int) = (subtotal * TAX_RATE).roundToInt()
+    fun total(subtotal: Int) = subtotal + tax(subtotal)
+}
+```
+
+### Order business logic isolated in a UseCase
+Independently testable, no Android dependencies:
 
 ```kotlin
 class PlaceOrderUseCase @Inject constructor(
@@ -165,41 +173,21 @@ class PlaceOrderUseCase @Inject constructor(
     private val notificationHelper: NotificationHelper
 ) {
     suspend operator fun invoke(address: Address) {
-        // 1. Validate cart
-        // 2. Map cart items → order items
-        // 3. Calculate total
-        // 4. Create order (Room + Firestore)
-        // 5. Sync to Firebase instantly
-        // 6. Show notification
-        // 7. Clear cart
+        // validate cart → map to order items → total (CartPricing)
+        // create order (Room) → push to Firestore → notify → clear cart
     }
 }
 ```
 
-### Half / Full Portion Pricing
-Dynamic unit price computed as a property — no redundant storage:
-
-```kotlin
-val unitPrice: Int
-    get() = if (portion == PortionType.FULL) fullPrice else halfPrice
-
-val totalPrice: Int
-    get() = unitPrice * quantity
-```
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! For major changes, please open an issue first.
+### Offline-first menu
+The menu is read from Room and only re-fetched from Firestore when the remote `menuVersion` differs — the app stays usable on a dead network.
 
 ---
 
 ## 👨‍💻 Author
 
-**Sandeep Sankla**
-Senior Android Engineer | 9+ years experience
-[LinkedIn](https://linkedin.com/in/sandeep-sankla) · [GitHub](https://github.com/sandeep-sankla)
+**Sandeep Sankla** — Android Engineer
+[LinkedIn](https://linkedin.com/in/sandeep-sankla) · [GitHub](https://github.com/sandeepsankla)
 
 ---
 
