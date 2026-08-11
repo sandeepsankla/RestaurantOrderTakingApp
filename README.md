@@ -16,11 +16,16 @@
 <table>
   <tr>
     <td align="center"><b>Menu (Firestore + offline cache)</b></td>
+    <td align="center"><b>Menu (Cart)</b></td>
     <td align="center"><b>Kitchen — Tandoor / Kitchen stations</b></td>
+    <td align="center"><b>Daily Summary </b></td>
   </tr>
+  
   <tr>
     <td><img src="assets/menu.jpeg" width="240"/></td>
+    <td><img src ="assets/WhatsApp Image 2026-08-11 at 1.38.47 PM.jpeg" width ="240"/></td>
     <td><img src="assets/order.jpeg" width="240"/></td>
+    <td><img src ="assets/WhatsApp Image 2026-08-11 at 1.39.49 PM.jpeg" width ="240"/></td>
   </tr>
 </table>
 
