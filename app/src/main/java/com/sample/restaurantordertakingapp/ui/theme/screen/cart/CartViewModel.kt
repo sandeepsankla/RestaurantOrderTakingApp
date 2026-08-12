@@ -2,15 +2,18 @@ package com.sample.restaurantordertakingapp.ui.theme.screen.cart
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sample.restaurantordertakingapp.domain.model.Address
 import com.sample.restaurantordertakingapp.domain.usecase.cart.AddToCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.CalculateCartSummaryUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.ObserveCartUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.RemoveItemUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.cart.UpdateQuantityUseCase
+import com.sample.restaurantordertakingapp.domain.usecase.order.PlaceOrderUseCase
 import com.sample.restaurantordertakingapp.ui.theme.screen.mapper.toDomain
 import com.sample.restaurantordertakingapp.ui.theme.screen.mapper.toUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -24,8 +27,28 @@ class CartViewModel @Inject constructor(
     private val calculateSummary: CalculateCartSummaryUseCase,
     private val addToCart: AddToCartUseCase,
     private val updateQuantity: UpdateQuantityUseCase,
-    private val removeItem: RemoveItemUseCase
+    private val removeItem: RemoveItemUseCase,
+    private val placeOrderUseCase: PlaceOrderUseCase
 ) : ViewModel() {
+
+    // Cart se seedha order place — success par UI navigate karega
+    private val _orderPlaced = MutableStateFlow(false)
+    val orderPlaced: StateFlow<Boolean> = _orderPlaced
+
+    fun placeOrder(paymentMethod: String? = null) {
+        viewModelScope.launch {
+            runCatching {
+                placeOrderUseCase(
+                    address = Address(society = null, flatNo = null, tower = null, mobile = "", orderId = ""),
+                    paymentMethod = paymentMethod
+                )
+            }.onSuccess { _orderPlaced.value = true }
+        }
+    }
+
+    fun onOrderHandled() {
+        _orderPlaced.value = false
+    }
 
 
     val uiState: StateFlow<CartUiState> = observeCart()

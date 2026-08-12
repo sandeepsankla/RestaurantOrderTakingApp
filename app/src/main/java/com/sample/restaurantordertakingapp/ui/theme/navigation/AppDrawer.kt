@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Assessment
+import androidx.compose.material.icons.filled.PointOfSale
 import androidx.compose.material.icons.filled.ReceiptLong
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
@@ -23,6 +25,8 @@ import androidx.compose.ui.unit.dp
 fun AppDrawer(
     currentRoute: String?,
     onOrdersClick: () -> Unit,
+    onFulfillmentClick: () -> Unit,
+    onReportClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     Column(
@@ -46,6 +50,20 @@ fun AppDrawer(
             icon = Icons.Default.ReceiptLong,
             selected = currentRoute == Screen.Orders.route,
             onClick = onOrdersClick
+        )
+
+        DrawerItem(
+            label = "Serve & Payment",
+            icon = Icons.Default.PointOfSale,
+            selected = currentRoute == Screen.Fulfillment.route,
+            onClick = onFulfillmentClick
+        )
+
+        DrawerItem(
+            label = "Daily Report",
+            icon = Icons.Default.Assessment,
+            selected = currentRoute == Screen.Report.route,
+            onClick = onReportClick
         )
 
         // 👇 pushes logout to bottom

@@ -36,7 +36,14 @@ fun AppTopBar(
     onCartClick: () -> Unit
 ) {
     TopAppBar(
-        title = { Text(title) },
+        title = {
+            Text(
+                title,
+                maxLines = 1,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold
+            )
+        },
         navigationIcon = {
             when {
                 showHamburger -> {

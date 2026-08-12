@@ -3,6 +3,7 @@ package com.sample.restaurantordertakingapp.ui.theme.screen.order
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sample.restaurantordertakingapp.domain.model.OrderStatus
+import com.sample.restaurantordertakingapp.domain.repo.OrderRepository
 import com.sample.restaurantordertakingapp.domain.usecase.order.ObserveOrdersUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.order.RefreshOrdersUseCase
 import com.sample.restaurantordertakingapp.domain.usecase.order.UpdateOrderStatusUseCase
@@ -19,7 +20,8 @@ import javax.inject.Inject
 class OrdersViewModel @Inject constructor(
     observeOrdersUseCase: ObserveOrdersUseCase,
     private val refreshOrdersUseCase: RefreshOrdersUseCase,
-    private val updateOrderStatusUseCase: UpdateOrderStatusUseCase
+    private val updateOrderStatusUseCase: UpdateOrderStatusUseCase,
+    private val orderRepository: OrderRepository
 ) : ViewModel() {
 
 
@@ -47,6 +49,32 @@ class OrdersViewModel @Inject constructor(
     fun onOrderStatusClick(orderId: String, currentStatus: OrderStatus) {
         viewModelScope.launch {
             updateOrderStatusUseCase(orderId, currentStatus)
+        }
+    }
+
+    /** Station (Tandoor/Kitchen) ne apna part ready mark kiya. */
+    fun onStationReady(orderId: String, station: Station) {
+        viewModelScope.launch {
+            when (station) {
+                Station.TANDOOR -> orderRepository.markTandoorReady(orderId)
+                Station.KITCHEN -> orderRepository.markKitchenReady(orderId)
+            }
+        }
+    }
+
+    /** Reception: fulfillment agla step (serve/deliver). */
+    fun onAdvanceFulfillment(orderId: String, currentStep: Int) {
+        if (currentStep >= 2) return
+        viewModelScope.launch {
+            orderRepository.setFulfillmentStep(orderId, currentStep + 1)
+        }
+    }
+
+    /** Reception: payment collect — method (Cash/UPI/Udhaar) save + step aage. */
+    fun onPaymentCollected(orderId: String, method: String, currentStep: Int) {
+        viewModelScope.launch {
+            orderRepository.setPaymentMethod(orderId, method)
+            if (currentStep < 2) orderRepository.setFulfillmentStep(orderId, currentStep + 1)
         }
     }
 }

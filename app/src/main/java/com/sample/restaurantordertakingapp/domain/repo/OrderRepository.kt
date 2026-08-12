@@ -17,6 +17,14 @@ interface OrderRepository {
         orderId: String,
         newStatus: OrderStatus
     )
+
+    suspend fun markTandoorReady(orderId: String)
+
+    suspend fun markKitchenReady(orderId: String)
+
+    suspend fun setFulfillmentStep(orderId: String, step: Int)
+
+    suspend fun setPaymentMethod(orderId: String, method: String)
     suspend fun createOrder(
         items: List<OrderItem>,
         totalAmount: Int,

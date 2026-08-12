@@ -85,6 +85,22 @@ class OrderRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun markTandoorReady(orderId: String) = withContext(ioDispatcher) {
+        orderDao.setTandoorReady(orderId, true)
+    }
+
+    override suspend fun markKitchenReady(orderId: String) = withContext(ioDispatcher) {
+        orderDao.setKitchenReady(orderId, true)
+    }
+
+    override suspend fun setFulfillmentStep(orderId: String, step: Int) = withContext(ioDispatcher) {
+        orderDao.setFulfillmentStep(orderId, step)
+    }
+
+    override suspend fun setPaymentMethod(orderId: String, method: String) = withContext(ioDispatcher) {
+        orderDao.setPaymentMethod(orderId, method)
+    }
+
     override fun observeOrdersWithItems(): Flow<List<OrderWithItems>> {
         return orderDao.observeOrdersWithItems()
     }

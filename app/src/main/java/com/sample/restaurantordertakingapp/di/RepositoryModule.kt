@@ -1,10 +1,12 @@
 package com.sample.restaurantordertakingapp.di
 
+import com.sample.restaurantordertakingapp.data.repository.CallRepositoryImpl
 import com.sample.restaurantordertakingapp.data.repository.CartRepositoryImpl
 import com.sample.restaurantordertakingapp.data.repository.MenuRepositoryImpl
 import com.sample.restaurantordertakingapp.data.repository.OrderPullRepositoryImpl
 import com.sample.restaurantordertakingapp.data.repository.OrderRepositoryImpl
 import com.sample.restaurantordertakingapp.data.repository.OrderSyncRepositoryImpl
+import com.sample.restaurantordertakingapp.domain.repo.CallRepository
 import com.sample.restaurantordertakingapp.domain.repo.CartRepository
 import com.sample.restaurantordertakingapp.domain.repo.MenuRepository
 import com.sample.restaurantordertakingapp.domain.repo.OrderPullRepository
@@ -29,4 +31,7 @@ abstract class RepositoryModule {
     abstract fun bindOrderSyncRepository(impl: OrderSyncRepositoryImpl): OrderSyncRepository
     @Binds
     abstract fun bindOrderPullRepository(impl: OrderPullRepositoryImpl): OrderPullRepository
+
+    @Binds
+    abstract fun bindCallRepository(impl: CallRepositoryImpl): CallRepository
 }

@@ -29,8 +29,8 @@ object DatabaseProvider {
             AppDatabase::class.java,
             "app_db"
         )
-        .fallbackToDestructiveMigration()
-        .build()
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

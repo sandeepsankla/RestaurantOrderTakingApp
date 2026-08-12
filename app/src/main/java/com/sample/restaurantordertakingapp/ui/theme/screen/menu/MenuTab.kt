@@ -35,12 +35,15 @@ fun MenuTabScreen(
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
-            TabRow(selectedTabIndex = selectedTab) {
+            ScrollableTabRow(
+                selectedTabIndex = selectedTab,
+                edgePadding = 8.dp
+            ) {
                 categories.forEachIndexed { i, cat ->
                     Tab(
                         selected = selectedTab == i,
                         onClick = { selectedTab = i },
-                        text = { Text(cat.name) }
+                        text = { Text(cat.name, maxLines = 1) }
                     )
                 }
             }

@@ -6,6 +6,7 @@ import com.sample.restaurantordertakingapp.data.local.dao.OrderItemDao
 import com.sample.restaurantordertakingapp.data.mapper.toEntity
 import com.sample.restaurantordertakingapp.data.mapper.toOrderEntity
 import com.sample.restaurantordertakingapp.data.remote.firebase.FirebaseOrderListener
+import com.sample.restaurantordertakingapp.di.ApplicationScope
 import com.sample.restaurantordertakingapp.di.IoDispatcher
 import com.sample.restaurantordertakingapp.domain.repo.OrderPullRepository
 import com.sample.restaurantordertakingapp.utils.NotificationHelper
@@ -19,6 +20,7 @@ class OrderPullRepositoryImpl @Inject constructor(
     private val orderItemDao: OrderItemDao,
     private val firebaseListener: FirebaseOrderListener,
     private val notificationHelper: NotificationHelper,
+    @ApplicationScope private val externalScope: CoroutineScope,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : OrderPullRepository {
 
@@ -30,7 +32,9 @@ class OrderPullRepositoryImpl @Inject constructor(
 
         registration = firebaseListener.listen { firebaseOrder ->
 
-            CoroutineScope(ioDispatcher).launch  {
+            // Injected app-scope use karo — har callback pe naya un-cancelled
+            // scope banane se memory leak hoti thi.
+            externalScope.launch(ioDispatcher) {
 
                 // 1️⃣ Avoid duplicates
                 if (orderDao.orderExists(firebaseOrder.orderId) > 0) return@launch

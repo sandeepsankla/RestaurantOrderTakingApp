@@ -37,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.sample.restaurantordertakingapp.domain.model.PortionType
@@ -150,17 +151,24 @@ fun MenuItemDetailScreen1(
 
             Row(
                 Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     menuItem.name,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 8.dp)
                 )
                 Text(
-                    text  = menuItem.getFormattedTotalPrice(isFull, quantity),
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold
+                    text = menuItem.getFormattedTotalPrice(isFull, quantity),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1
                 )
             }
 
@@ -243,7 +251,11 @@ fun MenuItemDetailScreen1(
 
 @Composable
 fun RadioButtonGroupWithBorder(menuItem: MenuItemUi,onClick : (isFullSelected : Boolean) -> Unit) {
-    val radioOptions = listOf(menuItem.getFormattedOptionLabel(true), menuItem.getFormattedOptionLabel(false))
+    // Half option tabhi dikhao jab uski price ho (single-price items me halfPrice = 0)
+    val radioOptions = buildList {
+        add(menuItem.getFormattedOptionLabel(true))                 // Full
+        if (menuItem.halfPrice > 0) add(menuItem.getFormattedOptionLabel(false)) // Half
+    }
     val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
     Card ( shape = RoundedCornerShape(8.dp), modifier = Modifier.fillMaxWidth()) {
         Row(Modifier.selectableGroup().padding(horizontal = 8.dp, vertical = 8.dp)) {
