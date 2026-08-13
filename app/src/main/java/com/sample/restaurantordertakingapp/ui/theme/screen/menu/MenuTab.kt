@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,22 +17,20 @@ import com.sample.restaurantordertakingapp.ui.theme.screen.cart.CartItemUi
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.CategoryUi
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu.MenuItemUi
 import com.sample.restaurantordertakingapp.ui.theme.screen.menu_details.MenuItemDetailScreen1
-import kotlin.collections.forEachIndexed
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuTabScreen(
     categories: List<CategoryUi>,
     onItemClick: (MenuItemUi) -> Unit,
-    onAddToCart: (CartItemUi) -> Unit
+    onAddToCart: (CartItemUi) -> Unit,
+    onCallKitchen: () -> Unit
 ) {
     var selectedTab by remember { mutableIntStateOf(0) }
     var selectedItem by remember { mutableStateOf<MenuItemUi?>(null) }
     var showVoiceDialog by remember { mutableStateOf(false) }
 
-    val allMenuItems = remember(categories) {
-        categories.flatMap { it.items }
-    }
+    val allMenuItems = categories.flatMap { it.items }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column {
@@ -59,17 +58,39 @@ fun MenuTabScreen(
             }
         }
 
-        // 🎙️ Voice Order Floating Action Button
-        ExtendedFloatingActionButton(
-            onClick = { showVoiceDialog = true },
-            icon = { Icon(Icons.Default.Mic, contentDescription = "Voice Order") },
-            text = { Text("Voice Order") },
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
+        // 🔘 Dual Floating Action Buttons Column (Call Kitchen + Voice Order)
+        Column(
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp)
-        )
+                .padding(16.dp),
+            horizontalAlignment = Alignment.End,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            // 🔔 Call Kitchen FAB
+            SmallFloatingActionButton(
+                onClick = onCallKitchen,
+                containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(Icons.Default.Notifications, contentDescription = "Call Kitchen")
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Call Kitchen", style = MaterialTheme.typography.labelLarge)
+                }
+            }
+
+            // 🎙️ Voice Order FAB
+            ExtendedFloatingActionButton(
+                onClick = { showVoiceDialog = true },
+                icon = { Icon(Icons.Default.Mic, contentDescription = "Voice Order") },
+                text = { Text("Voice Order 🎙️") },
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
+            )
+        }
     }
 
     BottomSheetWrapper(
@@ -102,8 +123,3 @@ fun MenuTabScreen(
         )
     }
 }
-
-
-
-
-

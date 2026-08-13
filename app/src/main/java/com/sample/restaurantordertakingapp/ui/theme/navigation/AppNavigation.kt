@@ -205,15 +205,6 @@ private fun ReceptionApp(onSwitchMode: () -> Unit) {
                     onBack = { navController.popBackStack() },
                     onCartClick = { navController.navigateSingleTop(Screen.Cart.route) }
                 )
-            },
-            floatingActionButton = {
-                if (currentRoute == Screen.Menu.route) {
-                    ExtendedFloatingActionButton(
-                        onClick = { showCall = true },
-                        icon = { Icon(Icons.Default.Notifications, contentDescription = null) },
-                        text = { Text("Call Kitchen") }
-                    )
-                }
             }
         ) { innerPadding ->
             NavHost(
@@ -229,7 +220,8 @@ private fun ReceptionApp(onSwitchMode: () -> Unit) {
                                 ?.savedStateHandle
                                 ?.set(KEY_MENU_ITEM, menuItem)
                             navController.navigate(Screen.Detail.route)
-                        }
+                        },
+                        onCallKitchen = { showCall = true }
                     )
                 }
 

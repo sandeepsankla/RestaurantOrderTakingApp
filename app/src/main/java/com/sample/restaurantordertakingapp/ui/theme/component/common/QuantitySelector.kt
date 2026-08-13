@@ -106,8 +106,8 @@ fun QuantitySelector(
             Text(
                 text = quantity.toString(),
                 style = configuration.textStyle,
-                fontWeight = FontWeight.Medium,
-                color = if (enabled) MaterialTheme.colorScheme.onBackground else Color.Gray,
+                fontWeight = FontWeight.Bold,
+                color = if (enabled) Color.Black else Color.Gray,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 

@@ -17,6 +17,7 @@ import com.sample.restaurantordertakingapp.ui.theme.screen.mapper.toDomain
 fun MenuScreen(
     onCartClick: () -> Unit,
     onItemClick: (MenuItemUi) -> Unit,
+    onCallKitchen: () -> Unit,
     viewModel: MenuViewModel = hiltViewModel()
 ) {
     val menuState by viewModel.menuState.collectAsStateWithLifecycle()
@@ -41,7 +42,8 @@ fun MenuScreen(
                 onItemClick = onItemClick,
                 onAddToCart = { uiItem ->
                     viewModel.addToCart(uiItem.toDomain())
-                }
+                },
+                onCallKitchen = onCallKitchen
             )
         }
     }
